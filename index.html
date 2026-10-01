@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eagler+</title>
+    
+    <!-- Import Cursive Font for the Welcome Screen -->
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Base Dynamic Colors & Properties */
+            --bg-color: #0f172a;
+            --accent-color: #6366f1;
+            
+            --accent-light: color-mix(in srgb, var(--accent-color) 60%, white);
+            --accent-glow: color-mix(in srgb, var(--accent-color) 50%, transparent);
+            --surface-color: color-mix(in srgb, var(--bg-color) 80%, white);
+            --surface-hover: color-mix(in srgb, var(--bg-color) 70%, white);
+            
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            
+            --radius-lg: 28px;
+            --radius-md: 16px;
+        }
+
+        /* ================= 19 THEME PRESETS ================= */
+        [data-theme="default"] {
+            --bg-color: #0f172a; --accent-color: #6366f1;
+            --bg-image: radial-gradient(circle at top center, var(--surface-color), var(--bg-color));
+            --glass-bg: color-mix(in srgb, var(--surface-color) 70%, transparent);
+            --glass-blur: 12px; --card-border: rgba(255, 255, 255, 0.05);
+            --radius-lg: 28px; --radius-md: 16px;
+        }
+        [data-theme="liquid-glass"] {
+            --bg-color: #001220; --accent-color: #00e5ff;
+            --bg-image: linear-gradient(135deg, #001220 0%, #004d61 100%);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-blur: 24px; --card-border: rgba(0, 229, 255, 0.2);
+            --radius-lg: 28px; --radius-md: 16px;
+        }
+        [data-theme="cyberpunk"] {
+            --bg-color: #09090b; --accent-color: #fce700;
+            --bg-image: radial-gradient(circle at bottom right, #270030, #09090b 80%);
+            --glass-bg: rgba(20, 20, 20, 0.85);
+            --glass-blur: 4px; --card-border: rgba(252, 231, 0, 0.3);
+            --radius-lg: 12px; --radius-md: 8px;
+        }
+        [data-theme="sunset"] {
+            --bg-color: #2e0219; --accent-color: #ff3366;
+            --bg-image: linear-gradient(180deg, #2e0219 0%, #0a0005 100%);
+            --glass-bg: rgba(46, 2, 25, 0.5);
+            --glass-blur: 16px; --card-border: rgba(255, 51, 102, 0.2);
+            --radius-lg: 28px; --radius-md: 16px;
+        }
+        [data-theme="nebula"] {
+            --bg-color: #05020a; --accent-color: #a855f7;
+            --bg-image: radial-gradient(ellipse at top, #2e1065 0%, #05020a 100%);
+            --glass-bg: rgba(46, 16, 101, 0.2);
+            --glass-blur: 14px; --card-border: rgba(168, 85, 247, 0.3);
+            --radius-lg: 28px; --radius-md: 16px;
+        }
+        [data-theme="monochrome"] {
+            --bg-color: #000000; --accent-color: #ffffff; --text-secondary: #777777;
+            --bg-image: radial-gradient(circle at center, #1a1a1a, #000000);
+            --glass-bg: rgba(25, 25, 25, 0.4);
+            --glass-blur: 10px; --card-border: rgba(255, 255, 255, 0.15);
+            --radius-lg: 0px; --radius-md: 0px;
+        }
+        [data-theme="golden-hour"] {
+            --bg-color: #1a0f00; --accent-color: #ffaa00;
+            --bg-image: radial-gradient(circle at top right, #4d2e00, #0a0600);
+            --glass-bg: rgba(255, 170, 0, 0.05);
+            --glass-blur: 16px; --card-border: rgba(255, 170, 0, 0.2);
+            --radius-lg: 28px; --radius-md: 16px;
+        }
+        [data-theme="windows-xp"] {
+            --bg-color: #003399; --accent-color: #3c8141;
+            --bg-image: linear-gradient(180deg, #245edb 0%, #245edb 75%, #3c8141 100%);
+            --glass-bg: rgba(255, 255, 255, 0.2);
+            --glass-blur: 4px; --card-border: rgba(255, 255, 255, 0.3);
+            --radius-lg: 8px; --radius-md: 4px;
+        }
+        [data-theme="macos-27"] {
+            --bg-color: #0b0b12; --accent-color: #007aff;
+            --bg-image: radial-gradient(circle at 10% 20%, rgba(255, 42, 109, 0.4), transparent 40%), 
+                        radial-gradient(circle at 90% 80%, rgba(5, 213, 255, 0.4), transparent 40%), #0b0b12;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-blur: 40px; --card-border: rgba(255, 255, 255, 0.1);
+            --radius-lg: 40px; --radius-md: 20px;
+        }
+        [data-theme="minecraft"] {
+            --bg-color: #3b2313; --accent-color: #55ff55;
+            --bg-image: linear-gradient(180deg, #68913b 0%, #68913b 15%, #3b2313 15%, #3b2313 100%);
+            --glass-bg: rgba(0, 0, 0, 0.6);
+            --glass-blur: 0px; --card-border: rgba(85, 255, 85, 0.4);
+            --radius-lg: 0px; --radius-md: 0px;
+        }
+        [data-theme="synthwave"] {
+            --bg-color: #090014; --accent-color: #00ffff;
+            --bg-image: linear-gradient(180deg, #090014 0%, #2b003b 50%, #ff007f 100%);
+            --glass-bg: rgba(20, 0, 40, 0.6);
+            --glass-blur: 10px; --card-border: rgba(0, 255, 255, 0.4);
+            --radius-lg: 12px; --radius-md: 8px;
+        }
+        
+        /* New Themes */
+        [data-theme="linux-terminal"] {
+            --bg-color: #000000; --accent-color: #00ff00;
+            --bg-image: none; background-color: #000000;
+            --glass-bg: rgba(0, 20, 0, 0.2);
+            --glass-blur: 0px; --card-border: #00ff00;
+            --radius-lg: 0px; --radius-md: 0px;
+        }
+        [data-theme="linux-terminal"] * { font-family: 'Courier New', monospace !important; }
+        
+        [data-theme="console-ui"] {
+            --bg-color: #12151a; --accent-color: #3b82f6;
+            --bg-image: radial-gradient(circle at top right, #1e293b, #0f172a);
+            --glass-bg: rgba(30, 41, 59, 0.8);
+            --glass-blur: 20px; --card-border: rgba(255, 255, 255, 0.05);
+            --radius-lg: 32px; --radius-md: 100px;
+        }
+        
+        /* Dynamic Time uses JS, but we define the base glass */
+        [data-theme="dynamic-time"] {
+            --glass-bg: color-mix(in srgb, var(--surface-color) 50%, transparent);
+            --glass-blur: 16px; --card-border: rgba(255, 255, 255, 0.15);
+            --radius-lg: 24px; --radius-md: 12px;
+        }
+
+        /* Animated Themes */
+        [data-theme="matrix"] {
+            --bg-color: #000000; --accent-color: #00ff41;
+            --bg-image: linear-gradient(0deg, #000000 0%, #002209 50%, #000000 100%);
+            background-size: 100% 400%; animation: scrollY 10s linear infinite;
+            --glass-bg: rgba(0, 20, 0, 0.6); --glass-blur: 8px; --card-border: rgba(0, 255, 65, 0.3);
+            --radius-lg: 16px; --radius-md: 8px;
+        }
+        [data-theme="ocean-wave"] {
+            --bg-color: #001f3f; --accent-color: #7FDBFF;
+            --bg-image: linear-gradient(45deg, #001122, #003366, #005577, #001122);
+            background-size: 300% 300%; animation: bgShift 12s ease-in-out infinite alternate;
+            --glass-bg: rgba(0, 100, 255, 0.1); --glass-blur: 20px; --card-border: rgba(127, 219, 255, 0.2);
+            --radius-lg: 28px; --radius-md: 16px;
+        }
+        [data-theme="crimson-pulse"] {
+            --bg-color: #110000; --accent-color: #ff1111;
+            --bg-image: radial-gradient(circle at center, #3a0000, #050000);
+            background-size: 150% 150%; animation: bgPulse 4s ease-in-out infinite alternate;
+            --glass-bg: rgba(30, 0, 0, 0.5); --glass-blur: 12px; --card-border: rgba(255, 17, 17, 0.2);
+            --radius-lg: 20px; --radius-md: 12px;
+        }
+        [data-theme="aurora"] {
+            --bg-color: #0d0015; --accent-color: #00f5d4;
+            --bg-image: linear-gradient(60deg, #0d0015, #1d0033, #002b3d, #00331a);
+            background-size: 400% 400%; animation: bgShift 16s ease infinite alternate;
+            --glass-bg: rgba(255, 255, 255, 0.02); --glass-blur: 24px; --card-border: rgba(0, 245, 212, 0.3);
+            --radius-lg: 32px; --radius-md: 16px;
+        }
+        [data-theme="custom"] {
+            --bg-image: radial-gradient(circle at top center, var(--surface-color), var(--bg-color));
+            --glass-bg: color-mix(in srgb, var(--surface-color) 70%, transparent);
+            --glass-blur: 12px; --card-border: rgba(255, 255, 255, 0.1);
+            --radius-lg: 28px; --radius-md: 16px;
+        }
+
+        @keyframes bgShift { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
+        @keyframes scrollY { 0% { background-position: 0% 0%; } 100% { background-position: 0% 100%; } }
+        @keyframes bgPulse { 0% { background-position: 50% 50%; background-size: 100% 100%; } 100% { background-position: 50% 50%; background-size: 150% 150%; } }
+        /* ==================================================== */
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+            background: var(--bg-image); background-attachment: fixed;
+            color: var(--text-primary); min-height: 100vh;
+            display: flex; flex-direction: column; overflow-x: hidden;
+            transition: background 0.6s ease;
+        }
+
+        /* Fixed Header Padding for right-side edge bug */
+        header { padding: 3rem 5vw 1rem; text-align: center; position: relative; }
+
+        .settings-btn {
+            position: absolute; top: 2.5rem; right: 5vw;
+            background: var(--glass-bg); backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--card-border); border-radius: 50%;
+            width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.3s ease; z-index: 50;
+        }
+        .settings-btn:hover {
+            transform: rotate(90deg) scale(1.1); background: var(--surface-hover);
+            border-color: var(--accent-color); box-shadow: 0 0 15px var(--accent-glow);
+        }
+        .settings-btn svg { width: 24px; height: 24px; fill: var(--text-secondary); transition: fill 0.3s ease; }
+        .settings-btn:hover svg { fill: var(--accent-color); }
+
+        .changelog-btn {
+            position: absolute; top: 2.5rem; left: 5vw;
+            background: var(--glass-bg); backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--card-border); border-radius: var(--radius-md);
+            padding: 0 1.2rem; height: 48px; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.3s ease; z-index: 50;
+            color: var(--text-secondary); font-weight: 600;
+        }
+        .changelog-btn:hover {
+            background: var(--surface-hover); border-color: var(--accent-color);
+            color: var(--accent-color); box-shadow: 0 0 15px var(--accent-glow); transform: translateY(-2px);
+        }
+
+        h1 {
+            font-size: 3.5rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--accent-light), var(--accent-color));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        /* Toolbar */
+        .toolbar { display: flex; justify-content: center; margin-bottom: 2rem; }
+        .tab-container {
+            display: inline-flex; background: var(--glass-bg); padding: 0.5rem;
+            border-radius: var(--radius-lg); backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--card-border); transition: border-radius 0.3s ease;
+        }
+        .tab-btn {
+            background: transparent; color: var(--text-secondary); border: none;
+            padding: 0.8rem 2rem; font-size: 1rem; font-weight: 600; border-radius: var(--radius-md);
+            cursor: pointer; transition: all 0.3s ease;
+        }
+        .tab-btn:hover { color: var(--text-primary); }
+        .tab-btn.active { background-color: var(--accent-color); color: white; box-shadow: 0 4px 20px var(--accent-glow); }
+
+        /* Content Areas */
+        .tab-content { display: none; opacity: 0; transform: translateY(20px); transition: opacity 0.4s ease, transform 0.4s ease; }
+        .tab-content.active { display: block; opacity: 1; transform: translateY(0); }
+
+        /* ================= LAYOUTS ================= */
+        .slider-wrapper { position: relative; width: 100%; }
+        .card-container { display: flex; gap: 1.5rem; padding: 1rem 5vw 4rem; }
+        /* Fix for Right-Side Edge Bug */
+        .card-container::after { content: ''; flex: 0 0 1px; padding-right: 5vw; }
+
+        body[data-layout="slider"] .card-container {
+            overflow-x: auto; scroll-behavior: smooth; -webkit-overflow-scrolling: touch;
+            scroll-snap-type: x mandatory; scrollbar-width: none;
+        }
+        body[data-layout="slider"] .card-container::-webkit-scrollbar { display: none; }
+        body[data-layout="slider"] .card { scroll-snap-align: center; }
+
+        body[data-layout="grid"] .card-container { flex-wrap: wrap; justify-content: center; overflow-x: hidden; padding-bottom: 4rem; }
+        body[data-layout="grid"] .card-container::after { display: none; }
+
+        /* Cards */
+        .card {
+            flex: 0 0 auto; width: 240px; height: 280px;
+            background: var(--glass-bg); backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--card-border); border-radius: var(--radius-lg);
+            text-decoration: none; color: var(--text-primary); display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative; overflow: hidden; box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        }
+        .card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: var(--radius-lg); border: 2px solid transparent;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0)) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0); -webkit-mask-composite: destination-out; mask-composite: exclude; transition: all 0.3s ease;
+        }
+        .card:hover { transform: translateY(-10px) scale(1.02); background: var(--surface-hover); box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), 0 0 25px var(--accent-glow); }
+        .card:hover::before { border-color: var(--accent-color); }
+        
+        .card-icon { width: 72px; height: 72px; margin-bottom: 1.5rem; fill: none; stroke: var(--text-secondary); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transition: all 0.3s ease; }
+        .card:hover .card-icon { stroke: var(--accent-light); transform: scale(1.1); }
+        .card span { font-size: 1.15rem; font-weight: 600; text-align: center; padding: 0 1rem; margin-top: 10px; }
+
+        /* Badges & Favorites */
+        .badge {
+            position: absolute; top: 1rem; right: 1rem; background: var(--accent-color); color: white; font-size: 0.7rem; font-weight: 700;
+            padding: 0.2rem 0.6rem; border-radius: var(--radius-md); text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 10px var(--accent-glow); transition: border-radius 0.3s;
+        }
+        
+        .fav-star {
+            position: absolute; top: 1rem; left: 1rem; width: 24px; height: 24px; cursor: pointer;
+            fill: transparent; stroke: var(--text-secondary); stroke-width: 2; transition: all 0.2s; z-index: 10;
+        }
+        .fav-star:hover { transform: scale(1.2); }
+        .card.favorited .fav-star { fill: #fce700; stroke: #fce700; filter: drop-shadow(0 0 8px rgba(252, 231, 0, 0.5)); }
+
+        footer { margin-top: auto; text-align: center; padding: 2rem; color: var(--text-secondary); font-size: 0.9rem; }
+        .keyboard-hint { display: block; margin-top: 0.5rem; opacity: 0.6; }
+
+        /* Overlays (Settings & Changelog) */
+        .overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 90; }
+        .overlay.active { opacity: 1; visibility: visible; }
+        
+        .side-panel {
+            position: fixed; top: 0; right: -420px; width: 100%; max-width: 420px; height: 100vh;
+            background: var(--glass-bg); backdrop-filter: blur(30px); border-left: 1px solid var(--card-border);
+            z-index: 100; transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1); display: flex; flex-direction: column;
+            padding: 2rem; box-shadow: -10px 0 30px rgba(0,0,0,0.5); overflow-y: auto;
+        }
+        .side-panel.active { right: 0; }
+        
+        /* Modal for Changelog */
+        .center-modal {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -45%) scale(0.95);
+            width: 90%; max-width: 600px; max-height: 80vh; background: var(--glass-bg); backdrop-filter: blur(30px);
+            border: 1px solid var(--card-border); border-radius: var(--radius-lg); z-index: 100;
+            display: flex; flex-direction: column; padding: 2rem; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .center-modal.active { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
+        .changelog-content { overflow-y: auto; color: var(--text-primary); line-height: 1.6; white-space: pre-wrap; font-family: monospace; font-size: 0.95rem; background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.05); }
+
+        .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .panel-header h2 { font-size: 1.5rem; font-weight: 600; }
+        .close-btn { background: none; border: none; color: var(--text-secondary); font-size: 2rem; line-height: 1; cursor: pointer; transition: color 0.2s; }
+        .close-btn:hover { color: var(--text-primary); }
+        .settings-subheader { font-size: 0.85rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; font-weight: 700; }
+        
+        .layout-toggle { display: flex; background: rgba(0,0,0,0.3); border-radius: 12px; padding: 0.3rem; margin-bottom: 2.5rem; border: 1px solid rgba(255,255,255,0.05); }
+        .layout-btn { flex: 1; background: transparent; border: none; color: var(--text-secondary); padding: 0.6rem; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
+        .layout-btn.active { background: var(--accent-color); color: white; }
+
+        .theme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 2.5rem; }
+        .theme-btn { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); color: var(--text-primary); padding: 0.8rem; border-radius: 12px; cursor: pointer; transition: all 0.2s; font-weight: 500; text-align: center; }
+        .theme-btn:hover { background: rgba(255,255,255,0.1); }
+        .theme-btn.active { border-color: var(--accent-color); background: color-mix(in srgb, var(--accent-color) 20%, transparent); box-shadow: 0 0 15px var(--accent-glow); }
+        
+        .setting-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; background: rgba(0,0,0,0.2); padding: 1rem 1.5rem; border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.05); }
+        input[type="color"] { -webkit-appearance: none; border: none; width: 40px; height: 40px; border-radius: 50%; overflow: hidden; cursor: pointer; padding: 0; background: none; }
+        input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+        input[type="color"]::-webkit-color-swatch { border: 2px solid rgba(255, 255, 255, 0.2); border-radius: 50%; box-shadow: inset 0 0 4px rgba(0,0,0,0.3); }
+        
+        .tut-replay-btn { width: 100%; margin-top: 1rem; background: transparent; border: 1px solid var(--card-border); color: var(--text-secondary); padding: 1rem; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; transition: all 0.2s; }
+        .tut-replay-btn:hover { background: rgba(255,255,255,0.05); color: white; }
+
+        /* ================= TUTORIAL OVERLAY (Fixed Cursive Animation) ================= */
+        .tutorial-overlay {
+            position: fixed; inset: 0; z-index: 9999;
+            background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(50px); -webkit-backdrop-filter: blur(50px);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden; transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        .tutorial-overlay.show { opacity: 1; visibility: visible; }
+        
+        .tutorial-slide {
+            position: absolute; max-width: 550px; width: 90%; text-align: center;
+            opacity: 0; transform: translateY(30px) scale(0.95); pointer-events: none;
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .tutorial-slide.active { opacity: 1; transform: translateY(0) scale(1); pointer-events: all; }
+        
+        .tut-title { font-size: 2.5rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 1rem; }
+        .tut-text { font-size: 1.2rem; color: #cbd5e1; line-height: 1.6; margin-bottom: 2.5rem; }
+        .tut-icon { width: 100px; height: 100px; margin: 0 auto 2rem; stroke: white; stroke-width: 1; fill: none; display: block; }
+        
+        .tut-btn-group { display: flex; justify-content: center; gap: 1rem; margin-top: 2rem;}
+        .tut-btn { background: white; color: black; border: none; padding: 1rem 2.5rem; font-size: 1.1rem; font-weight: 600; border-radius: 100px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+        .tut-btn:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(255,255,255,0.2); }
+        .tut-btn-secondary { background: rgba(255, 255, 255, 0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 1rem 2.5rem; font-size: 1.1rem; font-weight: 600; border-radius: 100px; cursor: pointer; transition: all 0.2s; }
+        .tut-btn-secondary:hover { background: rgba(255, 255, 255, 0.2); }
+        .tut-btn-start { background: #007aff; color: white; }
+        .tut-btn-start:hover { box-shadow: 0 10px 25px rgba(0, 122, 255, 0.4); transform: scale(1.05); }
+
+        /* Beautiful Cursive "Welcome" Wipe Animation */
+        .cursive-wrapper { margin-bottom: 1.5rem; display: flex; justify-content: center; }
+        .cursive-welcome {
+            font-family: 'Pacifico', cursive; font-size: 5.5rem; color: rgba(255,255,255,0.05);
+            position: relative; display: inline-block; padding: 10px 30px; letter-spacing: 2px;
+        }
+        .cursive-welcome::before {
+            content: 'welcome'; position: absolute; left: 30px; top: 10px; color: white;
+            white-space: nowrap; overflow: hidden; width: 0; filter: drop-shadow(0 0 15px rgba(255,255,255,0.5));
+        }
+        .tutorial-overlay.show .cursive-welcome::before { animation: writeText 2s cubic-bezier(0.2, 0.8, 0.2, 1) 0.5s forwards; }
+        @keyframes writeText { 0% { width: 0; } 100% { width: 100%; } }
+
+        .fade-in-delay { opacity: 0; animation: fadeIn 1s 2.5s ease forwards; }
+        .fade-in-delay-btn { opacity: 0; transform: translateY(10px); animation: fadeUp 1s 3s ease forwards; }
+        @keyframes fadeIn { to { opacity: 1; } }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+        .tut-theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; max-height: 35vh; overflow-y: auto; padding-right: 10px; margin: 0 auto; }
+        .tut-theme-grid::-webkit-scrollbar { width: 6px; }
+        .tut-theme-grid::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 10px; }
+    </style>
+</head>
+<body data-theme="default" data-layout="slider">
+
+    <!-- macOS Style Setup Tutorial -->
+    <div class="tutorial-overlay" id="tutorial-overlay">
+        
+        <!-- Slide 1: Welcome -->
+        <div class="tutorial-slide" id="tut-slide-1">
+            <div class="cursive-wrapper">
+                <span class="cursive-welcome">welcome</span>
+            </div>
+            <p class="tut-text fade-in-delay">Welcome to eagler+. Let's take a quick tour.</p>
+            <button class="tut-btn fade-in-delay-btn" onclick="nextSlide(2)">Continue</button>
+        </div>
+        
+        <!-- Slide 2: Navigation -->
+        <div class="tutorial-slide" id="tut-slide-2">
+            <svg class="tut-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+            <h2 class="tut-title">Choose Your Experience</h2>
+            <p class="tut-text">Toggle effortlessly between Vanilla builds, Custom Clients, and Texture Packs using the top navigation bar. Use your <b>Left & Right Arrow Keys</b> to quickly navigate the slider.</p>
+            <div class="tut-btn-group">
+                <button class="tut-btn-secondary" onclick="nextSlide(1)">Back</button>
+                <button class="tut-btn" onclick="nextSlide(3)">Next</button>
+            </div>
+        </div>
+
+        <!-- Slide 3: Live Theme Picker -->
+        <div class="tutorial-slide" id="tut-slide-3">
+            <h2 class="tut-title">Select a Vibe</h2>
+            <p class="tut-text" style="margin-bottom: 1.5rem;">Click a theme below to instantly preview it. You can always change this later in settings.</p>
+            
+            <div class="tut-theme-grid">
+                <button class="theme-btn active" data-btn-theme="default" onclick="setTheme('default')">Default Slate</button>
+                <button class="theme-btn" data-btn-theme="liquid-glass" onclick="setTheme('liquid-glass')">Liquid Glass</button>
+                <button class="theme-btn" data-btn-theme="cyberpunk" onclick="setTheme('cyberpunk')">Cyberpunk</button>
+                <button class="theme-btn" data-btn-theme="sunset" onclick="setTheme('sunset')">Sunset</button>
+                <button class="theme-btn" data-btn-theme="nebula" onclick="setTheme('nebula')">Nebula</button>
+                <button class="theme-btn" data-btn-theme="monochrome" onclick="setTheme('monochrome')">Monochrome</button>
+                <button class="theme-btn" data-btn-theme="golden-hour" onclick="setTheme('golden-hour')">Golden Hour</button>
+                <button class="theme-btn" data-btn-theme="windows-xp" onclick="setTheme('windows-xp')">Windows XP</button>
+                <button class="theme-btn" data-btn-theme="macos-27" onclick="setTheme('macos-27')">macOS 27</button>
+                <button class="theme-btn" data-btn-theme="minecraft" onclick="setTheme('minecraft')">Minecraft</button>
+                <button class="theme-btn" data-btn-theme="synthwave" onclick="setTheme('synthwave')">Synthwave 84</button>
+                
+                <button class="theme-btn" data-btn-theme="linux-terminal" onclick="setTheme('linux-terminal')">Linux Terminal</button>
+                <button class="theme-btn" data-btn-theme="console-ui" onclick="setTheme('console-ui')">Console UI</button>
+                <button class="theme-btn" data-btn-theme="dynamic-time" onclick="setTheme('dynamic-time')">Dynamic Time</button>
+
+                <button class="theme-btn" data-btn-theme="matrix" onclick="setTheme('matrix')">Animated Matrix</button>
+                <button class="theme-btn" data-btn-theme="ocean-wave" onclick="setTheme('ocean-wave')">Ocean Wave</button>
+                <button class="theme-btn" data-btn-theme="crimson-pulse" onclick="setTheme('crimson-pulse')">Crimson Pulse</button>
+                <button class="theme-btn" data-btn-theme="aurora" onclick="setTheme('aurora')">Aurora</button>
+            </div>
+
+            <div class="tut-btn-group">
+                <button class="tut-btn-secondary" onclick="nextSlide(2)">Back</button>
+                <button class="tut-btn" onclick="nextSlide(4)">Continue</button>
+            </div>
+        </div>
+
+        <!-- Slide 4: Finish -->
+        <div class="tutorial-slide" id="tut-slide-4">
+            <h2 class="tut-title" style="font-size: 3.5rem;">You're all set.</h2>
+            <p class="tut-text">Click the star on any card to add it to your favorites. Enjoy your new web experience.</p>
+            <div class="tut-btn-group">
+                <button class="tut-btn-secondary" onclick="nextSlide(3)">Back</button>
+                <button class="tut-btn tut-btn-start" onclick="finishTutorial()">Get Started</button>
+            </div>
+        </div>
+    </div>
+    <!-- End Tutorial -->
+
+    <header>
+        <button class="changelog-btn" onclick="openChangelog()">What's New</button>
+        
+        <button class="settings-btn" onclick="toggleSettings('settings-panel')" title="Settings">
+            <svg viewBox="0 0 24 24"><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+        </button>
+
+        <h1>eagler+</h1>
+        
+        <div class="toolbar">
+            <div class="tab-container">
+                <button class="tab-btn active" onclick="openTab(event, 'vanilla')">Vanilla</button>
+                <button class="tab-btn" onclick="openTab(event, 'clients')">Clients</button>
+                <button class="tab-btn" onclick="openTab(event, 'packs')">Packs & Shaders</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Vanilla Builds Tab -->
+    <main id="vanilla" class="tab-content active">
+        <div class="slider-wrapper">
+            <div class="card-container" id="vanilla-container">
+                
+                <a href="Vanilla/26.2-wasm.html" class="card" data-id="van-26.2">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'van-26.2', 'vanilla-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <div class="badge">Latest</div>
+                    <svg class="card-icon" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>
+                    <span>Version 26.2</span>
+                </a>
+
+                <a href="Vanilla/26.1.2-wasm.html" class="card" data-id="van-26.1.2">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'van-26.1.2', 'vanilla-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <div class="badge" style="background: #eab308; color: black;">Beta</div>
+                    <svg class="card-icon" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                    <span>Version 26.1.2</span>
+                </a>
+                
+                <a href="Vanilla/1.21.11-wasm.html" class="card" data-id="van-1.21">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'van-1.21', 'vanilla-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+                    <span>Version 1.21.11</span>
+                </a>
+                
+                <a href="Vanilla/1.20.6-wasm.html" class="card" data-id="van-1.20">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'van-1.20', 'vanilla-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><polygon points="1 6 8 2 16 6 23 2 23 18 16 22 8 18 1 22 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+                    <span>Version 1.20.6</span>
+                </a>
+                
+                <a href="Vanilla/1.16.5-wasm.html" class="card" data-id="van-1.16">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'van-1.16', 'vanilla-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"></path></svg>
+                    <span>Version 1.16.5</span>
+                </a>
+                
+                <a href="Vanilla/1.14.4-wasm.html" class="card" data-id="van-1.14">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'van-1.14', 'vanilla-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    <span>Version 1.14.4</span>
+                </a>
+                
+                <a href="Vanilla/1.13.2-wasm.html" class="card" data-id="van-1.13">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'van-1.13', 'vanilla-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
+                    <span>Version 1.13.2</span>
+                </a>
+                
+                <a href="Vanilla/1.12.2-wasm.html" class="card" data-id="van-1.12">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'van-1.12', 'vanilla-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c1.38 0 2.5-1.12 2.5-2.5 0-.61-.23-1.21-.64-1.67-.08-.09-.13-.21-.13-.33 0-.28.22-.5.5-.5H16c3.31 0 6-2.69 6-6 0-4.96-4.49-9-10-9z"/></svg>
+                    <span>Version 1.12.2</span>
+                </a>
+                
+                <a href="Vanilla/1.8.8-wasm.html" class="card" data-id="van-1.8">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'van-1.8', 'vanilla-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><path d="M14.5 17.5L3 6V3h3l11.5 11.5"></path><path d="M13 19l6-6"></path><path d="M16 16l4 4"></path><path d="M19 21l2-2"></path></svg>
+                    <span>Version 1.8.8</span>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Custom Clients Tab -->
+    <main id="clients" class="tab-content">
+        <div class="slider-wrapper">
+            <div class="card-container" id="clients-container">
+                <a href="Clients/Aero%20Client.html" class="card" data-id="cli-aero">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-aero', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    <span>Aero Client</span>
+                </a>
+                <a href="Clients/Astra%20Client.html" class="card" data-id="cli-astra">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-astra', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    <span>Astra Client</span>
+                </a>
+                <a href="Clients/EB%20Client%201.8.8.html" class="card" data-id="cli-eb8">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-eb8', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    <span>EB Client 1.8.8</span>
+                </a>
+                <a href="Clients/EB%20Client%201.14.4.html" class="card" data-id="cli-eb14">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-eb14', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    <span>EB Client 1.14.4</span>
+                </a>
+                <a href="Clients/Eclipse%20Client.html" class="card" data-id="cli-eclipse">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-eclipse', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    <span>Eclipse Client</span>
+                </a>
+                <a href="Clients/GX-Client.html" class="card" data-id="cli-gx">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-gx', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    <span>GX-Client</span>
+                </a>
+                <a href="Clients/Huzzium%20Client.html" class="card" data-id="cli-huzz">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-huzz', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    <span>Huzzium Client</span>
+                </a>
+                <a href="Clients/Kozmo%20Client.html" class="card" data-id="cli-kozmo">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-kozmo', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    <span>Kozmo Client</span>
+                </a>
+                <a href="Clients/Larp%20Client%201.14.4.html" class="card" data-id="cli-larp">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-larp', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    <span>Larp Client 1.14.4</span>
+                </a>
+                <a href="Clients/Myven%20Client.html" class="card" data-id="cli-myven">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-myven', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    <span>Myven Client</span>
+                </a>
+                <a href="Clients/Pixel%20Client.html" class="card" data-id="cli-pixel">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-pixel', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    <span>Pixel Client</span>
+                </a>
+                <a href="Clients/Precision%20Client.html" class="card" data-id="cli-precis">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-precis', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    <span>Precision Client</span>
+                </a>
+                <a href="Clients/Resent%20Client.html" class="card" data-id="cli-resent">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-resent', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    <span>Resent Client</span>
+                </a>
+                <a href="Clients/Tuff%20Client%20Beta.html" class="card" data-id="cli-tuff">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-tuff', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <div class="badge" style="background: #eab308; color: black;">Beta</div>
+                    <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    <span>Tuff Client Beta</span>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Texture Packs & Shaders Tab -->
+    <main id="packs" class="tab-content">
+        <div class="slider-wrapper">
+            <div class="card-container" id="packs-container">
+                <!-- Empty Placeholder for now. Add your packs here! -->
+                <div class="card" style="border: 2px dashed var(--text-secondary); background: transparent; backdrop-filter: none;">
+                    <svg class="card-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    <span>More Coming Soon</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer with Keyboard Nav Hint -->
+    <footer>
+        <p>Use <kbd style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">&larr;</kbd> and <kbd style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">&rarr;</kbd> arrow keys to slide horizontally.</p>
+    </footer>
+
+    <!-- Settings Menu Overlay -->
+    <div class="overlay" id="overlay" onclick="toggleSettings('settings-panel')"></div>
+    <div class="side-panel" id="settings-panel">
+        <div class="panel-header">
+            <h2>Customization</h2>
+            <button class="close-btn" onclick="toggleSettings('settings-panel')">&times;</button>
+        </div>
+        
+        <h3 class="settings-subheader">Layout</h3>
+        <div class="layout-toggle">
+            <button class="layout-btn" id="btn-layout-slider" onclick="setLayout('slider')">Slider View</button>
+            <button class="layout-btn" id="btn-layout-grid" onclick="setLayout('grid')">Grid View</button>
+        </div>
+
+        <h3 class="settings-subheader">Themes (19 Total)</h3>
+        <div class="theme-grid">
+            <button class="theme-btn" data-btn-theme="default" onclick="setTheme('default')">Default Slate</button>
+            <button class="theme-btn" data-btn-theme="liquid-glass" onclick="setTheme('liquid-glass')">Liquid Glass</button>
+            <button class="theme-btn" data-btn-theme="cyberpunk" onclick="setTheme('cyberpunk')">Cyberpunk</button>
+            <button class="theme-btn" data-btn-theme="sunset" onclick="setTheme('sunset')">Sunset</button>
+            <button class="theme-btn" data-btn-theme="nebula" onclick="setTheme('nebula')">Nebula</button>
+            <button class="theme-btn" data-btn-theme="monochrome" onclick="setTheme('monochrome')">Monochrome</button>
+            <button class="theme-btn" data-btn-theme="golden-hour" onclick="setTheme('golden-hour')">Golden Hour</button>
+            
+            <button class="theme-btn" data-btn-theme="windows-xp" onclick="setTheme('windows-xp')">Windows XP</button>
+            <button class="theme-btn" data-btn-theme="macos-27" onclick="setTheme('macos-27')">macOS 27</button>
+            <button class="theme-btn" data-btn-theme="minecraft" onclick="setTheme('minecraft')">Minecraft</button>
+            <button class="theme-btn" data-btn-theme="synthwave" onclick="setTheme('synthwave')">Synthwave 84</button>
+
+            <!-- New Recommended Themes -->
+            <button class="theme-btn" data-btn-theme="linux-terminal" onclick="setTheme('linux-terminal')">Linux Terminal</button>
+            <button class="theme-btn" data-btn-theme="console-ui" onclick="setTheme('console-ui')">Console UI</button>
+            <button class="theme-btn" data-btn-theme="dynamic-time" onclick="setTheme('dynamic-time')">Dynamic Time</button>
+
+            <!-- Animated Themes -->
+            <button class="theme-btn" data-btn-theme="matrix" onclick="setTheme('matrix')">Animated Matrix</button>
+            <button class="theme-btn" data-btn-theme="ocean-wave" onclick="setTheme('ocean-wave')">Ocean Wave</button>
+            <button class="theme-btn" data-btn-theme="crimson-pulse" onclick="setTheme('crimson-pulse')">Crimson Pulse</button>
+            <button class="theme-btn" data-btn-theme="aurora" onclick="setTheme('aurora')">Aurora</button>
+            
+            <button class="theme-btn" data-btn-theme="custom" onclick="setTheme('custom')">Custom Colors</button>
+        </div>
+
+        <h3 class="settings-subheader">Custom Colors</h3>
+        <div class="setting-row">
+            <label for="accent-picker">Accent Color</label>
+            <input type="color" id="accent-picker" value="#6366f1" oninput="onCustomColorChange('accent', this.value)">
+        </div>
+
+        <div class="setting-row">
+            <label for="bg-picker">Background Color</label>
+            <input type="color" id="bg-picker" value="#0f172a" oninput="onCustomColorChange('bg', this.value)">
+        </div>
+
+        <button class="tut-replay-btn" onclick="startTutorialFromSettings()">Replay Tutorial</button>
+    </div>
+
+    <!-- Changelog Modal -->
+    <div class="center-modal" id="changelog-modal">
+        <div class="panel-header" style="margin-bottom: 1rem;">
+            <h2>What's New</h2>
+            <button class="close-btn" onclick="toggleSettings('changelog-modal')">&times;</button>
+        </div>
+        <div class="changelog-content" id="changelog-content">
+            Loading...
+        </div>
+    </div>
+
+    <!-- Interactive Scripts -->
+    <script>
+        /* === Setup Tutorial Logic === */
+        function checkTutorial() {
+            if (!localStorage.getItem('eagler-tutorial-done')) {
+                setTimeout(() => {
+                    document.getElementById('tutorial-overlay').classList.add('show');
+                    setTimeout(() => { showSlide(1); }, 400);
+                }, 500);
+            }
+        }
+        function showSlide(num) {
+            document.querySelectorAll('.tutorial-slide').forEach(s => s.classList.remove('active'));
+            document.getElementById('tut-slide-' + num).classList.add('active');
+        }
+        function nextSlide(num) { showSlide(num); }
+        function finishTutorial() {
+            localStorage.setItem('eagler-tutorial-done', 'true');
+            const overlay = document.getElementById('tutorial-overlay');
+            overlay.style.opacity = '0';
+            setTimeout(() => { overlay.classList.remove('show'); overlay.style.opacity = ''; }, 800);
+        }
+        function startTutorialFromSettings() {
+            document.getElementById('settings-panel').classList.remove('active');
+            
+            const overlay = document.getElementById('tutorial-overlay');
+            overlay.classList.remove('show');
+            void overlay.offsetWidth; // Force Reflow to restart animation
+            
+            overlay.classList.add('show');
+            setTimeout(() => { showSlide(1); }, 400);
+        }
+
+        /* === Changelog (updates.txt) Logic === */
+        async function openChangelog() {
+            const modal = document.getElementById('changelog-modal');
+            const overlay = document.getElementById('overlay');
+            const content = document.getElementById('changelog-content');
+            
+            modal.classList.add('active');
+            overlay.classList.add('active');
+            
+            content.innerHTML = "<i>Fetching updates.txt from server...</i>";
+            try {
+                // This automatically looks for updates.txt in the same folder on GitHub!
+                const res = await fetch('updates.txt');
+                if (!res.ok) throw new Error();
+                const text = await res.text();
+                content.textContent = text;
+            } catch (e) {
+                content.innerHTML = "<b>No updates.txt file found.</b><br><br>To use this feature, simply create a text file named exactly <code>updates.txt</code> in the root of your GitHub repository. The site will automatically read it and display your news here!";
+            }
+        }
+
+        /* === Generic UI Logic === */
+        function openTab(evt, tabName) {
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].style.display = "none";
+                tabContents[i].classList.remove("active");
+            }
+            const tabBtns = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < tabBtns.length; i++) {
+                tabBtns[i].classList.remove("active");
+            }
+            const targetTab = document.getElementById(tabName);
+            targetTab.style.display = "block";
+            setTimeout(() => { targetTab.classList.add("active"); }, 10);
+            evt.currentTarget.classList.add("active");
+        }
+
+        function toggleSettings(modalId) {
+            const element = document.getElementById(modalId);
+            const overlay = document.getElementById('overlay');
+            
+            if (element.classList.contains('active')) {
+                element.classList.remove('active');
+                overlay.classList.remove('active');
+            } else {
+                // Close any open modals first
+                document.getElementById('settings-panel').classList.remove('active');
+                document.getElementById('changelog-modal').classList.remove('active');
+                
+                element.classList.add('active');
+                overlay.classList.add('active');
+            }
+        }
+
+        function setLayout(layoutName) {
+            document.body.setAttribute('data-layout', layoutName);
+            localStorage.setItem('eagler-layout', layoutName);
+            document.querySelectorAll('.layout-btn').forEach(btn => btn.classList.remove('active'));
+            const activeBtn = document.getElementById('btn-layout-' + layoutName);
+            if(activeBtn) activeBtn.classList.add('active');
+        }
+
+        /* === Theme Engine Engine === */
+        function setTheme(themeName) {
+            document.body.setAttribute('data-theme', themeName);
+            localStorage.setItem('eagler-theme', themeName);
+            
+            document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll(`[data-btn-theme="${themeName}"]`).forEach(btn => btn.classList.add('active'));
+
+            if(themeName !== 'custom') {
+                document.documentElement.style.removeProperty('--accent-color');
+                document.documentElement.style.removeProperty('--bg-color');
+                document.documentElement.style.removeProperty('--bg-image');
+            } else {
+                const accent = document.getElementById('accent-picker').value;
+                const bg = document.getElementById('bg-picker').value;
+                document.documentElement.style.setProperty('--accent-color', accent);
+                document.documentElement.style.setProperty('--bg-color', bg);
+            }
+
+            // Immediately trigger dynamic time calculation if selected
+            if(themeName === 'dynamic-time') { updateDynamicTime(); }
+        }
+
+        function onCustomColorChange(type, value) {
+            if (document.body.getAttribute('data-theme') !== 'custom') { setTheme('custom'); }
+            if (type === 'accent') {
+                document.documentElement.style.setProperty('--accent-color', value);
+                localStorage.setItem('eagler-accent', value);
+            } else if (type === 'bg') {
+                document.documentElement.style.setProperty('--bg-color', value);
+                localStorage.setItem('eagler-bg', value);
+            }
+        }
+
+        function updateDynamicTime() {
+            if (document.body.getAttribute('data-theme') !== 'dynamic-time') return;
+            const hour = new Date().getHours();
+            let bg1, bg2, accent;
+            if (hour >= 6 && hour < 12) { bg1 = "#87CEEB"; bg2 = "#f0f8ff"; accent = "#ff9900"; } // Morning
+            else if (hour >= 12 && hour < 17) { bg1 = "#00BFFF"; bg2 = "#1E90FF"; accent = "#ffd700"; } // Day
+            else if (hour >= 17 && hour < 20) { bg1 = "#FF4500"; bg2 = "#4B0082"; accent = "#ffb6c1"; } // Sunset
+            else { bg1 = "#0f172a"; bg2 = "#000000"; accent = "#a855f7"; } // Night
+            
+            document.documentElement.style.setProperty('--bg-color', bg2);
+            document.documentElement.style.setProperty('--accent-color', accent);
+            document.documentElement.style.setProperty('--bg-image', `linear-gradient(135deg, ${bg1}, ${bg2})`);
+        }
+        setInterval(updateDynamicTime, 60000); // Check time every minute
+
+        /* === Favorites System === */
+        let favorites = JSON.parse(localStorage.getItem('eagler-favs') || '[]');
+
+        function toggleFav(event, id, containerId) {
+            event.preventDefault(); // Stop the link from opening
+            event.stopPropagation();
+            
+            const card = document.querySelector(`[data-id="${id}"]`);
+            const idx = favorites.indexOf(id);
+            
+            if (idx > -1) {
+                favorites.splice(idx, 1);
+                card.classList.remove('favorited');
+            } else {
+                favorites.push(id);
+                card.classList.add('favorited');
+            }
+            
+            localStorage.setItem('eagler-favs', JSON.stringify(favorites));
+            sortFavorites(containerId);
+        }
+
+        function sortFavorites(containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const cards = Array.from(container.children);
+            
+            // Move favorited cards to the beginning
+            cards.forEach(card => {
+                const id = card.getAttribute('data-id');
+                if (favorites.includes(id)) {
+                    card.classList.add('favorited');
+                    container.prepend(card);
+                }
+            });
+        }
+
+        /* === Keyboard Navigation (Game Console Style) === */
+        window.addEventListener('keydown', (e) => {
+            if (document.getElementById('tutorial-overlay').classList.contains('show')) return;
+            
+            const activeTab = document.querySelector('.tab-content.active .card-container');
+            if (!activeTab || document.body.getAttribute('data-layout') === 'grid') return;
+
+            if (e.key === 'ArrowRight') {
+                activeTab.scrollBy({ left: 260, behavior: 'smooth' });
+            } else if (e.key === 'ArrowLeft') {
+                activeTab.scrollBy({ left: -260, behavior: 'smooth' });
+            }
+        });
+
+        /* Load Saved Data on Startup */
+        window.onload = function() {
+            const savedLayout = localStorage.getItem('eagler-layout') || 'slider';
+            const savedTheme = localStorage.getItem('eagler-theme') || 'default';
+            const savedAccent = localStorage.getItem('eagler-accent') || '#6366f1';
+            const savedBg = localStorage.getItem('eagler-bg') || '#0f172a';
+            
+            document.getElementById('accent-picker').value = savedAccent;
+            document.getElementById('bg-picker').value = savedBg;
+            
+            setLayout(savedLayout);
+            setTheme(savedTheme);
+            
+            // Sort favorites for all sections
+            sortFavorites('vanilla-container');
+            sortFavorites('clients-container');
+
+            checkTutorial();
+        }
+    </script>
+</body>
+</html>

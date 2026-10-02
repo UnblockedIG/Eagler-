@@ -1,0 +1,4 @@
+-New Layouts xbox 360,switch,windows,etc
+-40 themes
+-more small bugs fixes
+-new tutorial

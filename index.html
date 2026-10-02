@@ -75,7 +75,6 @@
         [data-theme="macos-27"] { --bg-color: #0b0b12; --accent-color: #007aff; --bg-image: radial-gradient(circle at 10% 20%, rgba(255, 42, 109, 0.4), transparent 40%), radial-gradient(circle at 90% 80%, rgba(5, 213, 255, 0.4), transparent 40%), #0b0b12; --glass-blur: 40px; --radius-lg: 40px; --text-primary: #fff; }
         [data-theme="synthwave"] { --bg-color: #090014; --accent-color: #00ffff; --bg-image: linear-gradient(180deg, #090014, #2b003b, #ff007f); --text-primary: #fff; }
         [data-theme="linux-terminal"] { --bg-color: #000000; --accent-color: #00ff00; --bg-image: none; background-color: #000000; --glass-blur: 0px; --card-border: #00ff00; --radius-lg: 0px; --text-primary: #00ff00; --text-secondary: #008800;}
-        [data-theme="linux-terminal"] * { font-family: 'Courier New', Courier, monospace !important; }
         [data-theme="console-ui"] { --bg-color: #12151a; --accent-color: #3b82f6; --bg-image: radial-gradient(circle at top right, #1e293b, #0f172a); --radius-lg: 32px; --radius-md: 100px; --text-primary: #fff;}
         [data-theme="vhs-glitch"] { --bg-color: #0000aa; --accent-color: #ffffff; --bg-image: repeating-linear-gradient(0deg, #0000aa, #0000aa 2px, #0000dd 2px, #0000dd 4px); --text-primary: #ffffff; --text-secondary: #aaa; --card-border: rgba(255,255,255,0.5); --radius-lg: 0px; }
         [data-theme="game-boy"] { --bg-color: #8bac0f; --accent-color: #0f380f; --bg-image: none; background-color: #8bac0f; --surface-color: #9bbc0f; --text-primary: #0f380f; --text-secondary: #306230; --card-border: #0f380f; --radius-lg: 8px; }
@@ -94,9 +93,6 @@
         [data-theme="radio-waves"] { --bg-color: #001100; --accent-color: #00ff41; --bg-image: radial-gradient(circle, transparent 20%, #00ff41 21%, transparent 22%); background-size: 100px 100px; animation: bgPulse 2s linear infinite; --text-primary: #fff; }
         [data-theme="starfield"] { --bg-color: #000; --accent-color: #fff; --bg-image: radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)), radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)), radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)); background-size: 200px 200px; animation: scrollY 20s linear infinite; --text-primary: #fff; }
         [data-theme="lava-lamp"] { --bg-color: #1a0033; --accent-color: #ff0066; --bg-image: radial-gradient(circle at 50% 50%, #ff0066 0%, #1a0033 50%); background-size: 200% 200%; animation: bgPulse 6s ease-in-out infinite alternate; --text-primary: #fff; }
-
-        /* Custom Mode */
-        [data-theme="custom"] { --bg-image: radial-gradient(circle at top center, var(--surface-color), var(--bg-color)); --text-primary: #fff; }
 
         /* Keyframes for backgrounds */
         @keyframes bgShift { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
@@ -187,7 +183,7 @@
         body[data-layout="grid"] .fav-star { position: absolute; top: 1rem; left: 1rem; }
         body[data-layout="grid"] .card:hover { transform: translateY(-10px) scale(1.02); background: var(--surface-hover, rgba(255,255,255,0.2)); box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), 0 0 25px var(--accent-glow); }
 
-        /* --- Flow Layout (New Clean Layout) --- */
+        /* --- Flow Layout (Clean Vertical List) --- */
         body[data-layout="flow"] .card-container { display: flex; flex-direction: column; align-items: center; gap: 1rem; padding: 1rem 5vw 4rem; overflow-y: auto; overflow-x: hidden; height: 70vh; scrollbar-width: none; }
         body[data-layout="flow"] .card { width: 90%; max-width: 700px; height: 100px; flex-direction: row; justify-content: flex-start; padding: 0 2rem; border-radius: var(--radius-md); }
         body[data-layout="flow"] .card-icon { width: 40px; height: 40px; margin: 0 1.5rem 0 0; }
@@ -201,7 +197,7 @@
            NINTENDO SWITCH LAYOUT
         ========================================================= */
         body[data-layout="switch"] { background: #2b2b2b !important; color: white !important; }
-        body[data-layout="switch"] header { display: none !important; }
+        body[data-layout="switch"] header, body[data-layout="switch"] footer { display: none !important; }
         
         .switch-top-bar { position: absolute; top: 0; left: 0; right: 0; padding: 2rem 4rem; justify-content: space-between; align-items: center; z-index: 20; }
         .switch-profiles { display: flex; gap: 1rem; }
@@ -231,7 +227,7 @@
            WINDOWS XP LAYOUT
         ========================================================= */
         body[data-layout="xp"] { background: url('windowsxp.jpg') no-repeat center center fixed !important; background-size: cover !important; background-color: #3a6ea5 !important; color: black !important; font-family: Tahoma, 'Segoe UI', sans-serif !important; }
-        body[data-layout="xp"] header, body[data-layout="xp"] .slider-wrapper { display: none !important; }
+        body[data-layout="xp"] header, body[data-layout="xp"] footer, body[data-layout="xp"] .slider-wrapper { display: none !important; }
         
         .xp-desktop { padding: 20px; flex-direction: column; gap: 20px; align-items: flex-start; height: 100%; position: absolute; top:0; left:0; z-index: 10;}
         .xp-desktop-icon { width: 70px; text-align: center; cursor: pointer; color: white; text-shadow: 1px 1px 2px black; font-size: 0.8rem; }
@@ -268,12 +264,10 @@
             color: #fff !important; font-family: 'Segoe UI', Tahoma, sans-serif !important; overflow: hidden !important; 
         }
         @keyframes nxeFloat { 0% { background-position: 0% 0%; } 100% { background-position: 100% 100%; } }
-        body[data-layout="xbox360"] header { display: none !important; }
+        body[data-layout="xbox360"] header, body[data-layout="xbox360"] footer { display: none !important; }
         
-        /* Auto-Playing Fullscreen Xbox Video */
-        #xbox-boot-screen { position: fixed; inset: 0; background: #000; z-index: 10000; display: none; opacity: 1; transition: opacity 0.5s ease; }
-        #xbox-boot-prompt { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; color: #fff; font-size: 1.5rem; cursor: pointer; animation: pulseText 2s infinite; font-family: sans-serif; background: rgba(0,0,0,0.8); z-index: 10001;}
-        @keyframes pulseText { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        /* Video Boot Screen */
+        #xbox-boot-screen { position: fixed; inset: 0; background: #000; z-index: 100000; display: none; opacity: 1; transition: opacity 0.8s ease; pointer-events: auto; }
         #xbox-boot-video { width: 100%; height: 100%; object-fit: cover; }
 
         .xbox-top-nav { position: absolute; top: 10%; left: 5%; flex-direction: column; gap: 10px; z-index: 20; display: flex;}
@@ -298,7 +292,7 @@
         body[data-layout="xbox360"] .slider-wrapper { height: 100%; }
         body[data-layout="xbox360"] .card-container { display: flex; gap: -30px; overflow-x: auto; padding: 0 10vw; align-items: center; height: 100%; scrollbar-width: none;}
         
-        /* Bigger Xbox Cards */
+        /* Larger 3D Xbox Cards */
         body[data-layout="xbox360"] .card { flex: 0 0 auto; width: 380px; height: 260px; background: linear-gradient(135deg, #b9f032 0%, #7db337 100%) !important; border: 2px solid #d4ff5e !important; border-radius: 4px !important; box-shadow: 5px 10px 20px rgba(0,0,0,0.4), inset 0 20px 20px rgba(255,255,255,0.3) !important; transform: perspective(1000px) rotateY(-10deg) scale(0.9); transition: all 0.3s ease; justify-content: flex-end; padding-bottom: 20px; align-items: flex-start; padding-left: 20px; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; flex-direction: column;}
         body[data-layout="xbox360"] .card:hover { transform: perspective(1000px) rotateY(0deg) scale(1.05); z-index: 10; background: linear-gradient(135deg, #c7ff3c 0%, #8cc73f 100%) !important; }
         body[data-layout="xbox360"] .card::before { display: none !important; }
@@ -308,9 +302,9 @@
 
         /* ================= OVERLAYS (Settings / Changelog) ================= */
         /* Center Footer */
-        footer { width: 100%; margin-top: auto; text-align: center; padding: 2rem; color: var(--text-secondary); font-size: 0.9rem; display: flex; justify-content: center; align-items: center;}
+        footer { width: 100%; margin-top: auto; padding: 2rem; display: flex; justify-content: center; align-items: center;}
         body[data-layout="switch"] footer, body[data-layout="xp"] footer, body[data-layout="xbox360"] footer { display: none !important; }
-        .keyboard-hint { opacity: 0.6; margin: 0 auto; text-align: center; }
+        .keyboard-hint { opacity: 0.6; color: var(--text-secondary); font-size: 0.9rem; text-align: center; }
 
         .overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 9000; }
         .overlay.active { opacity: 1; visibility: visible; }
@@ -355,8 +349,8 @@
         .pfp-option.active { border-color: var(--accent-color); opacity: 1; filter: drop-shadow(0 0 8px var(--accent-glow)); }
 
         /* ================= macOS SETUP TUTORIAL (Liquid Glass Style) ================= */
-        .tutorial-overlay { position: fixed; inset: 0; z-index: 9999; background: rgba(0, 0, 0, 0.4); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.8s ease, visibility 0.8s ease; overflow: hidden; }
-        .tutorial-overlay.show { opacity: 1; visibility: visible; }
+        .tutorial-overlay { position: fixed; inset: 0; z-index: 99999; pointer-events: none; background: rgba(0, 0, 0, 0.4); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.8s ease, visibility 0.8s ease; overflow: hidden; }
+        .tutorial-overlay.show { opacity: 1; visibility: visible; pointer-events: auto; }
         
         .tutorial-overlay::before, .tutorial-overlay::after { content: ''; position: absolute; border-radius: 50%; filter: blur(80px); z-index: -1; opacity: 0.6; }
         .tutorial-overlay::before { width: 400px; height: 400px; background: #4facfe; top: 10%; left: 20%; animation: floatOrb 10s ease-in-out infinite; }
@@ -407,7 +401,7 @@
     <!-- Anti-Flash Script: Shows the boot screen instantly if Xbox layout is loaded -->
     <script>
         if (localStorage.getItem('eagler-layout') === 'xbox360' && localStorage.getItem('eagler-tutorial-done')) {
-            document.write('<style>#xbox-boot-screen { display: flex !important; }</style>');
+            document.write('<style id="anti-flash-boot">#xbox-boot-screen { display: flex !important; }</style>');
         }
     </script>
 </head>
@@ -417,7 +411,7 @@
          XBOX BOOT SCREEN (Auto-Plays Video)
     =============================================== -->
     <div id="xbox-boot-screen">
-        <video id="xbox-boot-video" src="videoplayback.webm" muted playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
+        <video id="xbox-boot-video" src="videoplayback.webm" autoplay playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
     </div>
 
     <!-- ==============================================
@@ -544,9 +538,8 @@
         <!-- Slide 4 (Themes - ONLY if Slider/Grid/Flow) -->
         <div class="tutorial-slide" id="tut-slide-4">
             <h2 class="tut-title">Select a Vibe</h2>
-            <p class="tut-text" style="margin-bottom: 1.5rem;">Click a theme below to preview it. (Note: Themes only apply to Slider, Grid, and Flow layouts).</p>
+            <p class="tut-text" style="margin-bottom: 1.5rem;">Click a theme below to preview it.</p>
             <div class="tut-theme-grid">
-                <!-- Group 1 -->
                 <button class="theme-btn active" data-btn-theme="default" onclick="setTheme('default')">Default Slate</button>
                 <button class="theme-btn" data-btn-theme="liquid-glass" onclick="setTheme('liquid-glass')">Liquid Glass</button>
                 <button class="theme-btn" data-btn-theme="cyberpunk" onclick="setTheme('cyberpunk')">Cyberpunk</button>
@@ -803,12 +796,12 @@
         </div>
     </main>
 
-    <!-- Footer with Centered Keyboard Nav Hint -->
+    <!-- Footer -->
     <footer>
         <p class="keyboard-hint">Use <kbd style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">&larr;</kbd> and <kbd style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">&rarr;</kbd> arrow keys to slide horizontally.</p>
     </footer>
 
-    <!-- Settings Menu Side Panel -->
+    <!-- Settings Panel -->
     <div class="overlay" id="overlay" onclick="toggleSettings('settings-panel')"></div>
     <div class="side-panel" id="settings-panel">
         <div class="panel-header">
@@ -1010,6 +1003,7 @@
             overlay.style.opacity = '0';
             setTimeout(() => { overlay.classList.remove('show'); overlay.style.opacity = ''; }, 800);
             
+            // Trigger Boot screen immediately after tut if Xbox layout
             if(document.body.getAttribute('data-layout') === 'xbox360') {
                 setTimeout(() => { playXboxBoot(); }, 800);
             }
@@ -1219,39 +1213,41 @@
         setInterval(updateClocks, 1000);
 
         /* === Xbox Boot Animation Logic === */
+        function dismissBootScreen(screen) {
+            screen.style.pointerEvents = 'none';
+            screen.style.opacity = '0';
+            setTimeout(() => { 
+                screen.style.display = 'none'; 
+                let antiFlash = document.getElementById('anti-flash-boot');
+                if(antiFlash) antiFlash.remove();
+            }, 800);
+        }
+
         function playXboxBoot() {
             const bootScreen = document.getElementById('xbox-boot-screen');
             const video = document.getElementById('xbox-boot-video');
             
             bootScreen.style.display = 'flex';
             video.style.display = 'block';
+            video.currentTime = 0;
             
-            // Auto-play the video muted. It will smoothly transition out when finished.
-            video.play().catch(e => {
-                video.muted = true;
-                video.play().catch(err => {
-                    dismissBootScreen(bootScreen);
+            let playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    // Autoplay with sound failed. Mute and force visual playback.
+                    video.muted = true;
+                    video.play().catch(e => {
+                        dismissBootScreen(bootScreen);
+                    });
                 });
-            });
+            }
             
             video.onended = function() {
                 dismissBootScreen(bootScreen);
             };
         }
 
-        function dismissBootScreen(screen) {
-            screen.style.opacity = '0';
-            setTimeout(() => { screen.style.display = 'none'; }, 800);
-        }
-
         /* === Startup Sequence === */
-        document.addEventListener("DOMContentLoaded", () => {
-            // Early Boot Check
-            if (localStorage.getItem('eagler-layout') === 'xbox360' && localStorage.getItem('eagler-tutorial-done')) {
-                playXboxBoot();
-            }
-        });
-
         window.onload = function() {
             checkAndRecordPlaytime();
             renderPlaytimes();
@@ -1276,6 +1272,14 @@
             
             sortFavorites('vanilla-container');
             sortFavorites('clients-container');
+
+            // Play Xbox boot ONLY on very first load of the page if Xbox layout is active and tutorial is done
+            if (savedLayout === 'xbox360' && localStorage.getItem('eagler-tutorial-done')) {
+                playXboxBoot();
+            } else {
+                let bootScreen = document.getElementById('xbox-boot-screen');
+                bootScreen.style.display = 'none';
+            }
 
             checkTutorial();
         }

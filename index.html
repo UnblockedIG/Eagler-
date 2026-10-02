@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eagler+</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #0f172a; --accent-color: #6366f1;
+            --accent-light: color-mix(in srgb, var(--accent-color) 60%, white);
+            --accent-glow: color-mix(in srgb, var(--accent-color) 50%, transparent);
+            --surface-color: color-mix(in srgb, var(--bg-color) 80%, white);
+            --surface-hover: color-mix(in srgb, var(--bg-color) 70%, white);
+            --text-primary: #f8fafc; --text-secondary: #94a3b8;
+            --radius-lg: 28px; --radius-md: 16px;
+        }
+
+        /* ================= 40 UNIVERSAL THEME PRESETS ================= */
+        /* --- Category 1: Core / Clean --- */
+        [data-theme="default"] { --bg-color: #0f172a; --accent-color: #6366f1; --text-primary: #f8fafc; --text-secondary: #94a3b8;}
+        [data-theme="liquid-glass"] { --bg-color: #001220; --accent-color: #00e5ff; --bg-image: linear-gradient(135deg, #001220, #004d61); --glass-bg: rgba(255, 255, 255, 0.03); --glass-blur: 24px; --card-border: rgba(0, 229, 255, 0.2); --text-primary: #fff; --text-secondary: #bdf;}
+        [data-theme="monochrome"] { --bg-color: #000000; --accent-color: #ffffff; --text-secondary: #777777; --bg-image: radial-gradient(circle at center, #1a1a1a, #000000); --radius-lg: 0px; --radius-md: 0px; --text-primary: #fff;}
+        [data-theme="golden-hour"] { --bg-color: #1a0f00; --accent-color: #ffaa00; --bg-image: radial-gradient(circle at top right, #4d2e00, #0a0600); --text-primary: #fff; --text-secondary: #dca;}
+        [data-theme="sunset"] { --bg-color: #2e0219; --accent-color: #ff3366; --bg-image: linear-gradient(180deg, #2e0219, #0a0005); --text-primary: #fff; --text-secondary: #fbb;}
+        [data-theme="nebula"] { --bg-color: #05020a; --accent-color: #a855f7; --bg-image: radial-gradient(ellipse at top, #2e1065, #05020a); --text-primary: #fff; --text-secondary: #dca;}
+        [data-theme="midnight-blue"] { --bg-color: #000b18; --accent-color: #0055ff; --bg-image: linear-gradient(to bottom, #001533, #000b18); --text-primary: #fff; --text-secondary: #8ab;}
+        [data-theme="mint-frost"] { --bg-color: #e0f7fa; --accent-color: #00bfa5; --bg-image: none; background-color: #e0f7fa; --surface-color: #ffffff; --text-primary: #004d40; --text-secondary: #00796b; --card-border: rgba(0, 191, 165, 0.3); }
+        [data-theme="cherry-blossom"] { --bg-color: #fce4ec; --accent-color: #f06292; --bg-image: radial-gradient(circle, #fce4ec, #f8bbd0); --surface-color: #ffffff; --text-primary: #880e4f; --text-secondary: #c2185b; }
+        [data-theme="solarized-dark"] { --bg-color: #002b36; --accent-color: #2aa198; --bg-image: none; background-color: #002b36; --surface-color: #073642; --text-primary: #839496; --text-secondary: #586e75; --card-border: #2aa198; }
+
+        /* --- Category 2: Game Inspired --- */
+        [data-theme="minecraft"] { --bg-color: #3b2313; --accent-color: #55ff55; --bg-image: linear-gradient(180deg, #68913b 0%, #68913b 15%, #3b2313 15%, #3b2313 100%); --radius-lg: 0px; --glass-blur: 0px; --card-border: rgba(85, 255, 85, 0.4); --text-primary: #fff; }
+        [data-theme="cyberpunk"] { --bg-color: #09090b; --accent-color: #fce700; --bg-image: radial-gradient(circle at bottom right, #270030, #09090b 80%); --glass-bg: rgba(20, 20, 20, 0.85); --glass-blur: 4px; --radius-lg: 12px; --text-primary: #fff;}
+        [data-theme="portal"] { --bg-color: #dcdcdc; --accent-color: #ff9900; --bg-image: linear-gradient(90deg, #e6e6e6 50%, #dcdcdc 50%); --surface-color: #ffffff; --text-primary: #111; --text-secondary: #444; --card-border: #00aaff; --radius-lg: 8px; }
+        [data-theme="doom"] { --bg-color: #1a0000; --accent-color: #ff0000; --bg-image: radial-gradient(circle at center, #330000, #000000); --text-primary: #ffaaaa; --text-secondary: #ff5555; --card-border: #ff0000; --radius-lg: 0px; }
+        [data-theme="halo"] { --bg-color: #1b261b; --accent-color: #e5b13a; --bg-image: linear-gradient(135deg, #1b261b, #0d130d); --card-border: rgba(229, 177, 58, 0.4); --text-primary: #fff; --text-secondary: #bbb;}
+        [data-theme="animal-crossing"] { --bg-color: #e0f2f1; --accent-color: #4db6ac; --bg-image: repeating-linear-gradient(45deg, #e0f2f1, #e0f2f1 20px, #b2dfdb 20px, #b2dfdb 40px); --surface-color: #ffffff; --text-primary: #5d4037; --text-secondary: #795548; --radius-lg: 40px; }
+        [data-theme="pip-boy"] { --bg-color: #001100; --accent-color: #00ff41; --bg-image: none; background-color: #000a00; --radius-lg: 4px; --glass-blur: 0px; --card-border: #00ff41; --text-primary: #00ff41; --text-secondary: #009922;}
+        [data-theme="persona"] { --bg-color: #e60012; --accent-color: #ffffff; --bg-image: linear-gradient(135deg, #e60012 50%, #000000 50%); --text-primary: #ffffff; --text-secondary: #ccc; --card-border: #000000; --radius-lg: 0px; }
+        [data-theme="sheikah"] { --bg-color: #1e1b18; --accent-color: #4cd6e6; --bg-image: radial-gradient(circle, #2a2520, #141210); --card-border: rgba(76, 214, 230, 0.5); --radius-lg: 16px; --text-primary: #ffedcc; --text-secondary: #ccbb99;}
+        [data-theme="skyrim"] { --bg-color: #1c2331; --accent-color: #9eabb8; --bg-image: linear-gradient(to bottom, #2b3a4a, #0b0f17); --card-border: rgba(158, 171, 184, 0.4); --radius-lg: 4px; --text-primary: #e2e8f0; --text-secondary: #94a3b8;}
+
+        /* --- Category 3: Retro / Tech / OS --- */
+        [data-theme="windows-xp-theme"] { --bg-color: #003399; --accent-color: #3c8141; --bg-image: linear-gradient(180deg, #245edb 0%, #245edb 75%, #3c8141 100%); --radius-lg: 8px; --text-primary: #fff;}
+        [data-theme="macos-27"] { --bg-color: #0b0b12; --accent-color: #007aff; --bg-image: radial-gradient(circle at 10% 20%, rgba(255, 42, 109, 0.4), transparent 40%), radial-gradient(circle at 90% 80%, rgba(5, 213, 255, 0.4), transparent 40%), #0b0b12; --glass-blur: 40px; --radius-lg: 40px; --text-primary: #fff; }
+        [data-theme="synthwave"] { --bg-color: #090014; --accent-color: #00ffff; --bg-image: linear-gradient(180deg, #090014, #2b003b, #ff007f); --text-primary: #fff; }
+        [data-theme="linux-terminal"] { --bg-color: #000000; --accent-color: #00ff00; --bg-image: none; background-color: #000000; --glass-blur: 0px; --card-border: #00ff00; --radius-lg: 0px; --text-primary: #00ff00; --text-secondary: #008800;}
+        [data-theme="linux-terminal"] * { font-family: 'Courier New', Courier, monospace !important; }
+        [data-theme="console-ui"] { --bg-color: #12151a; --accent-color: #3b82f6; --bg-image: radial-gradient(circle at top right, #1e293b, #0f172a); --radius-lg: 32px; --radius-md: 100px; --text-primary: #fff;}
+        [data-theme="vhs-glitch"] { --bg-color: #0000aa; --accent-color: #ffffff; --bg-image: repeating-linear-gradient(0deg, #0000aa, #0000aa 2px, #0000dd 2px, #0000dd 4px); --text-primary: #ffffff; --text-secondary: #aaa; --card-border: rgba(255,255,255,0.5); --radius-lg: 0px; }
+        [data-theme="game-boy"] { --bg-color: #8bac0f; --accent-color: #0f380f; --bg-image: none; background-color: #8bac0f; --surface-color: #9bbc0f; --text-primary: #0f380f; --text-secondary: #306230; --card-border: #0f380f; --radius-lg: 8px; }
+        [data-theme="arcade-retro"] { --bg-color: #000000; --accent-color: #ff00ff; --bg-image: radial-gradient(circle, #220022, #000000); --card-border: #00ffff; --radius-lg: 8px; --text-primary: #fff; --text-secondary: #f0f;}
+        [data-theme="vaporwave"] { --bg-color: #ffb3ba; --accent-color: #ff99c8; --bg-image: linear-gradient(180deg, #ffb3ba, #ffdfba, #ffffba, #baffc9, #bae1ff); --surface-color: rgba(255,255,255,0.4); --text-primary: #333; --text-secondary: #666; }
+        [data-theme="e-ink"] { --bg-color: #eeeeee; --accent-color: #000000; --bg-image: none; background-color: #f4f4f4; --surface-color: #ffffff; --text-primary: #000000; --text-secondary: #555555; --card-border: #000000; --radius-lg: 4px; }
+
+        /* --- Category 4: Animated & Dynamic --- */
+        [data-theme="dynamic-time"] { --glass-blur: 16px; --radius-lg: 24px; --text-primary: #fff;}
+        [data-theme="matrix"] { --bg-color: #000000; --accent-color: #00ff41; --bg-image: linear-gradient(0deg, #000000 0%, #002209 50%, #000000 100%); background-size: 100% 400%; animation: scrollY 10s linear infinite; --glass-bg: rgba(0, 20, 0, 0.6); --glass-blur: 8px; --card-border: rgba(0, 255, 65, 0.3); --text-primary: #00ff41; --text-secondary: #008822;}
+        [data-theme="ocean-wave"] { --bg-color: #001f3f; --accent-color: #7FDBFF; --bg-image: linear-gradient(45deg, #001122, #003366, #005577, #001122); background-size: 300% 300%; animation: bgShift 12s ease-in-out infinite alternate; --text-primary: #fff;}
+        [data-theme="crimson-pulse"] { --bg-color: #110000; --accent-color: #ff1111; --bg-image: radial-gradient(circle at center, #3a0000, #050000); background-size: 150% 150%; animation: bgPulse 4s ease-in-out infinite alternate; --text-primary: #fff;}
+        [data-theme="aurora"] { --bg-color: #0d0015; --accent-color: #00f5d4; --bg-image: linear-gradient(60deg, #0d0015, #1d0033, #002b3d, #00331a); background-size: 400% 400%; animation: bgShift 16s ease infinite alternate; --radius-lg: 32px; --text-primary: #fff;}
+        [data-theme="highway-drive"] { --bg-color: #000; --accent-color: #ff007f; --bg-image: repeating-linear-gradient(180deg, #111 0px, #111 20px, #ff007f 20px, #ff007f 40px); background-size: 100% 200%; animation: scrollY 2s linear infinite; --text-primary: #fff; }
+        [data-theme="layer-shift"] { --bg-color: #111; --accent-color: #39ff14; --bg-image: linear-gradient(90deg, #111, #222, #111); background-size: 200% 100%; animation: bgShift 3s linear infinite; --text-primary: #fff; }
+        [data-theme="radio-waves"] { --bg-color: #001100; --accent-color: #00ff41; --bg-image: radial-gradient(circle, transparent 20%, #00ff41 21%, transparent 22%); background-size: 100px 100px; animation: bgPulse 2s linear infinite; --text-primary: #fff; }
+        [data-theme="starfield"] { --bg-color: #000; --accent-color: #fff; --bg-image: radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)), radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)), radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)); background-size: 200px 200px; animation: scrollY 20s linear infinite; --text-primary: #fff; }
+        [data-theme="lava-lamp"] { --bg-color: #1a0033; --accent-color: #ff0066; --bg-image: radial-gradient(circle at 50% 50%, #ff0066 0%, #1a0033 50%); background-size: 200% 200%; animation: bgPulse 6s ease-in-out infinite alternate; --text-primary: #fff; }
+
+        /* Custom Mode */
+        [data-theme="custom"] { --bg-image: radial-gradient(circle at top center, var(--surface-color), var(--bg-color)); --text-primary: #fff; }
+
+        @keyframes bgShift { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
+        @keyframes scrollY { 0% { background-position: 0% 0%; } 100% { background-position: 0% 100%; } }
+        @keyframes bgPulse { 0% { background-position: 50% 50%; background-size: 100% 100%; } 100% { background-position: 50% 50%; background-size: 150% 150%; } }
+
+        /* ================= STRICT UI ISOLATION ================= */
+        .switch-ui, .xp-ui, .xbox-ui { display: none !important; }
+        body[data-layout="switch"] .switch-ui { display: flex !important; }
+        body[data-layout="xp"] .xp-ui { display: flex !important; }
+        body[data-layout="xbox360"] .xbox-ui { display: flex !important; }
+
+        /* ================= BASE STYLES ================= */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif; min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; transition: background 0.6s ease; }
+        
+        /* Apply dynamic theme variables ONLY to Slider and Grid layouts */
+        body[data-layout="slider"], body[data-layout="grid"] { background: var(--bg-image); background-color: var(--bg-color); background-attachment: fixed; color: var(--text-primary); }
+        
+        header { padding: 3rem 5vw 1rem; text-align: center; position: relative; z-index: 10; }
+        .header-btn { position: absolute; top: 2.5rem; background: var(--glass-bg, rgba(255,255,255,0.1)); backdrop-filter: blur(var(--glass-blur, 12px)); border: 1px solid var(--card-border, rgba(255,255,255,0.1)); border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; z-index: 50; }
+        .header-btn:hover { background: var(--surface-hover, rgba(255,255,255,0.2)); border-color: var(--accent-color); box-shadow: 0 0 15px var(--accent-glow); }
+        .header-btn svg { width: 24px; height: 24px; fill: var(--text-secondary, #fff); transition: fill 0.3s ease; }
+        .header-btn:hover svg { fill: var(--accent-color); }
+        .settings-btn { right: 5vw; }
+        .changelog-btn { position: absolute; top: 2.5rem; left: 5vw; background: var(--glass-bg, rgba(255,255,255,0.1)); backdrop-filter: blur(var(--glass-blur, 12px)); border: 1px solid var(--card-border, rgba(255,255,255,0.1)); border-radius: var(--radius-md, 12px); padding: 0 1.2rem; height: 48px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; z-index: 50; color: var(--text-secondary, #fff); font-weight: 600; }
+        .changelog-btn:hover { background: var(--surface-hover, rgba(255,255,255,0.2)); border-color: var(--accent-color); color: var(--accent-color); box-shadow: 0 0 15px var(--accent-glow); transform: translateY(-2px); }
+
+        h1 { font-size: 3.5rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 2rem; background: linear-gradient(135deg, var(--accent-light, #fff), var(--accent-color, #6366f1)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .toolbar { display: flex; justify-content: center; margin-bottom: 2rem; }
+        .tab-container { display: inline-flex; background: var(--glass-bg, rgba(255,255,255,0.1)); padding: 0.5rem; border-radius: var(--radius-lg, 28px); backdrop-filter: blur(var(--glass-blur, 12px)); border: 1px solid var(--card-border, rgba(255,255,255,0.1)); transition: border-radius 0.3s ease; }
+        .tab-btn { background: transparent; color: var(--text-secondary, #fff); border: none; padding: 0.8rem 2rem; font-size: 1rem; font-weight: 600; border-radius: var(--radius-md, 16px); cursor: pointer; transition: all 0.3s ease; }
+        .tab-btn:hover { color: var(--text-primary, #fff); }
+        .tab-btn.active { background-color: var(--accent-color, #6366f1); color: white; box-shadow: 0 4px 20px var(--accent-glow); }
+
+        .tab-content { display: none; opacity: 0; transform: translateY(20px); transition: opacity 0.4s ease, transform 0.4s ease; }
+        .tab-content.active { display: block; opacity: 1; transform: translateY(0); }
+        .slider-wrapper { position: relative; width: 100%; z-index: 5;}
+        .card-container { display: flex; gap: 1.5rem; padding: 1rem 5vw 4rem; }
+        .card-container::after { content: ''; flex: 0 0 1px; padding-right: 5vw; }
+
+        /* General Card Styles for Slider/Grid */
+        .card { flex: 0 0 auto; width: 240px; height: 280px; background: var(--glass-bg, rgba(255,255,255,0.1)); backdrop-filter: blur(var(--glass-blur, 12px)); border: 1px solid var(--card-border, rgba(255,255,255,0.1)); border-radius: var(--radius-lg, 28px); text-decoration: none; color: var(--text-primary, #fff); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative; overflow: hidden; box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5); }
+        .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; border-radius: var(--radius-lg, 28px); border: 2px solid transparent; background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0)) border-box; -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0); -webkit-mask-composite: destination-out; mask-composite: exclude; transition: all 0.3s ease; }
+        .card-icon { width: 72px; height: 72px; margin-bottom: 1.5rem; fill: none; stroke: var(--text-secondary, #ccc); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transition: all 0.3s ease; }
+        .card span { font-size: 1.15rem; font-weight: 600; text-align: center; padding: 0 1rem; margin-top: 10px; z-index: 2;}
+        
+        .playtime-display { position: absolute; bottom: 15px; font-size: 0.8rem; color: var(--text-secondary, #ccc); font-weight: 500; opacity: 0.8; z-index: 2;}
+
+        .badge { position: absolute; top: 1rem; right: 1rem; background: var(--accent-color, #6366f1); color: white; font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: var(--radius-md, 16px); text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 10px var(--accent-glow); transition: border-radius 0.3s; z-index: 2;}
+        .fav-star { position: absolute; top: 1rem; left: 1rem; width: 24px; height: 24px; cursor: pointer; fill: transparent; stroke: var(--text-secondary, #fff); stroke-width: 2; transition: all 0.2s; z-index: 10; }
+        .fav-star:hover { transform: scale(1.2); }
+        .card.favorited .fav-star { fill: #fce700; stroke: #fce700; filter: drop-shadow(0 0 8px rgba(252, 231, 0, 0.5)); }
+
+        /* ================= LAYOUT ENGINE ================= */
+        /* --- Slider (Default) --- */
+        body[data-layout="slider"] .card-container { overflow-x: auto; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; scrollbar-width: none; }
+        body[data-layout="slider"] .card-container::-webkit-scrollbar { display: none; }
+        body[data-layout="slider"] .card { scroll-snap-align: center; }
+        body[data-layout="slider"] .card:hover, body[data-layout="grid"] .card:hover { transform: translateY(-10px) scale(1.02); background: var(--surface-hover, rgba(255,255,255,0.2)); box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), 0 0 25px var(--accent-glow); }
+        body[data-layout="slider"] .card:hover::before, body[data-layout="grid"] .card:hover::before { border-color: var(--accent-color); }
+        body[data-layout="slider"] .card:hover .card-icon, body[data-layout="grid"] .card:hover .card-icon { stroke: var(--accent-light); transform: scale(1.1); }
+
+        /* --- Grid --- */
+        body[data-layout="grid"] .card-container { flex-wrap: wrap; justify-content: center; overflow-x: hidden; padding-bottom: 4rem; }
+        body[data-layout="grid"] .card-container::after { display: none; }
+
+        /* --- Nintendo Switch Layout --- */
+        body[data-layout="switch"] { background: #2b2b2b !important; color: white !important; }
+        body[data-layout="switch"] header, body[data-layout="switch"] footer { display: none !important; }
+        
+        .switch-top-bar { position: absolute; top: 0; left: 0; right: 0; padding: 2rem 4rem; justify-content: space-between; align-items: center; z-index: 20; }
+        .switch-profiles { display: flex; gap: 1rem; }
+        .switch-avatar { width: 50px; height: 50px; background: #444; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid transparent; transition: 0.2s; cursor: pointer; }
+        .switch-avatar:hover { border-color: #00e6cc; }
+        .switch-avatar svg { width: 24px; fill: white; }
+        .switch-status { display: flex; gap: 1rem; align-items: center; font-size: 1.2rem; font-weight: 600; }
+        .switch-status svg { width: 24px; fill: white; }
+        
+        .switch-bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; padding: 1.5rem 4rem; gap: 2rem; justify-content: center; border-top: 1px solid #444; background: #2b2b2b; z-index: 20; }
+        .switch-app-icon { width: 60px; height: 60px; background: #444; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 3px solid transparent; transition: 0.2s; }
+        .switch-app-icon:hover { border-color: #00e6cc; transform: translateY(-5px); }
+        .switch-app-icon svg { width: 30px; fill: white; }
+        
+        body[data-layout="switch"] .tab-content { display: block !important; opacity: 1 !important; transform: none !important; }
+        body[data-layout="switch"] #clients, body[data-layout="switch"] #packs { display: none !important; }
+        
+        body[data-layout="switch"] .card-container { overflow-x: auto; scroll-behavior: smooth; padding: 8rem 4rem 10rem 4rem; align-items: center; flex-wrap: nowrap; justify-content: flex-start; scrollbar-width: none; }
+        body[data-layout="switch"] .card { width: 256px; height: 256px; border-radius: 0; background: #444 !important; border: 4px solid transparent !important; outline: none; transition: transform 0.2s, border-color 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.5) !important; backdrop-filter: none !important; }
+        body[data-layout="switch"] .card::before { display: none !important; }
+        body[data-layout="switch"] .card:hover { transform: scale(1.08); border-color: #00e6cc !important; background: #555 !important; z-index: 10; }
+        body[data-layout="switch"] .card span { font-weight: 700; color: white !important; }
+        body[data-layout="switch"] .card-icon { stroke: white !important; }
+        body[data-layout="switch"] .playtime-display, body[data-layout="switch"] .badge, body[data-layout="switch"] .fav-star { display: none !important; }
+
+        /* --- True Windows XP Layout --- */
+        body[data-layout="xp"] { background: url('windowsxp.jpg') no-repeat center center fixed !important; background-size: cover !important; background-color: #3a6ea5 !important; color: black !important; font-family: Tahoma, 'Segoe UI', sans-serif !important; }
+        body[data-layout="xp"] header, body[data-layout="xp"] footer, body[data-layout="xp"] .slider-wrapper { display: none !important; }
+        
+        .xp-desktop { padding: 20px; flex-direction: column; gap: 20px; align-items: flex-start; height: 100%; position: absolute; top:0; left:0; z-index: 10;}
+        .xp-desktop-icon { width: 70px; text-align: center; cursor: pointer; color: white; text-shadow: 1px 1px 2px black; font-size: 0.8rem; }
+        .xp-desktop-icon svg { width: 40px; height: 40px; fill: white; filter: drop-shadow(1px 1px 2px black); margin-bottom: 5px; }
+
+        .xp-taskbar { position: fixed; bottom: 0; left: 0; right: 0; height: 40px; background: linear-gradient(to bottom, #245edb 0%, #3f8cf3 9%, #245edb 18%, #245edb 92%, #1941a5 100%); z-index: 999; align-items: center; justify-content: space-between; box-shadow: 0 -2px 5px rgba(0,0,0,0.3); }
+        .xp-start-btn { background: linear-gradient(to bottom, #3c8141 0%, #4cb052 10%, #3c8141 20%, #2f6b33 100%); border: none; height: 100%; border-radius: 0 15px 15px 0; color: white; font-weight: bold; font-style: italic; font-size: 1.2rem; padding: 0 20px 0 10px; cursor: pointer; box-shadow: 2px 0 5px rgba(0,0,0,0.3); display: flex; align-items: center; gap: 8px; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
+        .xp-start-btn:active { filter: brightness(0.8); }
+        .xp-start-btn svg { width: 20px; fill: white; }
+        .xp-tray { background: #0b58e6; height: 100%; border-left: 1px solid #1941a5; display: flex; align-items: center; padding: 0 15px; color: white; font-size: 0.9rem; }
+        
+        .xp-start-menu { position: fixed; bottom: 40px; left: 0; width: 380px; height: 450px; background: white; border: 1px solid #1941a5; border-radius: 5px 5px 0 0; box-shadow: 2px 2px 10px rgba(0,0,0,0.5); z-index: 998; flex-direction: column; transform: translateY(100%); opacity: 0; transition: transform 0.2s, opacity 0.2s; visibility: hidden; }
+        .xp-start-menu.active { transform: translateY(0); opacity: 1; visibility: visible; }
+        .xp-menu-header { background: linear-gradient(to right, #1941a5, #245edb); height: 60px; border-radius: 4px 4px 0 0; display: flex; align-items: center; padding: 0 15px; color: white; font-weight: bold; font-size: 1.2rem; gap: 10px; box-shadow: inset 0 -2px 5px rgba(0,0,0,0.2); }
+        .xp-menu-header .xp-avatar { width: 40px; height: 40px; background: white; border: 2px solid rgba(255,255,255,0.5); border-radius: 3px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .xp-menu-body { display: flex; flex: 1; overflow: hidden; }
+        .xp-menu-left { flex: 1; background: white; padding: 10px; display: flex; flex-direction: column; border-right: 1px solid #d3d3d3; overflow-y: auto; }
+        .xp-menu-right { width: 140px; background: #d3e5fa; padding: 10px; display: flex; flex-direction: column; gap: 5px; border-left: 1px solid #fff; }
+        .xp-menu-footer { background: linear-gradient(to bottom, #4cb052, #2f6b33); height: 40px; display: flex; align-items: center; justify-content: flex-end; padding: 0 15px; }
+        
+        .xp-search { padding: 5px; border: 1px solid #7f9db9; width: 100%; margin-bottom: 10px; font-family: Tahoma; }
+        .xp-item { display: flex; align-items: center; gap: 10px; padding: 8px 5px; cursor: pointer; text-decoration: none; color: black; font-size: 0.9rem; }
+        .xp-item:hover { background: #245edb; color: white; }
+        .xp-item svg { width: 24px; height: 24px; stroke: currentColor; fill: none; }
+        .xp-item.right-item { font-size: 0.85rem; color: #001254; font-weight: 600; }
+        .xp-item.right-item:hover { background: #1941a5; color: white; }
+
+        /* --- Xbox 360 (NXE) Layout --- */
+        body[data-layout="xbox360"] { background: radial-gradient(circle at center top, #91c73f 0%, #4b6623 40%, #768a86 60%, #35383c 100%) !important; color: #fff !important; font-family: 'Segoe UI', Tahoma, sans-serif !important; overflow: hidden !important; }
+        body[data-layout="xbox360"]::before { content: ''; position: absolute; inset: 0; pointer-events: none; z-index: -1; background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 10%), radial-gradient(circle at 80% 60%, rgba(255,255,255,0.05) 0%, transparent 15%); background-size: 200px 200px; }
+        body[data-layout="xbox360"] header, body[data-layout="xbox360"] footer { display: none !important; }
+        
+        .xbox-top-nav { position: absolute; top: 10%; left: 5%; flex-direction: column; gap: 10px; z-index: 20; display: flex;}
+        .xbox-tab { font-size: 1.5rem; color: rgba(255,255,255,0.5); cursor: pointer; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); transition: 0.2s;}
+        .xbox-tab:hover { color: rgba(255,255,255,0.8); }
+        .xbox-tab.active { font-size: 2rem; color: #fff; font-weight: bold; }
+        
+        .xbox-profile { position: absolute; top: 5%; right: 5%; display: flex; align-items: center; gap: 15px; z-index: 20;}
+        .xbox-profile-text { text-align: right; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
+        .xbox-profile-text .name { font-size: 1.5rem; font-weight: bold; }
+        .xbox-avatar { width: 64px; height: 64px; background: #ddd; border: 2px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; overflow: hidden;}
+        
+        .xbox-footer { position: absolute; bottom: 5%; left: 5%; right: 5%; display: flex; justify-content: space-between; align-items: flex-end; z-index: 20;}
+        .xbox-btn { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; color: #000; font-weight: bold; margin-right: 5px; font-size: 0.9rem;}
+        .a-btn { background: #3fca28; }
+        .y-btn { background: #e6b127; cursor: pointer;}
+        .xbox-guide-btn { width: 60px; height: 60px; background: radial-gradient(circle, #e0e0e0, #888); border-radius: 50%; border: 4px solid #ccc; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center;}
+        .xbox-guide-btn::after { content: 'X'; font-family: sans-serif; color: #8bc34a; font-size: 2rem; font-weight: 900; font-style: italic;}
+        
+        body[data-layout="xbox360"] .tab-content { position: absolute !important; top: 35% !important; left: 0 !important; right: 0 !important; height: 400px !important; display: none; opacity: 0; transition: opacity 0.3s ease; }
+        body[data-layout="xbox360"] .tab-content.active { display: block !important; opacity: 1 !important; transform: none !important;}
+        body[data-layout="xbox360"] .slider-wrapper { height: 100%; }
+        body[data-layout="xbox360"] .card-container { display: flex; gap: -20px; overflow-x: auto; padding: 0 10vw; align-items: center; height: 100%; scrollbar-width: none;}
+        body[data-layout="xbox360"] .card { flex: 0 0 auto; width: 300px; height: 220px; background: linear-gradient(135deg, #b9f032 0%, #7db337 100%) !important; border: 2px solid #d4ff5e !important; border-radius: 4px !important; box-shadow: 5px 10px 20px rgba(0,0,0,0.4), inset 0 20px 20px rgba(255,255,255,0.3) !important; transform: perspective(800px) rotateY(-15deg) scale(0.9); transition: all 0.3s ease; justify-content: flex-end; padding-bottom: 20px; align-items: flex-start; padding-left: 20px; backdrop-filter: none !important;}
+        body[data-layout="xbox360"] .card:hover { transform: perspective(800px) rotateY(0deg) scale(1.05); z-index: 10; background: linear-gradient(135deg, #c7ff3c 0%, #8cc73f 100%) !important; }
+        body[data-layout="xbox360"] .card::before { display: none !important; }
+        body[data-layout="xbox360"] .card span { font-size: 1.5rem; font-weight: normal; color: #fff !important; text-shadow: 1px 1px 2px rgba(0,0,0,0.4); text-align: left; padding: 0;}
+        body[data-layout="xbox360"] .card-icon { position: absolute; top: 20%; left: 50%; transform: translateX(-50%); width: 100px; height: 100px; stroke: rgba(255,255,255,0.8) !important; }
+        body[data-layout="xbox360"] .badge, body[data-layout="xbox360"] .fav-star, body[data-layout="xbox360"] .playtime-display { display: none !important; }
+
+        /* ================= OVERLAYS ================= */
+        footer { margin-top: auto; text-align: center; padding: 2rem; color: var(--text-secondary); font-size: 0.9rem; }
+        
+        .overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 9000; }
+        .overlay.active { opacity: 1; visibility: visible; }
+        
+        .side-panel { position: fixed; top: 0; right: -420px; width: 100%; max-width: 420px; height: 100vh; background: var(--glass-bg, rgba(0,0,0,0.8)); backdrop-filter: blur(30px); border-left: 1px solid var(--card-border, #555); z-index: 9001; transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1); display: flex; flex-direction: column; padding: 2rem; box-shadow: -10px 0 30px rgba(0,0,0,0.5); overflow-y: auto; color: var(--text-primary, #fff); }
+        .side-panel.active { right: 0; }
+        
+        .center-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -45%) scale(0.95); width: 90%; max-width: 600px; max-height: 80vh; background: var(--glass-bg, #111); backdrop-filter: blur(30px); border: 1px solid var(--card-border, #555); border-radius: var(--radius-lg, 12px); z-index: 9001; display: flex; flex-direction: column; padding: 2rem; box-shadow: 0 20px 50px rgba(0,0,0,0.5); opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); color: var(--text-primary, #fff); }
+        .center-modal.active { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
+        .changelog-content { overflow-y: auto; line-height: 1.6; white-space: pre-wrap; font-family: monospace; font-size: 0.95rem; background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: var(--radius-md, 8px); border: 1px solid rgba(255,255,255,0.05); }
+
+        .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .panel-header h2 { font-size: 1.5rem; font-weight: 600; color: inherit; }
+        .close-btn { background: none; border: none; color: inherit; font-size: 2rem; line-height: 1; cursor: pointer; transition: 0.2s; opacity: 0.7; }
+        .close-btn:hover { opacity: 1; }
+        
+        .settings-subheader { font-size: 0.85rem; color: inherit; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; font-weight: 700; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;}
+        
+        .layout-toggle { display: flex; flex-wrap: wrap; gap: 0.5rem; background: rgba(0,0,0,0.3); border-radius: 12px; padding: 0.5rem; margin-bottom: 2.5rem; border: 1px solid rgba(255,255,255,0.05); }
+        .layout-btn { flex: 1 1 30%; background: transparent; border: none; color: inherit; opacity: 0.8; padding: 0.6rem; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
+        .layout-btn.active { background: var(--accent-color, #6366f1); color: white; opacity: 1; }
+
+        .theme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 2.5rem; }
+        .theme-btn { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); color: inherit; padding: 0.8rem; border-radius: 8px; cursor: pointer; transition: all 0.2s; font-weight: 500; text-align: center; }
+        .theme-btn:hover { background: rgba(255,255,255,0.1); }
+        .theme-btn.active { border-color: var(--accent-color, #6366f1); background: color-mix(in srgb, var(--accent-color, #6366f1) 30%, transparent); box-shadow: 0 0 15px var(--accent-glow, transparent); }
+        
+        .setting-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; background: rgba(0,0,0,0.2); padding: 1rem 1.5rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
+        input[type="color"] { -webkit-appearance: none; border: none; width: 40px; height: 40px; border-radius: 50%; overflow: hidden; cursor: pointer; padding: 0; background: none; }
+        input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+        input[type="color"]::-webkit-color-swatch { border: 2px solid rgba(255, 255, 255, 0.2); border-radius: 50%; box-shadow: inset 0 0 4px rgba(0,0,0,0.3); }
+        
+        .tut-replay-btn { width: 100%; margin-top: 1rem; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: inherit; padding: 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
+        .tut-replay-btn:hover { background: rgba(255,255,255,0.05); }
+
+        /* Xbox 360 Settings Inputs */
+        .xbox-input { width: 100%; padding: 10px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); color: white; border-radius: 8px; font-family: inherit; font-size: 1rem; margin-bottom: 1rem; outline: none;}
+        .xbox-input:focus { border-color: var(--accent-color); }
+        .pfp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1rem; }
+        .pfp-option { width: 100%; aspect-ratio: 1; border-radius: 8px; cursor: pointer; border: 2px solid transparent; opacity: 0.6; transition: 0.2s; object-fit: cover; background: #333;}
+        .pfp-option:hover { opacity: 0.8; }
+        .pfp-option.active { border-color: var(--accent-color); opacity: 1; filter: drop-shadow(0 0 8px var(--accent-glow)); }
+
+        /* ================= macOS SETUP TUTORIAL ================= */
+        .tutorial-overlay { position: fixed; inset: 0; z-index: 9999; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(60px); -webkit-backdrop-filter: blur(60px); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.8s ease, visibility 0.8s ease; }
+        .tutorial-overlay.show { opacity: 1; visibility: visible; }
+        .tutorial-slide { position: absolute; max-width: 550px; width: 90%; text-align: center; opacity: 0; transform: translateY(30px) scale(0.95); pointer-events: none; transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1); color: white; }
+        .tutorial-slide.active { opacity: 1; transform: translateY(0) scale(1); pointer-events: all; }
+        
+        .tut-title { font-size: 2.5rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 1rem; }
+        .tut-text { font-size: 1.15rem; color: #d1d5db; line-height: 1.6; margin-bottom: 2.5rem; }
+        .tut-icon { width: 100px; height: 100px; margin: 0 auto 2rem; stroke: white; stroke-width: 1; fill: none; display: block; }
+        
+        .tut-btn-group { display: flex; justify-content: center; gap: 1rem; margin-top: 2rem;}
+        .tut-btn { background: white; color: black; border: none; padding: 0.9rem 2.5rem; font-size: 1.05rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+        .tut-btn:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(255,255,255,0.2); }
+        .tut-btn-secondary { background: rgba(255, 255, 255, 0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 0.9rem 2.5rem; font-size: 1.05rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+        .tut-btn-secondary:hover { background: rgba(255, 255, 255, 0.2); }
+        .tut-btn-start { background: #007aff; color: white; }
+        .tut-btn-start:hover { box-shadow: 0 10px 25px rgba(0, 122, 255, 0.4); transform: scale(1.05); }
+
+        .cursive-wrapper { margin-bottom: 1.5rem; display: flex; justify-content: center; }
+        .cursive-welcome { font-family: 'Pacifico', cursive; font-size: 5.5rem; color: rgba(255,255,255,0.05); position: relative; display: inline-block; padding: 10px 30px; letter-spacing: 2px; }
+        .cursive-welcome::before { content: 'welcome'; position: absolute; left: 30px; top: 10px; color: white; white-space: nowrap; overflow: hidden; width: 0; filter: drop-shadow(0 0 15px rgba(255,255,255,0.5)); }
+        .tutorial-overlay.show .cursive-welcome::before { animation: writeText 2.5s cubic-bezier(0.2, 0.8, 0.2, 1) 0.5s forwards; }
+        @keyframes writeText { 0% { width: 0; } 100% { width: 100%; } }
+
+        .fade-in-delay { opacity: 0; animation: fadeIn 1s 2.8s ease forwards; }
+        .fade-in-delay-btn { opacity: 0; transform: translateY(10px); animation: fadeUp 1s 3.2s ease forwards; }
+        @keyframes fadeIn { to { opacity: 1; } }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+        .tut-theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; max-height: 35vh; overflow-y: auto; padding-right: 10px; margin: 0 auto; text-align: left; }
+        .tut-theme-grid::-webkit-scrollbar { width: 6px; }
+        .tut-theme-grid::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 10px; }
+    </style>
+</head>
+<body data-theme="default" data-layout="slider">
+
+    <!-- ==============================================
+         OS SPECIFIC OVERLAYS (STRICTLY ISOLATED)
+    =============================================== -->
+    
+    <!-- Nintendo Switch UI -->
+    <div class="switch-ui switch-top-bar">
+        <div class="switch-profiles">
+            <div class="switch-avatar"><img class="os-pfp-img" src="pic1.jpeg" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><svg viewBox="0 0 24 24" style="display:none;"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-7 8-7s8 3 8 7"/></svg></div>
+        </div>
+        <div class="switch-status">
+            <span class="clock-display">12:00 PM</span>
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v2h-2zm0-10h2v8h-2z"/></svg>
+        </div>
+    </div>
+    <div class="switch-ui switch-bottom-bar">
+        <div class="switch-app-icon" title="Minecoin Shop" onclick="alert('Minecoin Shop is currently offline!')"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+        <div class="switch-app-icon" title="Album" onclick="alert('Album is empty.')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
+        <div class="switch-app-icon" title="System Settings" onclick="toggleSettings('settings-panel')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+    </div>
+
+    <!-- Windows XP UI -->
+    <div class="xp-ui xp-desktop">
+        <div class="xp-desktop-icon" onclick="alert('Recycle Bin is empty')"><svg viewBox="0 0 24 24"><path d="M3 6h18m-2 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg><br>Recycle Bin</div>
+        <div class="xp-desktop-icon" onclick="toggleSettings('settings-panel')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><br>Control Panel</div>
+    </div>
+    
+    <div class="xp-ui xp-start-menu" id="xp-start-menu">
+        <div class="xp-menu-header">
+            <div class="xp-avatar"><img class="os-pfp-img" src="pic1.jpeg" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><svg viewBox="0 0 24 24" style="width:24px; fill:#1941a5; display:none;"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+            <span class="os-gamertag-display">Player1</span>
+        </div>
+        <div class="xp-menu-body">
+            <div class="xp-menu-left">
+                <input type="text" class="xp-search" id="xp-search" placeholder="Search programs..." onkeyup="filterXPMenu()">
+                <div id="xp-programs-list"></div>
+            </div>
+            <div class="xp-menu-right">
+                <div class="xp-item right-item" onclick="alert('My Computer')">My Computer</div>
+                <div class="xp-item right-item" onclick="alert('My Documents')">My Documents</div>
+                <div class="xp-item right-item" onclick="toggleSettings('settings-panel')">Control Panel</div>
+                <div class="xp-item right-item" onclick="openChangelog()">Help and Support</div>
+            </div>
+        </div>
+        <div class="xp-menu-footer"></div>
+    </div>
+
+    <div class="xp-ui xp-taskbar">
+        <button class="xp-start-btn" onclick="toggleXPMenu()">
+            <svg viewBox="0 0 174 174"><path fill="#fff" d="M0 25.1l61.6-8.5v65.6H0V25.1zm66.7-9.2L173.8 0v81.8H66.7V15.9zm0 71h107.1v82.2l-107.1-15V86.9zM0 86.9h61.6v61.4L0 139.8V86.9z"/></svg>
+            start
+        </button>
+        <div class="xp-tray clock-display">12:00 PM</div>
+    </div>
+
+    <!-- Xbox 360 UI -->
+    <div class="xbox-ui xbox-top-nav">
+        <div class="xbox-tab active" data-target="vanilla" onclick="openTab(event, 'vanilla')">Vanilla Games</div>
+        <div class="xbox-tab" data-target="clients" onclick="openTab(event, 'clients')">Custom Clients</div>
+        <div class="xbox-tab" data-target="packs" onclick="openTab(event, 'packs')">Packs & Shaders</div>
+    </div>
+    
+    <div class="xbox-ui xbox-profile">
+        <div class="xbox-profile-text">
+            <div class="name os-gamertag-display">Player1</div>
+            <div class="gs playtime-total">0h 0m <span style="font-family: sans-serif; font-size:1rem;">G</span></div>
+        </div>
+        <div class="xbox-avatar">
+            <img class="os-pfp-img" src="pic1.jpeg" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <svg viewBox="0 0 24 24" style="width: 40px; fill: #aaa; display:none;"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        </div>
+    </div>
+
+    <div class="xbox-ui xbox-footer">
+        <div>
+            <span class="xbox-btn a-btn">A</span> Select &nbsp;&nbsp;&nbsp;
+            <span class="xbox-btn y-btn" onclick="toggleSettings('settings-panel')">Y</span> <span style="cursor:pointer;" onclick="toggleSettings('settings-panel')">System Settings</span>
+        </div>
+        <div class="xbox-guide-btn" onclick="toggleSettings('settings-panel')"></div>
+    </div>
+
+    <!-- ==============================================
+         SETUP TUTORIAL (macOS Style)
+    =============================================== -->
+    <div class="tutorial-overlay" id="tutorial-overlay">
+        <!-- Slide 1 -->
+        <div class="tutorial-slide" id="tut-slide-1">
+            <div class="cursive-wrapper"><span class="cursive-welcome">welcome</span></div>
+            <p class="tut-text fade-in-delay">Welcome to eagler+. Let's take a quick tour.</p>
+            <button class="tut-btn fade-in-delay-btn" onclick="nextSlide(2)">Continue</button>
+        </div>
+        
+        <!-- Slide 2 -->
+        <div class="tutorial-slide" id="tut-slide-2">
+            <svg class="tut-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+            <h2 class="tut-title">Choose Your Experience</h2>
+            <p class="tut-text">Toggle effortlessly between Vanilla builds, Custom Clients, and Texture Packs using the top navigation bar. We now track your <b>Playtime</b> locally!</p>
+            <div class="tut-btn-group">
+                <button class="tut-btn-secondary" onclick="nextSlide(1)">Back</button>
+                <button class="tut-btn" onclick="nextSlide(3)">Next</button>
+            </div>
+        </div>
+
+        <!-- Slide 3 (Layout Selection) -->
+        <div class="tutorial-slide" id="tut-slide-3">
+            <svg class="tut-icon" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><path d="M22 6l-10 7L2 6"></path></svg>
+            <h2 class="tut-title">Pick a Layout</h2>
+            <p class="tut-text">Choose how you want to navigate the hub. You can change this later.</p>
+            <div class="layout-toggle" style="margin-bottom: 2rem;">
+                <button class="layout-btn active" id="btn-layout-slider" onclick="setLayout('slider')">Slider</button>
+                <button class="layout-btn" id="btn-layout-grid" onclick="setLayout('grid')">Grid</button>
+                <button class="layout-btn" id="btn-layout-switch" onclick="setLayout('switch')">Switch UI</button>
+                <button class="layout-btn" id="btn-layout-xp" onclick="setLayout('xp')">Windows XP</button>
+                <button class="layout-btn" id="btn-layout-xbox360" onclick="setLayout('xbox360')">Xbox 360</button>
+            </div>
+            <div class="tut-btn-group">
+                <button class="tut-btn-secondary" onclick="nextSlide(2)">Back</button>
+                <button class="tut-btn" onclick="handleLayoutNext()">Next</button>
+            </div>
+        </div>
+
+        <!-- Slide 4 (Themes - ONLY if Slider/Grid) -->
+        <div class="tutorial-slide" id="tut-slide-4">
+            <h2 class="tut-title">Select a Vibe</h2>
+            <p class="tut-text" style="margin-bottom: 1.5rem;">Click a theme below to preview it.</p>
+            <div class="tut-theme-grid">
+                <!-- Group 1 -->
+                <button class="theme-btn active" data-btn-theme="default" onclick="setTheme('default')">Default Slate</button>
+                <button class="theme-btn" data-btn-theme="liquid-glass" onclick="setTheme('liquid-glass')">Liquid Glass</button>
+                <button class="theme-btn" data-btn-theme="monochrome" onclick="setTheme('monochrome')">Monochrome</button>
+                <button class="theme-btn" data-btn-theme="golden-hour" onclick="setTheme('golden-hour')">Golden Hour</button>
+                <button class="theme-btn" data-btn-theme="sunset" onclick="setTheme('sunset')">Sunset</button>
+                <button class="theme-btn" data-btn-theme="nebula" onclick="setTheme('nebula')">Nebula</button>
+                <button class="theme-btn" data-btn-theme="midnight-blue" onclick="setTheme('midnight-blue')">Midnight Blue</button>
+                <button class="theme-btn" data-btn-theme="mint-frost" onclick="setTheme('mint-frost')">Mint Frost</button>
+                <button class="theme-btn" data-btn-theme="cherry-blossom" onclick="setTheme('cherry-blossom')">Cherry Blossom</button>
+                <button class="theme-btn" data-btn-theme="solarized-dark" onclick="setTheme('solarized-dark')">Solarized Dark</button>
+                <!-- Group 2 -->
+                <button class="theme-btn" data-btn-theme="minecraft" onclick="setTheme('minecraft')">Minecraft Block</button>
+                <button class="theme-btn" data-btn-theme="cyberpunk" onclick="setTheme('cyberpunk')">Cyberpunk</button>
+                <button class="theme-btn" data-btn-theme="portal" onclick="setTheme('portal')">Aperture Lab</button>
+                <button class="theme-btn" data-btn-theme="doom" onclick="setTheme('doom')">Doom Mars</button>
+                <button class="theme-btn" data-btn-theme="halo" onclick="setTheme('halo')">Spartan Green</button>
+                <button class="theme-btn" data-btn-theme="animal-crossing" onclick="setTheme('animal-crossing')">Island Pastel</button>
+                <button class="theme-btn" data-btn-theme="pip-boy" onclick="setTheme('pip-boy')">Pip-Boy Rads</button>
+                <button class="theme-btn" data-btn-theme="persona" onclick="setTheme('persona')">Phantom Thief</button>
+                <button class="theme-btn" data-btn-theme="sheikah" onclick="setTheme('sheikah')">Sheikah Slate</button>
+                <button class="theme-btn" data-btn-theme="skyrim" onclick="setTheme('skyrim')">Skyrim Frost</button>
+                <!-- Group 3 -->
+                <button class="theme-btn" data-btn-theme="windows-xp-theme" onclick="setTheme('windows-xp-theme')">Windows XP Mode</button>
+                <button class="theme-btn" data-btn-theme="macos-27" onclick="setTheme('macos-27')">macOS 27</button>
+                <button class="theme-btn" data-btn-theme="synthwave" onclick="setTheme('synthwave')">Synthwave 84</button>
+                <button class="theme-btn" data-btn-theme="linux-terminal" onclick="setTheme('linux-terminal')">Linux Terminal</button>
+                <button class="theme-btn" data-btn-theme="console-ui" onclick="setTheme('console-ui')">Console UI</button>
+                <button class="theme-btn" data-btn-theme="vhs-glitch" onclick="setTheme('vhs-glitch')">VHS Glitch</button>
+                <button class="theme-btn" data-btn-theme="game-boy" onclick="setTheme('game-boy')">Classic Handheld</button>
+                <button class="theme-btn" data-btn-theme="arcade-retro" onclick="setTheme('arcade-retro')">Arcade Neon</button>
+                <button class="theme-btn" data-btn-theme="vaporwave" onclick="setTheme('vaporwave')">Vaporwave</button>
+                <button class="theme-btn" data-btn-theme="e-ink" onclick="setTheme('e-ink')">E-Ink Reader</button>
+                <!-- Group 4 -->
+                <button class="theme-btn" data-btn-theme="matrix" onclick="setTheme('matrix')">Animated Matrix</button>
+                <button class="theme-btn" data-btn-theme="ocean-wave" onclick="setTheme('ocean-wave')">Ocean Wave</button>
+                <button class="theme-btn" data-btn-theme="crimson-pulse" onclick="setTheme('crimson-pulse')">Crimson Pulse</button>
+                <button class="theme-btn" data-btn-theme="aurora" onclick="setTheme('aurora')">Aurora</button>
+                <button class="theme-btn" data-btn-theme="highway-drive" onclick="setTheme('highway-drive')">Highway Drive</button>
+                <button class="theme-btn" data-btn-theme="layer-shift" onclick="setTheme('layer-shift')">Layer Shift</button>
+                <button class="theme-btn" data-btn-theme="radio-waves" onclick="setTheme('radio-waves')">Radio Waves</button>
+                <button class="theme-btn" data-btn-theme="starfield" onclick="setTheme('starfield')">Starfield</button>
+                <button class="theme-btn" data-btn-theme="lava-lamp" onclick="setTheme('lava-lamp')">Lava Lamp</button>
+                <button class="theme-btn" data-btn-theme="dynamic-time" onclick="setTheme('dynamic-time')">Dynamic Time</button>
+            </div>
+            <div class="tut-btn-group">
+                <button class="tut-btn-secondary" onclick="nextSlide(3)">Back</button>
+                <button class="tut-btn" onclick="nextSlide(7)">Continue</button>
+            </div>
+        </div>
+
+        <!-- Slide 5 (Xbox Gamertag - ONLY if Xbox) -->
+        <div class="tutorial-slide" id="tut-slide-5">
+            <h2 class="tut-title">Create Gamertag</h2>
+            <p class="tut-text">Choose a name for your Xbox 360 profile.</p>
+            <input type="text" id="tut-gamertag-input" class="xbox-input" placeholder="Player1" style="max-width: 300px; text-align: center; margin: 0 auto 2rem; display: block;">
+            <div class="tut-btn-group">
+                <button class="tut-btn-secondary" onclick="nextSlide(3)">Back</button>
+                <button class="tut-btn" onclick="saveGamertagAndNext()">Next</button>
+            </div>
+        </div>
+
+        <!-- Slide 6 (Xbox Pfp - ONLY if Xbox) -->
+        <div class="tutorial-slide" id="tut-slide-6">
+            <h2 class="tut-title">Choose Gamerpic</h2>
+            <p class="tut-text">Select your avatar.</p>
+            <div class="pfp-grid" style="max-width: 300px; margin: 0 auto 2rem;">
+                <img src="pic1.jpeg" class="pfp-option active" data-pic="pic1.jpeg" onclick="selectTutPfp('pic1.jpeg', this)" onerror="this.style.opacity='0.2'">
+                <img src="pic2.jpeg" class="pfp-option" data-pic="pic2.jpeg" onclick="selectTutPfp('pic2.jpeg', this)" onerror="this.style.opacity='0.2'">
+                <img src="pic3.jpeg" class="pfp-option" data-pic="pic3.jpeg" onclick="selectTutPfp('pic3.jpeg', this)" onerror="this.style.opacity='0.2'">
+                <img src="pic4.jpeg" class="pfp-option" data-pic="pic4.jpeg" onclick="selectTutPfp('pic4.jpeg', this)" onerror="this.style.opacity='0.2'">
+                <img src="pic5.jpeg" class="pfp-option" data-pic="pic5.jpeg" onclick="selectTutPfp('pic5.jpeg', this)" onerror="this.style.opacity='0.2'">
+                <img src="pic6.jpeg" class="pfp-option" data-pic="pic6.jpeg" onclick="selectTutPfp('pic6.jpeg', this)" onerror="this.style.opacity='0.2'">
+            </div>
+            <div class="tut-btn-group">
+                <button class="tut-btn-secondary" onclick="nextSlide(5)">Back</button>
+                <button class="tut-btn" onclick="savePfpAndNext()">Continue</button>
+            </div>
+        </div>
+
+        <!-- Slide 7 (Finish) -->
+        <div class="tutorial-slide" id="tut-slide-7">
+            <h2 class="tut-title" style="font-size: 3.5rem;">You're all set.</h2>
+            <p class="tut-text">Click the star on any card to add it to your favorites.</p>
+            <div class="tut-btn-group">
+                <button class="tut-btn-secondary" onclick="backFromFinish()">Back</button>
+                <button class="tut-btn tut-btn-start" onclick="finishTutorial()">Get Started</button>
+            </div>
+        </div>
+    </div>
+    <!-- End Tutorial -->
+
+    <!-- ==============================================
+         MAIN APP CONTENT (Standard Header)
+    =============================================== -->
+    <header>
+        <button class="changelog-btn" onclick="openChangelog()">What's New</button>
+        <button class="header-btn settings-btn" onclick="toggleSettings('settings-panel')" title="Settings">
+            <svg viewBox="0 0 24 24"><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+        </button>
+
+        <h1>eagler+</h1>
+        
+        <div class="toolbar">
+            <div class="tab-container">
+                <button class="tab-btn active" onclick="openTab(event, 'vanilla')">Vanilla</button>
+                <button class="tab-btn" onclick="openTab(event, 'clients')">Clients</button>
+                <button class="tab-btn" onclick="openTab(event, 'packs')">Packs & Shaders</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Vanilla Builds Tab -->
+    <main id="vanilla" class="tab-content active">
+        <div class="slider-wrapper">
+            <div class="card-container" id="vanilla-container">
+                
+                <a href="Vanilla/26.2-wasm.html" class="card game-card" data-id="van-26.2" data-title="Version 26.2">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'van-26.2', 'vanilla-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <div class="badge">Latest</div>
+                    <svg class="card-icon" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>
+                    <span>Version 26.2</span>
+                    <div class="playtime-display" id="pt-van-26.2"></div>
+                </a>
+
+                <a href="Vanilla/26.1.2-wasm.html" class="card game-card" data-id="van-26.1.2" data-title="Version 26.1.2">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'van-26.1.2', 'vanilla-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <div class="badge" style="background: #eab308; color: black;">Beta</div>
+                    <svg class="card-icon" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                    <span>Version 26.1.2</span>
+                    <div class="playtime-display" id="pt-van-26.1.2"></div>
+                </a>
+                
+                <a href="Vanilla/1.21.11-wasm.html" class="card game-card" data-id="van-1.21" data-title="Version 1.21.11">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'van-1.21', 'vanilla-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+                    <span>Version 1.21.11</span>
+                    <div class="playtime-display" id="pt-van-1.21"></div>
+                </a>
+                
+                <a href="Vanilla/1.20.6-wasm.html" class="card game-card" data-id="van-1.20" data-title="Version 1.20.6">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'van-1.20', 'vanilla-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><polygon points="1 6 8 2 16 6 23 2 23 18 16 22 8 18 1 22 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+                    <span>Version 1.20.6</span>
+                    <div class="playtime-display" id="pt-van-1.20"></div>
+                </a>
+                
+                <a href="Vanilla/1.16.5-wasm.html" class="card game-card" data-id="van-1.16" data-title="Version 1.16.5">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'van-1.16', 'vanilla-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"></path></svg>
+                    <span>Version 1.16.5</span>
+                    <div class="playtime-display" id="pt-van-1.16"></div>
+                </a>
+                
+                <a href="Vanilla/1.14.4-wasm.html" class="card game-card" data-id="van-1.14" data-title="Version 1.14.4">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'van-1.14', 'vanilla-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    <span>Version 1.14.4</span>
+                    <div class="playtime-display" id="pt-van-1.14"></div>
+                </a>
+                
+                <a href="Vanilla/1.13.2-wasm.html" class="card game-card" data-id="van-1.13" data-title="Version 1.13.2">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'van-1.13', 'vanilla-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
+                    <span>Version 1.13.2</span>
+                    <div class="playtime-display" id="pt-van-1.13"></div>
+                </a>
+                
+                <a href="Vanilla/1.12.2-wasm.html" class="card game-card" data-id="van-1.12" data-title="Version 1.12.2">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'van-1.12', 'vanilla-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c1.38 0 2.5-1.12 2.5-2.5 0-.61-.23-1.21-.64-1.67-.08-.09-.13-.21-.13-.33 0-.28.22-.5.5-.5H16c3.31 0 6-2.69 6-6 0-4.96-4.49-9-10-9z"/></svg>
+                    <span>Version 1.12.2</span>
+                    <div class="playtime-display" id="pt-van-1.12"></div>
+                </a>
+                
+                <a href="Vanilla/1.8.8-wasm.html" class="card game-card" data-id="van-1.8" data-title="Version 1.8.8">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'van-1.8', 'vanilla-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><path d="M14.5 17.5L3 6V3h3l11.5 11.5"></path><path d="M13 19l6-6"></path><path d="M16 16l4 4"></path><path d="M19 21l2-2"></path></svg>
+                    <span>Version 1.8.8</span>
+                    <div class="playtime-display" id="pt-van-1.8"></div>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Custom Clients Tab -->
+    <main id="clients" class="tab-content">
+        <div class="slider-wrapper">
+            <div class="card-container" id="clients-container">
+                <a href="Clients/Aero%20Client.html" class="card game-card" data-id="cli-aero" data-title="Aero Client">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-aero', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    <span>Aero Client</span>
+                    <div class="playtime-display" id="pt-cli-aero"></div>
+                </a>
+                <a href="Clients/Astra%20Client.html" class="card game-card" data-id="cli-astra" data-title="Astra Client">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-astra', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    <span>Astra Client</span>
+                    <div class="playtime-display" id="pt-cli-astra"></div>
+                </a>
+                <a href="Clients/EB%20Client%201.8.8.html" class="card game-card" data-id="cli-eb8" data-title="EB Client 1.8.8">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-eb8', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    <span>EB Client 1.8.8</span>
+                    <div class="playtime-display" id="pt-cli-eb8"></div>
+                </a>
+                <a href="Clients/EB%20Client%201.14.4.html" class="card game-card" data-id="cli-eb14" data-title="EB Client 1.14.4">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-eb14', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    <span>EB Client 1.14.4</span>
+                    <div class="playtime-display" id="pt-cli-eb14"></div>
+                </a>
+                <a href="Clients/Eclipse%20Client.html" class="card game-card" data-id="cli-eclipse" data-title="Eclipse Client">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-eclipse', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    <span>Eclipse Client</span>
+                    <div class="playtime-display" id="pt-cli-eclipse"></div>
+                </a>
+                <a href="Clients/GX-Client.html" class="card game-card" data-id="cli-gx" data-title="GX-Client">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-gx', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    <span>GX-Client</span>
+                    <div class="playtime-display" id="pt-cli-gx"></div>
+                </a>
+                <a href="Clients/Huzzium%20Client.html" class="card game-card" data-id="cli-huzz" data-title="Huzzium Client">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-huzz', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    <span>Huzzium Client</span>
+                    <div class="playtime-display" id="pt-cli-huzz"></div>
+                </a>
+                <a href="Clients/Kozmo%20Client.html" class="card game-card" data-id="cli-kozmo" data-title="Kozmo Client">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-kozmo', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    <span>Kozmo Client</span>
+                    <div class="playtime-display" id="pt-cli-kozmo"></div>
+                </a>
+                <a href="Clients/Larp%20Client%201.14.4.html" class="card game-card" data-id="cli-larp" data-title="Larp Client 1.14.4">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-larp', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    <span>Larp Client 1.14.4</span>
+                    <div class="playtime-display" id="pt-cli-larp"></div>
+                </a>
+                <a href="Clients/Myven%20Client.html" class="card game-card" data-id="cli-myven" data-title="Myven Client">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-myven', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    <span>Myven Client</span>
+                    <div class="playtime-display" id="pt-cli-myven"></div>
+                </a>
+                <a href="Clients/Pixel%20Client.html" class="card game-card" data-id="cli-pixel" data-title="Pixel Client">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-pixel', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    <span>Pixel Client</span>
+                    <div class="playtime-display" id="pt-cli-pixel"></div>
+                </a>
+                <a href="Clients/Precision%20Client.html" class="card game-card" data-id="cli-precis" data-title="Precision Client">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-precis', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    <span>Precision Client</span>
+                    <div class="playtime-display" id="pt-cli-precis"></div>
+                </a>
+                <a href="Clients/Resent%20Client.html" class="card game-card" data-id="cli-resent" data-title="Resent Client">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-resent', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    <span>Resent Client</span>
+                    <div class="playtime-display" id="pt-cli-resent"></div>
+                </a>
+                <a href="Clients/Tuff%20Client%20Beta.html" class="card game-card" data-id="cli-tuff" data-title="Tuff Client Beta">
+                    <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-tuff', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <div class="badge" style="background: #eab308; color: black;">Beta</div>
+                    <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    <span>Tuff Client Beta</span>
+                    <div class="playtime-display" id="pt-cli-tuff"></div>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Texture Packs & Shaders Tab -->
+    <main id="packs" class="tab-content">
+        <div class="slider-wrapper">
+            <div class="card-container" id="packs-container">
+                <div class="card" style="border: 2px dashed var(--text-secondary); background: transparent; backdrop-filter: none;">
+                    <svg class="card-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    <span>Add packs to repo</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer with Keyboard Nav Hint -->
+    <footer>
+        <p class="keyboard-hint">Use <kbd style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">&larr;</kbd> and <kbd style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">&rarr;</kbd> arrow keys to slide horizontally.</p>
+    </footer>
+
+    <!-- Settings Menu Side Panel -->
+    <div class="overlay" id="overlay" onclick="toggleSettings('settings-panel')"></div>
+    <div class="side-panel" id="settings-panel">
+        <div class="panel-header">
+            <h2>Customization</h2>
+            <button class="close-btn" onclick="toggleSettings('settings-panel')">&times;</button>
+        </div>
+        
+        <h3 class="settings-subheader">Layout Engine</h3>
+        <div class="layout-toggle">
+            <button class="layout-btn active" id="btn-layout-slider" onclick="setLayout('slider')">Slider</button>
+            <button class="layout-btn" id="btn-layout-grid" onclick="setLayout('grid')">Grid</button>
+            <button class="layout-btn" id="btn-layout-switch" onclick="setLayout('switch')">Switch UI</button>
+            <button class="layout-btn" id="btn-layout-xp" onclick="setLayout('xp')">Windows XP</button>
+            <button class="layout-btn" id="btn-layout-xbox360" onclick="setLayout('xbox360')">Xbox 360</button>
+        </div>
+
+        <div id="xbox-settings-section" style="display: none;">
+            <h3 class="settings-subheader">Xbox 360 Settings</h3>
+            <div style="margin-bottom: 2rem;">
+                <input type="text" id="setting-gamertag" class="xbox-input" placeholder="Player1" style="width: 100%; padding: 10px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); color: white; border-radius: 8px; font-family: inherit; font-size: 1rem; margin-bottom: 1rem; outline: none;" onchange="updateGamertag(this.value)">
+                <div class="pfp-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1rem;">
+                    <img src="pic1.jpeg" class="pfp-option" data-pic="pic1.jpeg" onclick="updatePfp('pic1.jpeg')" onerror="this.style.opacity='0.2'" style="width: 100%; aspect-ratio: 1; border-radius: 8px; cursor: pointer; border: 2px solid transparent; opacity: 0.6; transition: 0.2s; object-fit: cover; background: #333;">
+                    <img src="pic2.jpeg" class="pfp-option" data-pic="pic2.jpeg" onclick="updatePfp('pic2.jpeg')" onerror="this.style.opacity='0.2'" style="width: 100%; aspect-ratio: 1; border-radius: 8px; cursor: pointer; border: 2px solid transparent; opacity: 0.6; transition: 0.2s; object-fit: cover; background: #333;">
+                    <img src="pic3.jpeg" class="pfp-option" data-pic="pic3.jpeg" onclick="updatePfp('pic3.jpeg')" onerror="this.style.opacity='0.2'" style="width: 100%; aspect-ratio: 1; border-radius: 8px; cursor: pointer; border: 2px solid transparent; opacity: 0.6; transition: 0.2s; object-fit: cover; background: #333;">
+                    <img src="pic4.jpeg" class="pfp-option" data-pic="pic4.jpeg" onclick="updatePfp('pic4.jpeg')" onerror="this.style.opacity='0.2'" style="width: 100%; aspect-ratio: 1; border-radius: 8px; cursor: pointer; border: 2px solid transparent; opacity: 0.6; transition: 0.2s; object-fit: cover; background: #333;">
+                    <img src="pic5.jpeg" class="pfp-option" data-pic="pic5.jpeg" onclick="updatePfp('pic5.jpeg')" onerror="this.style.opacity='0.2'" style="width: 100%; aspect-ratio: 1; border-radius: 8px; cursor: pointer; border: 2px solid transparent; opacity: 0.6; transition: 0.2s; object-fit: cover; background: #333;">
+                    <img src="pic6.jpeg" class="pfp-option" data-pic="pic6.jpeg" onclick="updatePfp('pic6.jpeg')" onerror="this.style.opacity='0.2'" style="width: 100%; aspect-ratio: 1; border-radius: 8px; cursor: pointer; border: 2px solid transparent; opacity: 0.6; transition: 0.2s; object-fit: cover; background: #333;">
+                </div>
+            </div>
+        </div>
+
+        <h3 class="settings-subheader">Themes (40 Total)</h3>
+        <div style="font-size: 0.8rem; margin-bottom: 10px; opacity: 0.7;">(Only active in Slider & Grid layouts)</div>
+        <div class="theme-grid">
+            <button class="theme-btn" data-btn-theme="default" onclick="setTheme('default')">Default Slate</button>
+            <button class="theme-btn" data-btn-theme="liquid-glass" onclick="setTheme('liquid-glass')">Liquid Glass</button>
+            <button class="theme-btn" data-btn-theme="monochrome" onclick="setTheme('monochrome')">Monochrome</button>
+            <button class="theme-btn" data-btn-theme="golden-hour" onclick="setTheme('golden-hour')">Golden Hour</button>
+            <button class="theme-btn" data-btn-theme="sunset" onclick="setTheme('sunset')">Sunset</button>
+            <button class="theme-btn" data-btn-theme="nebula" onclick="setTheme('nebula')">Nebula</button>
+            <button class="theme-btn" data-btn-theme="midnight-blue" onclick="setTheme('midnight-blue')">Midnight Blue</button>
+            <button class="theme-btn" data-btn-theme="mint-frost" onclick="setTheme('mint-frost')">Mint Frost</button>
+            <button class="theme-btn" data-btn-theme="cherry-blossom" onclick="setTheme('cherry-blossom')">Cherry Blossom</button>
+            <button class="theme-btn" data-btn-theme="solarized-dark" onclick="setTheme('solarized-dark')">Solarized Dark</button>
+
+            <button class="theme-btn" data-btn-theme="minecraft" onclick="setTheme('minecraft')">Minecraft Block</button>
+            <button class="theme-btn" data-btn-theme="cyberpunk" onclick="setTheme('cyberpunk')">Cyberpunk</button>
+            <button class="theme-btn" data-btn-theme="portal" onclick="setTheme('portal')">Aperture Lab</button>
+            <button class="theme-btn" data-btn-theme="doom" onclick="setTheme('doom')">Doom Mars</button>
+            <button class="theme-btn" data-btn-theme="halo" onclick="setTheme('halo')">Spartan Green</button>
+            <button class="theme-btn" data-btn-theme="animal-crossing" onclick="setTheme('animal-crossing')">Island Pastel</button>
+            <button class="theme-btn" data-btn-theme="pip-boy" onclick="setTheme('pip-boy')">Pip-Boy Rads</button>
+            <button class="theme-btn" data-btn-theme="persona" onclick="setTheme('persona')">Phantom Thief</button>
+            <button class="theme-btn" data-btn-theme="sheikah" onclick="setTheme('sheikah')">Sheikah Slate</button>
+            <button class="theme-btn" data-btn-theme="skyrim" onclick="setTheme('skyrim')">Skyrim Frost</button>
+
+            <button class="theme-btn" data-btn-theme="windows-xp-theme" onclick="setTheme('windows-xp-theme')">Windows XP Mode</button>
+            <button class="theme-btn" data-btn-theme="macos-27" onclick="setTheme('macos-27')">macOS 27</button>
+            <button class="theme-btn" data-btn-theme="synthwave" onclick="setTheme('synthwave')">Synthwave 84</button>
+            <button class="theme-btn" data-btn-theme="linux-terminal" onclick="setTheme('linux-terminal')">Linux Terminal</button>
+            <button class="theme-btn" data-btn-theme="console-ui" onclick="setTheme('console-ui')">Console UI</button>
+            <button class="theme-btn" data-btn-theme="vhs-glitch" onclick="setTheme('vhs-glitch')">VHS Glitch</button>
+            <button class="theme-btn" data-btn-theme="game-boy" onclick="setTheme('game-boy')">Classic Handheld</button>
+            <button class="theme-btn" data-btn-theme="arcade-retro" onclick="setTheme('arcade-retro')">Arcade Neon</button>
+            <button class="theme-btn" data-btn-theme="vaporwave" onclick="setTheme('vaporwave')">Vaporwave</button>
+            <button class="theme-btn" data-btn-theme="e-ink" onclick="setTheme('e-ink')">E-Ink Reader</button>
+
+            <button class="theme-btn" data-btn-theme="matrix" onclick="setTheme('matrix')">Animated Matrix</button>
+            <button class="theme-btn" data-btn-theme="ocean-wave" onclick="setTheme('ocean-wave')">Ocean Wave</button>
+            <button class="theme-btn" data-btn-theme="crimson-pulse" onclick="setTheme('crimson-pulse')">Crimson Pulse</button>
+            <button class="theme-btn" data-btn-theme="aurora" onclick="setTheme('aurora')">Aurora</button>
+            <button class="theme-btn" data-btn-theme="highway-drive" onclick="setTheme('highway-drive')">Highway Drive</button>
+            <button class="theme-btn" data-btn-theme="layer-shift" onclick="setTheme('layer-shift')">Layer Shift</button>
+            <button class="theme-btn" data-btn-theme="radio-waves" onclick="setTheme('radio-waves')">Radio Waves</button>
+            <button class="theme-btn" data-btn-theme="starfield" onclick="setTheme('starfield')">Starfield</button>
+            <button class="theme-btn" data-btn-theme="lava-lamp" onclick="setTheme('lava-lamp')">Lava Lamp</button>
+            <button class="theme-btn" data-btn-theme="dynamic-time" onclick="setTheme('dynamic-time')">Dynamic Time</button>
+            
+            <button class="theme-btn" data-btn-theme="custom" onclick="setTheme('custom')">Custom Colors</button>
+        </div>
+
+        <h3 class="settings-subheader">Custom Colors</h3>
+        <div class="setting-row">
+            <label for="accent-picker">Accent Color</label>
+            <input type="color" id="accent-picker" value="#6366f1" oninput="onCustomColorChange('accent', this.value)">
+        </div>
+
+        <div class="setting-row">
+            <label for="bg-picker">Background Color</label>
+            <input type="color" id="bg-picker" value="#0f172a" oninput="onCustomColorChange('bg', this.value)">
+        </div>
+
+        <button class="tut-replay-btn" onclick="startTutorialFromSettings()">Replay Tutorial</button>
+    </div>
+
+    <!-- Changelog Modal -->
+    <div class="center-modal" id="changelog-modal">
+        <div class="panel-header" style="margin-bottom: 1rem;">
+            <h2>What's New</h2>
+            <button class="close-btn" onclick="toggleSettings('changelog-modal')">&times;</button>
+        </div>
+        <div class="changelog-content" id="changelog-content">Loading...</div>
+    </div>
+
+    <!-- Interactive Scripts -->
+    <script>
+        /* === Playtime Tracker Logic === */
+        function checkAndRecordPlaytime() {
+            let launchId = localStorage.getItem('eagler-launch-id');
+            let launchTime = localStorage.getItem('eagler-launch-time');
+            if (launchId && launchTime) {
+                let elapsed = Date.now() - parseInt(launchTime);
+                if (elapsed > 0 && elapsed < 43200000) {
+                    let playtimeStats = JSON.parse(localStorage.getItem('eagler-playtime') || '{}');
+                    playtimeStats[launchId] = (playtimeStats[launchId] || 0) + elapsed;
+                    localStorage.setItem('eagler-playtime', JSON.stringify(playtimeStats));
+                }
+                localStorage.removeItem('eagler-launch-id'); localStorage.removeItem('eagler-launch-time');
+            }
+        }
+        function formatPlaytime(ms) {
+            if (!ms) return '';
+            let mins = Math.floor(ms / 60000);
+            if (mins < 1) return '< 1m';
+            if (mins < 60) return `${mins}m`;
+            let hrs = Math.floor(mins / 60);
+            mins = mins % 60;
+            return `${hrs}h ${mins}m`;
+        }
+        function renderPlaytimes() {
+            let playtimeStats = JSON.parse(localStorage.getItem('eagler-playtime') || '{}');
+            document.querySelectorAll('.game-card').forEach(card => {
+                let id = card.getAttribute('data-id');
+                let displayEl = document.getElementById('pt-' + id);
+                if (displayEl && playtimeStats[id]) { displayEl.textContent = 'Played: ' + formatPlaytime(playtimeStats[id]); }
+            });
+            let totalMs = Object.values(playtimeStats).reduce((a, b) => a + b, 0);
+            document.querySelectorAll('.playtime-total').forEach(el => {
+                el.innerHTML = formatPlaytime(totalMs) + ' <span style="font-family: sans-serif; font-size:1rem;">G</span>';
+            });
+        }
+        document.querySelectorAll('.game-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (e.target.closest('.fav-star')) return;
+                e.preventDefault();
+                localStorage.setItem('eagler-launch-id', this.getAttribute('data-id'));
+                localStorage.setItem('eagler-launch-time', Date.now());
+                window.location.href = this.getAttribute('href');
+            });
+        });
+
+        /* === Setup Tutorial Logic (Dynamic Routing) === */
+        function checkTutorial() {
+            if (!localStorage.getItem('eagler-tutorial-done')) {
+                setTimeout(() => {
+                    document.getElementById('tutorial-overlay').classList.add('show');
+                    setTimeout(() => { showSlide(1); }, 400);
+                }, 500);
+            }
+        }
+        function showSlide(num) {
+            document.querySelectorAll('.tutorial-slide').forEach(s => s.classList.remove('active'));
+            document.getElementById('tut-slide-' + num).classList.add('active');
+        }
+        function nextSlide(num) { showSlide(num); }
+        
+        // Router for Layout Slide -> Next
+        function handleLayoutNext() {
+            let layout = document.body.getAttribute('data-layout');
+            if (layout === 'slider' || layout === 'grid') { showSlide(4); } // Themes
+            else if (layout === 'xbox360') { showSlide(5); } // Gamertag
+            else { showSlide(7); } // Skip straight to end for XP/Switch
+        }
+
+        // Router for Gamertag Slide -> Next
+        function saveGamertagAndNext() {
+            let tag = document.getElementById('tut-gamertag-input').value;
+            if(tag.trim() === '') tag = 'Player1';
+            updateGamertag(tag);
+            showSlide(6); // Go to Profile Pic
+        }
+
+        // Router for Pfp Slide -> Next
+        function savePfpAndNext() {
+            showSlide(7); // Finish
+        }
+
+        // Route back from Finish slide dynamically
+        function backFromFinish() {
+            let layout = document.body.getAttribute('data-layout');
+            if (layout === 'slider' || layout === 'grid') { showSlide(4); }
+            else if (layout === 'xbox360') { showSlide(6); }
+            else { showSlide(3); }
+        }
+
+        function finishTutorial() {
+            localStorage.setItem('eagler-tutorial-done', 'true');
+            const overlay = document.getElementById('tutorial-overlay');
+            overlay.style.opacity = '0';
+            setTimeout(() => { overlay.classList.remove('show'); overlay.style.opacity = ''; }, 800);
+        }
+        function startTutorialFromSettings() {
+            document.getElementById('settings-panel').classList.remove('active');
+            const overlay = document.getElementById('tutorial-overlay');
+            overlay.classList.remove('show');
+            void overlay.offsetWidth; 
+            overlay.classList.add('show');
+            setTimeout(() => { showSlide(1); }, 400);
+        }
+
+        /* === Profile UI (Gamertag & PFP) === */
+        function updateGamertag(name) {
+            localStorage.setItem('eagler-gamertag', name);
+            document.querySelectorAll('.os-gamertag-display').forEach(el => el.textContent = name);
+            let settingsInput = document.getElementById('setting-gamertag');
+            if(settingsInput) settingsInput.value = name;
+        }
+        
+        function selectTutPfp(pic, el) {
+            document.querySelectorAll('#tut-slide-6 .pfp-option').forEach(img => img.classList.remove('active'));
+            el.classList.add('active');
+            updatePfp(pic);
+        }
+
+        function updatePfp(pic) {
+            localStorage.setItem('eagler-xbox-pic', pic);
+            document.querySelectorAll('.os-pfp-img').forEach(img => { img.src = pic; img.style.display = 'block'; });
+            // Update active state in settings grid
+            document.querySelectorAll('#settings-panel .pfp-option').forEach(img => {
+                img.classList.remove('active');
+                if(img.getAttribute('data-pic') === pic) img.classList.add('active');
+            });
+        }
+
+        /* === Changelog (updates.txt) Logic === */
+        async function openChangelog() {
+            const modal = document.getElementById('changelog-modal');
+            const overlay = document.getElementById('overlay');
+            const content = document.getElementById('changelog-content');
+            modal.classList.add('active'); overlay.classList.add('active');
+            content.innerHTML = "<i>Fetching updates.txt from server...</i>";
+            try {
+                const res = await fetch('updates.txt');
+                if (!res.ok) throw new Error();
+                content.textContent = await res.text();
+            } catch (e) {
+                content.innerHTML = "<b>No updates.txt file found.</b><br><br>Create a file named exactly <code>updates.txt</code> in your GitHub repo root.";
+            }
+        }
+
+        /* === Generic UI Logic === */
+        function openTab(evt, tabName) {
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) { tabContents[i].style.display = "none"; tabContents[i].classList.remove("active"); }
+            const tabBtns = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < tabBtns.length; i++) { tabBtns[i].classList.remove("active"); }
+            
+            const targetTab = document.getElementById(tabName);
+            if(targetTab) {
+                targetTab.style.display = "block";
+                setTimeout(() => { targetTab.classList.add("active"); }, 10);
+            }
+            if(evt && evt.currentTarget) evt.currentTarget.classList.add("active");
+            
+            document.querySelectorAll('.xbox-tab').forEach(t => t.classList.remove('active'));
+            const xboxTab = document.querySelector(`.xbox-tab[data-target="${tabName}"]`);
+            if(xboxTab) xboxTab.classList.add('active');
+        }
+
+        function toggleSettings(modalId) {
+            const element = document.getElementById(modalId);
+            const overlay = document.getElementById('overlay');
+            if (element.classList.contains('active')) {
+                element.classList.remove('active'); overlay.classList.remove('active');
+            } else {
+                document.getElementById('settings-panel').classList.remove('active');
+                document.getElementById('changelog-modal').classList.remove('active');
+                element.classList.add('active'); overlay.classList.add('active');
+            }
+        }
+
+        function setLayout(layoutName) {
+            document.body.setAttribute('data-layout', layoutName);
+            localStorage.setItem('eagler-layout', layoutName);
+            document.querySelectorAll('.layout-btn').forEach(btn => btn.classList.remove('active'));
+            const activeBtn = document.getElementById('btn-layout-' + layoutName);
+            if(activeBtn) activeBtn.classList.add('active');
+            
+            if (layoutName === 'xp') { buildXPStartMenu(); }
+
+            // Isolate Xbox 360 settings panel visibility
+            const xboxSettings = document.getElementById('xbox-settings-section');
+            if (xboxSettings) {
+                xboxSettings.style.display = (layoutName === 'xbox360') ? 'block' : 'none';
+            }
+        }
+
+        /* === Theme Engine === */
+        function setTheme(themeName) {
+            document.body.setAttribute('data-theme', themeName);
+            localStorage.setItem('eagler-theme', themeName);
+            
+            document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll(`[data-btn-theme="${themeName}"]`).forEach(btn => btn.classList.add('active'));
+
+            if(themeName !== 'custom') {
+                document.documentElement.style.removeProperty('--accent-color');
+                document.documentElement.style.removeProperty('--bg-color');
+                document.documentElement.style.removeProperty('--bg-image');
+            } else {
+                const accent = document.getElementById('accent-picker').value;
+                const bg = document.getElementById('bg-picker').value;
+                document.documentElement.style.setProperty('--accent-color', accent);
+                document.documentElement.style.setProperty('--bg-color', bg);
+            }
+            if(themeName === 'dynamic-time') { updateDynamicTime(); }
+        }
+
+        function onCustomColorChange(type, value) {
+            if (document.body.getAttribute('data-theme') !== 'custom') { setTheme('custom'); }
+            if (type === 'accent') { document.documentElement.style.setProperty('--accent-color', value); localStorage.setItem('eagler-accent', value); } 
+            else if (type === 'bg') { document.documentElement.style.setProperty('--bg-color', value); localStorage.setItem('eagler-bg', value); }
+        }
+
+        function updateDynamicTime() {
+            if (document.body.getAttribute('data-theme') !== 'dynamic-time') return;
+            const hour = new Date().getHours();
+            let bg1, bg2, accent;
+            if (hour >= 6 && hour < 12) { bg1 = "#87CEEB"; bg2 = "#f0f8ff"; accent = "#ff9900"; }
+            else if (hour >= 12 && hour < 17) { bg1 = "#00BFFF"; bg2 = "#1E90FF"; accent = "#ffd700"; }
+            else if (hour >= 17 && hour < 20) { bg1 = "#FF4500"; bg2 = "#4B0082"; accent = "#ffb6c1"; }
+            else { bg1 = "#0f172a"; bg2 = "#000000"; accent = "#a855f7"; }
+            document.documentElement.style.setProperty('--bg-color', bg2);
+            document.documentElement.style.setProperty('--accent-color', accent);
+            document.documentElement.style.setProperty('--bg-image', `linear-gradient(135deg, ${bg1}, ${bg2})`);
+        }
+        setInterval(updateDynamicTime, 60000);
+
+        /* === Windows XP Start Menu Engine === */
+        function toggleXPMenu() { document.getElementById('xp-start-menu').classList.toggle('active'); }
+        function buildXPStartMenu() {
+            const list = document.getElementById('xp-programs-list');
+            list.innerHTML = ''; 
+            document.querySelectorAll('.game-card').forEach(card => {
+                let title = card.getAttribute('data-title');
+                let url = card.getAttribute('href');
+                let svg = card.querySelector('.card-icon').outerHTML;
+                let div = document.createElement('div');
+                div.className = 'xp-item xp-game-item';
+                div.innerHTML = svg + title;
+                div.onclick = () => { window.location.href = url; };
+                list.appendChild(div);
+            });
+        }
+        function filterXPMenu() {
+            let query = document.getElementById('xp-search').value.toLowerCase();
+            document.querySelectorAll('.xp-game-item').forEach(item => {
+                if (item.textContent.toLowerCase().includes(query)) { item.style.display = 'flex'; } 
+                else { item.style.display = 'none'; }
+            });
+        }
+
+        /* === Favorites System === */
+        let favorites = JSON.parse(localStorage.getItem('eagler-favs') || '[]');
+        function toggleFav(event, id, containerId) {
+            event.preventDefault(); event.stopPropagation();
+            const card = document.querySelector(`[data-id="${id}"]`);
+            const idx = favorites.indexOf(id);
+            if (idx > -1) { favorites.splice(idx, 1); card.classList.remove('favorited'); } 
+            else { favorites.push(id); card.classList.add('favorited'); }
+            localStorage.setItem('eagler-favs', JSON.stringify(favorites));
+            sortFavorites(containerId);
+        }
+        function sortFavorites(containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const cards = Array.from(container.children);
+            cards.forEach(card => {
+                const id = card.getAttribute('data-id');
+                if (favorites.includes(id)) { card.classList.add('favorited'); container.prepend(card); }
+            });
+        }
+
+        /* === Keyboard Navigation & Dynamic Clock === */
+        window.addEventListener('keydown', (e) => {
+            if (document.getElementById('tutorial-overlay').classList.contains('show')) return;
+            const activeTab = document.querySelector('.tab-content.active .card-container');
+            if (!activeTab || document.body.getAttribute('data-layout') === 'grid' || document.body.getAttribute('data-layout') === 'xp') return;
+            if (e.key === 'ArrowRight') { activeTab.scrollBy({ left: 260, behavior: 'smooth' }); } 
+            else if (e.key === 'ArrowLeft') { activeTab.scrollBy({ left: -260, behavior: 'smooth' }); }
+        });
+
+        function updateClocks() {
+            const timeString = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            document.querySelectorAll('.clock-display').forEach(c => c.textContent = timeString);
+        }
+        setInterval(updateClocks, 1000);
+
+        /* === Startup Sequence === */
+        window.onload = function() {
+            checkAndRecordPlaytime();
+            renderPlaytimes();
+            updateClocks();
+            
+            const savedLayout = localStorage.getItem('eagler-layout') || 'slider';
+            const savedTheme = localStorage.getItem('eagler-theme') || 'default';
+            const savedAccent = localStorage.getItem('eagler-accent') || '#6366f1';
+            const savedBg = localStorage.getItem('eagler-bg') || '#0f172a';
+            
+            const savedPfp = localStorage.getItem('eagler-xbox-pic') || 'pic1.jpeg';
+            const savedTag = localStorage.getItem('eagler-gamertag') || 'Player1';
+            
+            document.getElementById('accent-picker').value = savedAccent;
+            document.getElementById('bg-picker').value = savedBg;
+            
+            updatePfp(savedPfp);
+            updateGamertag(savedTag);
+            
+            setLayout(savedLayout);
+            setTheme(savedTheme);
+            
+            sortFavorites('vanilla-container');
+            sortFavorites('clients-container');
+
+            checkTutorial();
+        }
+    </script>
+</body>
+</html>

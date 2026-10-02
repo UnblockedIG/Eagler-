@@ -94,6 +94,9 @@
         [data-theme="starfield"] { --bg-color: #000; --accent-color: #fff; --bg-image: radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)), radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)), radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)); background-size: 200px 200px; animation: scrollY 20s linear infinite; --text-primary: #fff; }
         [data-theme="lava-lamp"] { --bg-color: #1a0033; --accent-color: #ff0066; --bg-image: radial-gradient(circle at 50% 50%, #ff0066 0%, #1a0033 50%); background-size: 200% 200%; animation: bgPulse 6s ease-in-out infinite alternate; --text-primary: #fff; }
 
+        /* Custom Mode */
+        [data-theme="custom"] { --bg-image: radial-gradient(circle at top center, var(--surface-color), var(--bg-color)); --text-primary: #fff; }
+
         /* Keyframes for backgrounds */
         @keyframes bgShift { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
         @keyframes scrollY { 0% { background-position: 0% 0%; } 100% { background-position: 0% 100%; } }
@@ -104,8 +107,10 @@
         ========================================================= */
         header { padding: 3rem 5vw 1rem; text-align: center; position: relative; z-index: 10; }
         
-        .universal-clock { position: absolute; top: 2.5rem; left: 5vw; font-size: 1.5rem; font-weight: 700; color: var(--text-primary); height: 48px; display: flex; align-items: center; }
-        body[data-layout="switch"] .universal-clock, body[data-layout="xp"] .universal-clock, body[data-layout="xbox360"] .universal-clock { display: none !important; }
+        .header-live-stats { position: absolute; top: 2.5rem; left: 5vw; display: flex; flex-direction: column; text-align: left; }
+        .universal-clock { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); }
+        .live-users { font-size: 0.85rem; font-weight: 600; color: var(--accent-color); margin-top: 4px; text-transform: uppercase; letter-spacing: 1px;}
+        body[data-layout="switch"] .header-live-stats, body[data-layout="xp"] .header-live-stats, body[data-layout="xbox360"] .header-live-stats { display: none !important; }
 
         .header-btn { position: absolute; top: 2.5rem; background: var(--glass-bg, rgba(255,255,255,0.1)); backdrop-filter: blur(var(--glass-blur, 12px)); -webkit-backdrop-filter: blur(var(--glass-blur, 12px)); border: 1px solid var(--card-border, rgba(255,255,255,0.1)); border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; z-index: 50; }
         .header-btn:hover { background: var(--surface-hover, rgba(255,255,255,0.2)); border-color: var(--accent-color); box-shadow: 0 0 15px var(--accent-glow); }
@@ -303,7 +308,6 @@
         /* ================= OVERLAYS (Settings / Changelog) ================= */
         /* Center Footer */
         footer { width: 100%; margin-top: auto; padding: 2rem; display: flex; justify-content: center; align-items: center;}
-        body[data-layout="switch"] footer, body[data-layout="xp"] footer, body[data-layout="xbox360"] footer { display: none !important; }
         .keyboard-hint { opacity: 0.6; color: var(--text-secondary); font-size: 0.9rem; text-align: center; }
 
         .overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 9000; }
@@ -408,10 +412,10 @@
 <body data-theme="default" data-layout="slider">
 
     <!-- ==============================================
-         XBOX BOOT SCREEN (Auto-Plays Video)
+         XBOX BOOT SCREEN (Smart Fallback Video)
     =============================================== -->
     <div id="xbox-boot-screen">
-        <video id="xbox-boot-video" src="videoplayback.webm" autoplay playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
+        <video id="xbox-boot-video" src="videoplayback.webm" playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
     </div>
 
     <!-- ==============================================
@@ -538,7 +542,7 @@
         <!-- Slide 4 (Themes - ONLY if Slider/Grid/Flow) -->
         <div class="tutorial-slide" id="tut-slide-4">
             <h2 class="tut-title">Select a Vibe</h2>
-            <p class="tut-text" style="margin-bottom: 1.5rem;">Click a theme below to preview it.</p>
+            <p class="tut-text" style="margin-bottom: 1.5rem;">Click a theme below to preview it. (Note: Themes only apply to Slider, Grid, and Flow layouts).</p>
             <div class="tut-theme-grid">
                 <button class="theme-btn active" data-btn-theme="default" onclick="setTheme('default')">Default Slate</button>
                 <button class="theme-btn" data-btn-theme="liquid-glass" onclick="setTheme('liquid-glass')">Liquid Glass</button>
@@ -600,7 +604,10 @@
          MAIN APP CONTENT (Standard Header)
     =============================================== -->
     <header>
-        <div class="universal-clock clock-display">12:00 PM</div>
+        <div class="header-live-stats">
+            <div class="universal-clock clock-display">12:00 PM</div>
+            <div id="live-users" class="live-users">0 Players Online</div>
+        </div>
         
         <button class="changelog-btn" onclick="openChangelog()">What's New</button>
         <button class="header-btn settings-btn" onclick="toggleSettings('settings-panel')" title="Settings">
@@ -784,7 +791,7 @@
         </div>
     </main>
 
-    <!-- Texture Packs & Shaders Tab -->
+    <!-- Texture Packs Tab -->
     <main id="packs" class="tab-content">
         <div class="slider-wrapper">
             <div class="card-container" id="packs-container">
@@ -951,17 +958,6 @@
                 el.innerHTML = formatPlaytime(totalMs) + ' <span style="font-family: sans-serif; font-size:1rem;">G</span>';
             });
         }
-        
-        // LAUNCH GAMES IN A NEW TAB & RECORD PLAYTIME
-        document.querySelectorAll('.game-card').forEach(card => {
-            card.addEventListener('click', function(e) {
-                if (e.target.closest('.fav-star')) return;
-                e.preventDefault();
-                localStorage.setItem('eagler-launch-id', this.getAttribute('data-id'));
-                localStorage.setItem('eagler-launch-time', Date.now());
-                window.open(this.getAttribute('href'), '_blank');
-            });
-        });
 
         /* === Setup Tutorial Logic (Dynamic Routing) === */
         function checkTutorial() {
@@ -1283,6 +1279,47 @@
 
             checkTutorial();
         }
+    </script>
+    
+    <!-- Firebase Live User Counter -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-analytics.js";
+        import { getDatabase, ref, onValue, push, onDisconnect, set } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
+      
+        const firebaseConfig = {
+          apiKey: "AIzaSyCzm8-Zh9NiQMiVFB2OMdSH2sXeFu04Wac",
+          authDomain: "eagleranallytics.firebaseapp.com",
+          databaseURL: "https://eagleranallytics-default-rtdb.firebaseio.com",
+          projectId: "eagleranallytics",
+          storageBucket: "eagleranallytics.firebasestorage.app",
+          messagingSenderId: "277884984164",
+          appId: "1:277884984164:web:0a6bc77042a8e01f8f3871",
+          measurementId: "G-MZQJLPWHRN"
+        };
+      
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app); 
+        const db = getDatabase(app);
+      
+        const connectedRef = ref(db, ".info/connected");
+        const onlineUsersRef = ref(db, "online_users");
+      
+        onValue(connectedRef, (snap) => {
+          if (snap.val() === true) {
+            const myConnectionRef = push(onlineUsersRef);
+            onDisconnect(myConnectionRef).remove();
+            set(myConnectionRef, true);
+          }
+        });
+      
+        onValue(onlineUsersRef, (snap) => {
+          let count = snap.size;
+          let displayEl = document.getElementById("live-users");
+          if (displayEl) {
+            displayEl.innerText = count === 1 ? count + " Player Online" : count + " Players Online";
+          }
+        });
     </script>
 </body>
 </html>

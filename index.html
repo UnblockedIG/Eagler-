@@ -7,20 +7,48 @@
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     
     <style>
+        /* =========================================================
+           CORE VARIABLES
+        ========================================================= */
         :root {
-            --bg-color: #0f172a; --accent-color: #6366f1;
+            --bg-color: #0f172a; 
+            --accent-color: #6366f1;
             --accent-light: color-mix(in srgb, var(--accent-color) 60%, white);
             --accent-glow: color-mix(in srgb, var(--accent-color) 50%, transparent);
             --surface-color: color-mix(in srgb, var(--bg-color) 80%, white);
             --surface-hover: color-mix(in srgb, var(--bg-color) 70%, white);
-            --text-primary: #f8fafc; --text-secondary: #94a3b8;
-            --radius-lg: 28px; --radius-md: 16px;
+            --text-primary: #f8fafc; 
+            --text-secondary: #94a3b8;
+            --radius-lg: 28px; 
+            --radius-md: 16px;
         }
 
-        /* ================= 40 UNIVERSAL THEME PRESETS ================= */
-        /* --- Category 1: Core / Clean --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif; 
+            min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; 
+            transition: background 0.6s ease; 
+        }
+
+        /* =========================================================
+           STRICT UI ISOLATION (Prevents Layouts from Breaking)
+        ========================================================= */
+        .switch-ui, .xp-ui, .xbox-ui { display: none !important; }
+        body[data-layout="switch"] .switch-ui { display: flex !important; }
+        body[data-layout="xp"] .xp-ui { display: flex !important; }
+        body[data-layout="xbox360"] .xbox-ui { display: flex !important; }
+
+        /* =========================================================
+           40 UNIVERSAL THEMES (Only apply to compatible layouts)
+        ========================================================= */
+        body[data-layout="slider"], body[data-layout="grid"], body[data-layout="flow"] { 
+            background: var(--bg-image); background-color: var(--bg-color); 
+            background-attachment: fixed; color: var(--text-primary); 
+        }
+
+        /* Group 1: Core / Clean */
         [data-theme="default"] { --bg-color: #0f172a; --accent-color: #6366f1; --text-primary: #f8fafc; --text-secondary: #94a3b8;}
-        [data-theme="liquid-glass"] { --bg-color: #001220; --accent-color: #00e5ff; --bg-image: linear-gradient(135deg, #001220, #004d61); --glass-bg: rgba(255, 255, 255, 0.03); --glass-blur: 24px; --card-border: rgba(0, 229, 255, 0.2); --text-primary: #fff; --text-secondary: #bdf;}
+        [data-theme="liquid-glass"] { --bg-color: #f0f4f8; --accent-color: #007aff; --bg-image: radial-gradient(circle at 10% 20%, rgba(0, 122, 255, 0.15) 0%, transparent 40%), radial-gradient(circle at 90% 80%, rgba(255, 45, 85, 0.1) 0%, transparent 40%), linear-gradient(135deg, #e2e8f0, #ffffff); background-color: #f0f4f8; --glass-bg: rgba(255, 255, 255, 0.4); --glass-blur: 40px; --card-border: rgba(255, 255, 255, 0.7); --radius-lg: 32px; --radius-md: 16px; --text-primary: #1d1d1f; --text-secondary: #86868b; }
         [data-theme="monochrome"] { --bg-color: #000000; --accent-color: #ffffff; --text-secondary: #777777; --bg-image: radial-gradient(circle at center, #1a1a1a, #000000); --radius-lg: 0px; --radius-md: 0px; --text-primary: #fff;}
         [data-theme="golden-hour"] { --bg-color: #1a0f00; --accent-color: #ffaa00; --bg-image: radial-gradient(circle at top right, #4d2e00, #0a0600); --text-primary: #fff; --text-secondary: #dca;}
         [data-theme="sunset"] { --bg-color: #2e0219; --accent-color: #ff3366; --bg-image: linear-gradient(180deg, #2e0219, #0a0005); --text-primary: #fff; --text-secondary: #fbb;}
@@ -30,7 +58,7 @@
         [data-theme="cherry-blossom"] { --bg-color: #fce4ec; --accent-color: #f06292; --bg-image: radial-gradient(circle, #fce4ec, #f8bbd0); --surface-color: #ffffff; --text-primary: #880e4f; --text-secondary: #c2185b; }
         [data-theme="solarized-dark"] { --bg-color: #002b36; --accent-color: #2aa198; --bg-image: none; background-color: #002b36; --surface-color: #073642; --text-primary: #839496; --text-secondary: #586e75; --card-border: #2aa198; }
 
-        /* --- Category 2: Game Inspired --- */
+        /* Group 2: Game Inspired */
         [data-theme="minecraft"] { --bg-color: #3b2313; --accent-color: #55ff55; --bg-image: linear-gradient(180deg, #68913b 0%, #68913b 15%, #3b2313 15%, #3b2313 100%); --radius-lg: 0px; --glass-blur: 0px; --card-border: rgba(85, 255, 85, 0.4); --text-primary: #fff; }
         [data-theme="cyberpunk"] { --bg-color: #09090b; --accent-color: #fce700; --bg-image: radial-gradient(circle at bottom right, #270030, #09090b 80%); --glass-bg: rgba(20, 20, 20, 0.85); --glass-blur: 4px; --radius-lg: 12px; --text-primary: #fff;}
         [data-theme="portal"] { --bg-color: #dcdcdc; --accent-color: #ff9900; --bg-image: linear-gradient(90deg, #e6e6e6 50%, #dcdcdc 50%); --surface-color: #ffffff; --text-primary: #111; --text-secondary: #444; --card-border: #00aaff; --radius-lg: 8px; }
@@ -42,12 +70,11 @@
         [data-theme="sheikah"] { --bg-color: #1e1b18; --accent-color: #4cd6e6; --bg-image: radial-gradient(circle, #2a2520, #141210); --card-border: rgba(76, 214, 230, 0.5); --radius-lg: 16px; --text-primary: #ffedcc; --text-secondary: #ccbb99;}
         [data-theme="skyrim"] { --bg-color: #1c2331; --accent-color: #9eabb8; --bg-image: linear-gradient(to bottom, #2b3a4a, #0b0f17); --card-border: rgba(158, 171, 184, 0.4); --radius-lg: 4px; --text-primary: #e2e8f0; --text-secondary: #94a3b8;}
 
-        /* --- Category 3: Retro / Tech / OS --- */
+        /* Group 3: Retro / Tech / OS */
         [data-theme="windows-xp-theme"] { --bg-color: #003399; --accent-color: #3c8141; --bg-image: linear-gradient(180deg, #245edb 0%, #245edb 75%, #3c8141 100%); --radius-lg: 8px; --text-primary: #fff;}
         [data-theme="macos-27"] { --bg-color: #0b0b12; --accent-color: #007aff; --bg-image: radial-gradient(circle at 10% 20%, rgba(255, 42, 109, 0.4), transparent 40%), radial-gradient(circle at 90% 80%, rgba(5, 213, 255, 0.4), transparent 40%), #0b0b12; --glass-blur: 40px; --radius-lg: 40px; --text-primary: #fff; }
         [data-theme="synthwave"] { --bg-color: #090014; --accent-color: #00ffff; --bg-image: linear-gradient(180deg, #090014, #2b003b, #ff007f); --text-primary: #fff; }
         [data-theme="linux-terminal"] { --bg-color: #000000; --accent-color: #00ff00; --bg-image: none; background-color: #000000; --glass-blur: 0px; --card-border: #00ff00; --radius-lg: 0px; --text-primary: #00ff00; --text-secondary: #008800;}
-        [data-theme="linux-terminal"] * { font-family: 'Courier New', Courier, monospace !important; }
         [data-theme="console-ui"] { --bg-color: #12151a; --accent-color: #3b82f6; --bg-image: radial-gradient(circle at top right, #1e293b, #0f172a); --radius-lg: 32px; --radius-md: 100px; --text-primary: #fff;}
         [data-theme="vhs-glitch"] { --bg-color: #0000aa; --accent-color: #ffffff; --bg-image: repeating-linear-gradient(0deg, #0000aa, #0000aa 2px, #0000dd 2px, #0000dd 4px); --text-primary: #ffffff; --text-secondary: #aaa; --card-border: rgba(255,255,255,0.5); --radius-lg: 0px; }
         [data-theme="game-boy"] { --bg-color: #8bac0f; --accent-color: #0f380f; --bg-image: none; background-color: #8bac0f; --surface-color: #9bbc0f; --text-primary: #0f380f; --text-secondary: #306230; --card-border: #0f380f; --radius-lg: 8px; }
@@ -55,7 +82,7 @@
         [data-theme="vaporwave"] { --bg-color: #ffb3ba; --accent-color: #ff99c8; --bg-image: linear-gradient(180deg, #ffb3ba, #ffdfba, #ffffba, #baffc9, #bae1ff); --surface-color: rgba(255,255,255,0.4); --text-primary: #333; --text-secondary: #666; }
         [data-theme="e-ink"] { --bg-color: #eeeeee; --accent-color: #000000; --bg-image: none; background-color: #f4f4f4; --surface-color: #ffffff; --text-primary: #000000; --text-secondary: #555555; --card-border: #000000; --radius-lg: 4px; }
 
-        /* --- Category 4: Animated & Dynamic --- */
+        /* Group 4: Animated & Dynamic */
         [data-theme="dynamic-time"] { --glass-blur: 16px; --radius-lg: 24px; --text-primary: #fff;}
         [data-theme="matrix"] { --bg-color: #000000; --accent-color: #00ff41; --bg-image: linear-gradient(0deg, #000000 0%, #002209 50%, #000000 100%); background-size: 100% 400%; animation: scrollY 10s linear infinite; --glass-bg: rgba(0, 20, 0, 0.6); --glass-blur: 8px; --card-border: rgba(0, 255, 65, 0.3); --text-primary: #00ff41; --text-secondary: #008822;}
         [data-theme="ocean-wave"] { --bg-color: #001f3f; --accent-color: #7FDBFF; --bg-image: linear-gradient(45deg, #001122, #003366, #005577, #001122); background-size: 300% 300%; animation: bgShift 12s ease-in-out infinite alternate; --text-primary: #fff;}
@@ -70,73 +97,108 @@
         /* Custom Mode */
         [data-theme="custom"] { --bg-image: radial-gradient(circle at top center, var(--surface-color), var(--bg-color)); --text-primary: #fff; }
 
+        /* Keyframes for backgrounds */
         @keyframes bgShift { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
         @keyframes scrollY { 0% { background-position: 0% 0%; } 100% { background-position: 0% 100%; } }
         @keyframes bgPulse { 0% { background-position: 50% 50%; background-size: 100% 100%; } 100% { background-position: 50% 50%; background-size: 150% 150%; } }
 
-        /* ================= STRICT UI ISOLATION ================= */
-        .switch-ui, .xp-ui, .xbox-ui { display: none !important; }
-        body[data-layout="switch"] .switch-ui { display: flex !important; }
-        body[data-layout="xp"] .xp-ui { display: flex !important; }
-        body[data-layout="xbox360"] .xbox-ui { display: flex !important; }
-
-        /* ================= BASE STYLES ================= */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif; min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; transition: background 0.6s ease; }
-        
-        /* Apply dynamic theme variables ONLY to Slider and Grid layouts */
-        body[data-layout="slider"], body[data-layout="grid"] { background: var(--bg-image); background-color: var(--bg-color); background-attachment: fixed; color: var(--text-primary); }
-        
+        /* =========================================================
+           STANDARD HEADER & NAV (Slider/Grid/Flow)
+        ========================================================= */
         header { padding: 3rem 5vw 1rem; text-align: center; position: relative; z-index: 10; }
-        .header-btn { position: absolute; top: 2.5rem; background: var(--glass-bg, rgba(255,255,255,0.1)); backdrop-filter: blur(var(--glass-blur, 12px)); border: 1px solid var(--card-border, rgba(255,255,255,0.1)); border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; z-index: 50; }
+        
+        .universal-clock { position: absolute; top: 2.5rem; left: 5vw; font-size: 1.5rem; font-weight: 700; color: var(--text-primary); height: 48px; display: flex; align-items: center; }
+        body[data-layout="switch"] .universal-clock, body[data-layout="xp"] .universal-clock, body[data-layout="xbox360"] .universal-clock { display: none !important; }
+
+        .header-btn { position: absolute; top: 2.5rem; background: var(--glass-bg, rgba(255,255,255,0.1)); backdrop-filter: blur(var(--glass-blur, 12px)); -webkit-backdrop-filter: blur(var(--glass-blur, 12px)); border: 1px solid var(--card-border, rgba(255,255,255,0.1)); border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; z-index: 50; }
         .header-btn:hover { background: var(--surface-hover, rgba(255,255,255,0.2)); border-color: var(--accent-color); box-shadow: 0 0 15px var(--accent-glow); }
         .header-btn svg { width: 24px; height: 24px; fill: var(--text-secondary, #fff); transition: fill 0.3s ease; }
         .header-btn:hover svg { fill: var(--accent-color); }
         .settings-btn { right: 5vw; }
-        .changelog-btn { position: absolute; top: 2.5rem; left: 5vw; background: var(--glass-bg, rgba(255,255,255,0.1)); backdrop-filter: blur(var(--glass-blur, 12px)); border: 1px solid var(--card-border, rgba(255,255,255,0.1)); border-radius: var(--radius-md, 12px); padding: 0 1.2rem; height: 48px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; z-index: 50; color: var(--text-secondary, #fff); font-weight: 600; }
+        
+        .changelog-btn { position: absolute; top: 2.5rem; right: calc(5vw + 65px); background: var(--glass-bg, rgba(255,255,255,0.1)); backdrop-filter: blur(var(--glass-blur, 12px)); -webkit-backdrop-filter: blur(var(--glass-blur, 12px)); border: 1px solid var(--card-border, rgba(255,255,255,0.1)); border-radius: var(--radius-md, 12px); padding: 0 1.2rem; height: 48px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; z-index: 50; color: var(--text-secondary, #fff); font-weight: 600; }
         .changelog-btn:hover { background: var(--surface-hover, rgba(255,255,255,0.2)); border-color: var(--accent-color); color: var(--accent-color); box-shadow: 0 0 15px var(--accent-glow); transform: translateY(-2px); }
 
         h1 { font-size: 3.5rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 2rem; background: linear-gradient(135deg, var(--accent-light, #fff), var(--accent-color, #6366f1)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
         .toolbar { display: flex; justify-content: center; margin-bottom: 2rem; }
-        .tab-container { display: inline-flex; background: var(--glass-bg, rgba(255,255,255,0.1)); padding: 0.5rem; border-radius: var(--radius-lg, 28px); backdrop-filter: blur(var(--glass-blur, 12px)); border: 1px solid var(--card-border, rgba(255,255,255,0.1)); transition: border-radius 0.3s ease; }
+        .tab-container { display: inline-flex; background: var(--glass-bg, rgba(255,255,255,0.1)); padding: 0.5rem; border-radius: var(--radius-lg, 28px); backdrop-filter: blur(var(--glass-blur, 12px)); -webkit-backdrop-filter: blur(var(--glass-blur, 12px)); border: 1px solid var(--card-border, rgba(255,255,255,0.1)); transition: border-radius 0.3s ease; }
         .tab-btn { background: transparent; color: var(--text-secondary, #fff); border: none; padding: 0.8rem 2rem; font-size: 1rem; font-weight: 600; border-radius: var(--radius-md, 16px); cursor: pointer; transition: all 0.3s ease; }
         .tab-btn:hover { color: var(--text-primary, #fff); }
         .tab-btn.active { background-color: var(--accent-color, #6366f1); color: white; box-shadow: 0 4px 20px var(--accent-glow); }
 
+        /* =========================================================
+           CARD ENGINE (Slider / Grid / Flow)
+        ========================================================= */
         .tab-content { display: none; opacity: 0; transform: translateY(20px); transition: opacity 0.4s ease, transform 0.4s ease; }
         .tab-content.active { display: block; opacity: 1; transform: translateY(0); }
         .slider-wrapper { position: relative; width: 100%; z-index: 5;}
-        .card-container { display: flex; gap: 1.5rem; padding: 1rem 5vw 4rem; }
-        .card-container::after { content: ''; flex: 0 0 1px; padding-right: 5vw; }
-
-        /* General Card Styles for Slider/Grid */
-        .card { flex: 0 0 auto; width: 240px; height: 280px; background: var(--glass-bg, rgba(255,255,255,0.1)); backdrop-filter: blur(var(--glass-blur, 12px)); border: 1px solid var(--card-border, rgba(255,255,255,0.1)); border-radius: var(--radius-lg, 28px); text-decoration: none; color: var(--text-primary, #fff); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative; overflow: hidden; box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5); }
-        .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; border-radius: var(--radius-lg, 28px); border: 2px solid transparent; background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0)) border-box; -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0); -webkit-mask-composite: destination-out; mask-composite: exclude; transition: all 0.3s ease; }
-        .card-icon { width: 72px; height: 72px; margin-bottom: 1.5rem; fill: none; stroke: var(--text-secondary, #ccc); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transition: all 0.3s ease; }
-        .card span { font-size: 1.15rem; font-weight: 600; text-align: center; padding: 0 1rem; margin-top: 10px; z-index: 2;}
         
-        .playtime-display { position: absolute; bottom: 15px; font-size: 0.8rem; color: var(--text-secondary, #ccc); font-weight: 500; opacity: 0.8; z-index: 2;}
-
-        .badge { position: absolute; top: 1rem; right: 1rem; background: var(--accent-color, #6366f1); color: white; font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: var(--radius-md, 16px); text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 10px var(--accent-glow); transition: border-radius 0.3s; z-index: 2;}
-        .fav-star { position: absolute; top: 1rem; left: 1rem; width: 24px; height: 24px; cursor: pointer; fill: transparent; stroke: var(--text-secondary, #fff); stroke-width: 2; transition: all 0.2s; z-index: 10; }
+        .card { 
+            background: var(--glass-bg, rgba(255,255,255,0.1)); backdrop-filter: blur(var(--glass-blur, 12px)); -webkit-backdrop-filter: blur(var(--glass-blur, 12px)); 
+            border: 1px solid var(--card-border, rgba(255,255,255,0.1)); border-radius: var(--radius-lg, 28px); 
+            text-decoration: none; color: var(--text-primary, #fff); display: flex; align-items: center; justify-content: center; 
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative; overflow: hidden; box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5); 
+        }
+        .card::before { 
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; border-radius: inherit; border: 2px solid transparent; 
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0)) border-box; 
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0); -webkit-mask-composite: destination-out; mask-composite: exclude; transition: all 0.3s ease; 
+        }
+        .card-icon { fill: none; stroke: var(--text-secondary, #ccc); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transition: all 0.3s ease; }
+        .card:hover::before { border-color: var(--accent-color); }
+        
+        .playtime-display { font-size: 0.8rem; color: var(--text-secondary, #ccc); font-weight: 500; opacity: 0.8; z-index: 2;}
+        .badge { background: var(--accent-color, #6366f1); color: white; font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: var(--radius-md, 16px); text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 10px var(--accent-glow); transition: border-radius 0.3s; z-index: 2;}
+        
+        .fav-star { width: 24px; height: 24px; cursor: pointer; fill: transparent; stroke: var(--text-secondary, #fff); stroke-width: 2; transition: all 0.2s; z-index: 10; }
         .fav-star:hover { transform: scale(1.2); }
         .card.favorited .fav-star { fill: #fce700; stroke: #fce700; filter: drop-shadow(0 0 8px rgba(252, 231, 0, 0.5)); }
 
-        /* ================= LAYOUT ENGINE ================= */
-        /* --- Slider (Default) --- */
-        body[data-layout="slider"] .card-container { overflow-x: auto; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; scrollbar-width: none; }
+        /* Smooth Icon Animations (Constant) */
+        @keyframes subtleFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @keyframes subtlePulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+        @keyframes subtleSwing { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(5deg); } 75% { transform: rotate(-5deg); } }
+        
+        body[data-layout="slider"] .card:nth-child(3n+1) .card-icon, body[data-layout="grid"] .card:nth-child(3n+1) .card-icon, body[data-layout="flow"] .card:nth-child(3n+1) .card-icon { animation: subtleFloat 4s ease-in-out infinite; }
+        body[data-layout="slider"] .card:nth-child(3n+2) .card-icon, body[data-layout="grid"] .card:nth-child(3n+2) .card-icon, body[data-layout="flow"] .card:nth-child(3n+2) .card-icon { animation: subtlePulse 4s ease-in-out infinite; }
+        body[data-layout="slider"] .card:nth-child(3n+3) .card-icon, body[data-layout="grid"] .card:nth-child(3n+3) .card-icon, body[data-layout="flow"] .card:nth-child(3n+3) .card-icon { animation: subtleSwing 5s ease-in-out infinite; }
+
+        /* --- Slider Layout --- */
+        body[data-layout="slider"] .card-container { display: flex; gap: 1.5rem; padding: 1rem 5vw 4rem; overflow-x: auto; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; scrollbar-width: none; }
+        body[data-layout="slider"] .card-container::after { content: ''; flex: 0 0 1px; padding-right: 5vw; }
         body[data-layout="slider"] .card-container::-webkit-scrollbar { display: none; }
-        body[data-layout="slider"] .card { scroll-snap-align: center; }
-        body[data-layout="slider"] .card:hover, body[data-layout="grid"] .card:hover { transform: translateY(-10px) scale(1.02); background: var(--surface-hover, rgba(255,255,255,0.2)); box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), 0 0 25px var(--accent-glow); }
-        body[data-layout="slider"] .card:hover::before, body[data-layout="grid"] .card:hover::before { border-color: var(--accent-color); }
-        body[data-layout="slider"] .card:hover .card-icon, body[data-layout="grid"] .card:hover .card-icon { stroke: var(--accent-light); transform: scale(1.1); }
+        body[data-layout="slider"] .card { flex: 0 0 auto; width: 240px; height: 280px; flex-direction: column; scroll-snap-align: center; }
+        body[data-layout="slider"] .card-icon { width: 72px; height: 72px; margin-bottom: 1.5rem; }
+        body[data-layout="slider"] .card span { font-size: 1.15rem; font-weight: 600; text-align: center; padding: 0 1rem; margin-top: 10px; z-index: 2;}
+        body[data-layout="slider"] .playtime-display { position: absolute; bottom: 15px; }
+        body[data-layout="slider"] .badge { position: absolute; top: 1rem; right: 1rem; }
+        body[data-layout="slider"] .fav-star { position: absolute; top: 1rem; left: 1rem; }
+        body[data-layout="slider"] .card:hover { transform: translateY(-10px) scale(1.02); background: var(--surface-hover, rgba(255,255,255,0.2)); box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), 0 0 25px var(--accent-glow); }
+        
+        /* --- Grid Layout --- */
+        body[data-layout="grid"] .card-container { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; padding: 1rem 5vw 4rem; overflow-x: hidden; }
+        body[data-layout="grid"] .card { width: 240px; height: 280px; flex-direction: column; }
+        body[data-layout="grid"] .card-icon { width: 72px; height: 72px; margin-bottom: 1.5rem; }
+        body[data-layout="grid"] .card span { font-size: 1.15rem; font-weight: 600; text-align: center; padding: 0 1rem; margin-top: 10px; z-index: 2;}
+        body[data-layout="grid"] .playtime-display { position: absolute; bottom: 15px; }
+        body[data-layout="grid"] .badge { position: absolute; top: 1rem; right: 1rem; }
+        body[data-layout="grid"] .fav-star { position: absolute; top: 1rem; left: 1rem; }
+        body[data-layout="grid"] .card:hover { transform: translateY(-10px) scale(1.02); background: var(--surface-hover, rgba(255,255,255,0.2)); box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), 0 0 25px var(--accent-glow); }
 
-        /* --- Grid --- */
-        body[data-layout="grid"] .card-container { flex-wrap: wrap; justify-content: center; overflow-x: hidden; padding-bottom: 4rem; }
-        body[data-layout="grid"] .card-container::after { display: none; }
+        /* --- Flow Layout --- */
+        body[data-layout="flow"] .card-container { display: flex; flex-direction: column; align-items: center; gap: 1rem; padding: 1rem 5vw 4rem; overflow-y: auto; overflow-x: hidden; height: 70vh; scrollbar-width: none; }
+        body[data-layout="flow"] .card { width: 90%; max-width: 700px; height: 100px; flex-direction: row; justify-content: flex-start; padding: 0 2rem; border-radius: var(--radius-md); }
+        body[data-layout="flow"] .card-icon { width: 40px; height: 40px; margin: 0 1.5rem 0 0; }
+        body[data-layout="flow"] .card span { margin: 0; font-size: 1.25rem; flex: 1; text-align: left; }
+        body[data-layout="flow"] .playtime-display { position: relative; margin-left: auto; margin-right: 1.5rem; font-size: 0.95rem;}
+        body[data-layout="flow"] .badge { position: relative; top: 0; right: 0; margin-left: 1rem; }
+        body[data-layout="flow"] .fav-star { position: relative; top: 0; left: 0; margin-right: 1rem; }
+        body[data-layout="flow"] .card:hover { transform: scale(1.02); background: var(--surface-hover, rgba(255,255,255,0.2)); box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.5), 0 0 20px var(--accent-glow); }
 
-        /* --- Nintendo Switch Layout --- */
+        /* =========================================================
+           NINTENDO SWITCH LAYOUT
+        ========================================================= */
         body[data-layout="switch"] { background: #2b2b2b !important; color: white !important; }
         body[data-layout="switch"] header, body[data-layout="switch"] footer { display: none !important; }
         
@@ -156,15 +218,17 @@
         body[data-layout="switch"] .tab-content { display: block !important; opacity: 1 !important; transform: none !important; }
         body[data-layout="switch"] #clients, body[data-layout="switch"] #packs { display: none !important; }
         
-        body[data-layout="switch"] .card-container { overflow-x: auto; scroll-behavior: smooth; padding: 8rem 4rem 10rem 4rem; align-items: center; flex-wrap: nowrap; justify-content: flex-start; scrollbar-width: none; }
-        body[data-layout="switch"] .card { width: 256px; height: 256px; border-radius: 0; background: #444 !important; border: 4px solid transparent !important; outline: none; transition: transform 0.2s, border-color 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.5) !important; backdrop-filter: none !important; }
+        body[data-layout="switch"] .card-container { display: flex; gap: 1.5rem; overflow-x: auto; scroll-behavior: smooth; padding: 8rem 4rem 10rem 4rem; align-items: center; flex-wrap: nowrap; justify-content: flex-start; scrollbar-width: none; }
+        body[data-layout="switch"] .card { flex: 0 0 auto; width: 256px; height: 256px; border-radius: 0; background: #444 !important; border: 4px solid transparent !important; outline: none; transition: transform 0.2s, border-color 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.5) !important; flex-direction: column;}
         body[data-layout="switch"] .card::before { display: none !important; }
         body[data-layout="switch"] .card:hover { transform: scale(1.08); border-color: #00e6cc !important; background: #555 !important; z-index: 10; }
-        body[data-layout="switch"] .card span { font-weight: 700; color: white !important; }
-        body[data-layout="switch"] .card-icon { stroke: white !important; }
+        body[data-layout="switch"] .card span { font-weight: 700; color: white !important; font-size: 1.15rem; margin-top: 15px;}
+        body[data-layout="switch"] .card-icon { width: 72px; height: 72px; stroke: white !important; animation: none !important; transform: none !important;}
         body[data-layout="switch"] .playtime-display, body[data-layout="switch"] .badge, body[data-layout="switch"] .fav-star { display: none !important; }
 
-        /* --- True Windows XP Layout --- */
+        /* =========================================================
+           WINDOWS XP LAYOUT
+        ========================================================= */
         body[data-layout="xp"] { background: url('windowsxp.jpg') no-repeat center center fixed !important; background-size: cover !important; background-color: #3a6ea5 !important; color: black !important; font-family: Tahoma, 'Segoe UI', sans-serif !important; }
         body[data-layout="xp"] header, body[data-layout="xp"] footer, body[data-layout="xp"] .slider-wrapper { display: none !important; }
         
@@ -194,11 +258,23 @@
         .xp-item.right-item { font-size: 0.85rem; color: #001254; font-weight: 600; }
         .xp-item.right-item:hover { background: #1941a5; color: white; }
 
-        /* --- Xbox 360 (NXE) Layout --- */
-        body[data-layout="xbox360"] { background: radial-gradient(circle at center top, #91c73f 0%, #4b6623 40%, #768a86 60%, #35383c 100%) !important; color: #fff !important; font-family: 'Segoe UI', Tahoma, sans-serif !important; overflow: hidden !important; }
-        body[data-layout="xbox360"]::before { content: ''; position: absolute; inset: 0; pointer-events: none; z-index: -1; background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 10%), radial-gradient(circle at 80% 60%, rgba(255,255,255,0.05) 0%, transparent 15%); background-size: 200px 200px; }
+        /* =========================================================
+           XBOX 360 (NXE) LAYOUT
+        ========================================================= */
+        body[data-layout="xbox360"] { 
+            background: linear-gradient(135deg, #7db337 0%, #4b6623 30%, #5a6b68 70%, #25282c 100%) !important; 
+            background-size: 200% 200% !important; animation: nxeFloat 15s ease-in-out infinite alternate !important; 
+            color: #fff !important; font-family: 'Segoe UI', Tahoma, sans-serif !important; overflow: hidden !important; 
+        }
+        @keyframes nxeFloat { 0% { background-position: 0% 0%; } 100% { background-position: 100% 100%; } }
         body[data-layout="xbox360"] header, body[data-layout="xbox360"] footer { display: none !important; }
         
+        /* Auto-Playing Fullscreen Xbox Video */
+        #xbox-boot-screen { position: fixed; inset: 0; background: #000; z-index: 10000; display: none; opacity: 1; transition: opacity 0.5s ease; }
+        #xbox-boot-prompt { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; color: #fff; font-size: 1.5rem; cursor: pointer; animation: pulseText 2s infinite; font-family: sans-serif; background: rgba(0,0,0,0.8); z-index: 10001;}
+        @keyframes pulseText { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        #xbox-boot-video { width: 100%; height: 100%; object-fit: cover; }
+
         .xbox-top-nav { position: absolute; top: 10%; left: 5%; flex-direction: column; gap: 10px; z-index: 20; display: flex;}
         .xbox-tab { font-size: 1.5rem; color: rgba(255,255,255,0.5); cursor: pointer; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); transition: 0.2s;}
         .xbox-tab:hover { color: rgba(255,255,255,0.8); }
@@ -219,24 +295,24 @@
         body[data-layout="xbox360"] .tab-content { position: absolute !important; top: 35% !important; left: 0 !important; right: 0 !important; height: 400px !important; display: none; opacity: 0; transition: opacity 0.3s ease; }
         body[data-layout="xbox360"] .tab-content.active { display: block !important; opacity: 1 !important; transform: none !important;}
         body[data-layout="xbox360"] .slider-wrapper { height: 100%; }
-        body[data-layout="xbox360"] .card-container { display: flex; gap: -20px; overflow-x: auto; padding: 0 10vw; align-items: center; height: 100%; scrollbar-width: none;}
-        body[data-layout="xbox360"] .card { flex: 0 0 auto; width: 300px; height: 220px; background: linear-gradient(135deg, #b9f032 0%, #7db337 100%) !important; border: 2px solid #d4ff5e !important; border-radius: 4px !important; box-shadow: 5px 10px 20px rgba(0,0,0,0.4), inset 0 20px 20px rgba(255,255,255,0.3) !important; transform: perspective(800px) rotateY(-15deg) scale(0.9); transition: all 0.3s ease; justify-content: flex-end; padding-bottom: 20px; align-items: flex-start; padding-left: 20px; backdrop-filter: none !important;}
-        body[data-layout="xbox360"] .card:hover { transform: perspective(800px) rotateY(0deg) scale(1.05); z-index: 10; background: linear-gradient(135deg, #c7ff3c 0%, #8cc73f 100%) !important; }
+        body[data-layout="xbox360"] .card-container { display: flex; gap: -30px; overflow-x: auto; padding: 0 10vw; align-items: center; height: 100%; scrollbar-width: none;}
+        
+        /* Bigger Xbox Cards */
+        body[data-layout="xbox360"] .card { flex: 0 0 auto; width: 380px; height: 260px; background: linear-gradient(135deg, #b9f032 0%, #7db337 100%) !important; border: 2px solid #d4ff5e !important; border-radius: 4px !important; box-shadow: 5px 10px 20px rgba(0,0,0,0.4), inset 0 20px 20px rgba(255,255,255,0.3) !important; transform: perspective(1000px) rotateY(-10deg) scale(0.9); transition: all 0.3s ease; justify-content: flex-end; padding-bottom: 20px; align-items: flex-start; padding-left: 20px; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; flex-direction: column;}
+        body[data-layout="xbox360"] .card:hover { transform: perspective(1000px) rotateY(0deg) scale(1.05); z-index: 10; background: linear-gradient(135deg, #c7ff3c 0%, #8cc73f 100%) !important; }
         body[data-layout="xbox360"] .card::before { display: none !important; }
-        body[data-layout="xbox360"] .card span { font-size: 1.5rem; font-weight: normal; color: #fff !important; text-shadow: 1px 1px 2px rgba(0,0,0,0.4); text-align: left; padding: 0;}
-        body[data-layout="xbox360"] .card-icon { position: absolute; top: 20%; left: 50%; transform: translateX(-50%); width: 100px; height: 100px; stroke: rgba(255,255,255,0.8) !important; }
+        body[data-layout="xbox360"] .card span { font-size: 2rem; font-weight: normal; color: #fff !important; text-shadow: 1px 1px 2px rgba(0,0,0,0.4); text-align: left; padding: 0;}
+        body[data-layout="xbox360"] .card-icon { position: absolute; top: 15%; left: 50%; transform: translateX(-50%); width: 130px; height: 130px; stroke: rgba(255,255,255,0.8) !important; animation: none !important;}
         body[data-layout="xbox360"] .badge, body[data-layout="xbox360"] .fav-star, body[data-layout="xbox360"] .playtime-display { display: none !important; }
 
-        /* ================= OVERLAYS ================= */
-        footer { margin-top: auto; text-align: center; padding: 2rem; color: var(--text-secondary); font-size: 0.9rem; }
-        
-        .overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 9000; }
+        /* ================= OVERLAYS (Settings / Changelog) ================= */
+        .overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 9000; }
         .overlay.active { opacity: 1; visibility: visible; }
         
-        .side-panel { position: fixed; top: 0; right: -420px; width: 100%; max-width: 420px; height: 100vh; background: var(--glass-bg, rgba(0,0,0,0.8)); backdrop-filter: blur(30px); border-left: 1px solid var(--card-border, #555); z-index: 9001; transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1); display: flex; flex-direction: column; padding: 2rem; box-shadow: -10px 0 30px rgba(0,0,0,0.5); overflow-y: auto; color: var(--text-primary, #fff); }
+        .side-panel { position: fixed; top: 0; right: -420px; width: 100%; max-width: 420px; height: 100vh; background: var(--glass-bg, rgba(0,0,0,0.8)); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border-left: 1px solid var(--card-border, #555); z-index: 9001; transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1); display: flex; flex-direction: column; padding: 2rem; box-shadow: -10px 0 30px rgba(0,0,0,0.5); overflow-y: auto; color: var(--text-primary, #fff); }
         .side-panel.active { right: 0; }
         
-        .center-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -45%) scale(0.95); width: 90%; max-width: 600px; max-height: 80vh; background: var(--glass-bg, #111); backdrop-filter: blur(30px); border: 1px solid var(--card-border, #555); border-radius: var(--radius-lg, 12px); z-index: 9001; display: flex; flex-direction: column; padding: 2rem; box-shadow: 0 20px 50px rgba(0,0,0,0.5); opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); color: var(--text-primary, #fff); }
+        .center-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -45%) scale(0.95); width: 90%; max-width: 600px; max-height: 80vh; background: var(--glass-bg, #111); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border: 1px solid var(--card-border, #555); border-radius: var(--radius-lg, 12px); z-index: 9001; display: flex; flex-direction: column; padding: 2rem; box-shadow: 0 20px 50px rgba(0,0,0,0.5); opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); color: var(--text-primary, #fff); }
         .center-modal.active { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
         .changelog-content { overflow-y: auto; line-height: 1.6; white-space: pre-wrap; font-family: monospace; font-size: 0.95rem; background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: var(--radius-md, 8px); border: 1px solid rgba(255,255,255,0.05); }
 
@@ -264,7 +340,7 @@
         .tut-replay-btn { width: 100%; margin-top: 1rem; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: inherit; padding: 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
         .tut-replay-btn:hover { background: rgba(255,255,255,0.05); }
 
-        /* Xbox 360 Settings Inputs */
+        /* Xbox Settings Inputs */
         .xbox-input { width: 100%; padding: 10px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); color: white; border-radius: 8px; font-family: inherit; font-size: 1rem; margin-bottom: 1rem; outline: none;}
         .xbox-input:focus { border-color: var(--accent-color); }
         .pfp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1rem; }
@@ -272,32 +348,42 @@
         .pfp-option:hover { opacity: 0.8; }
         .pfp-option.active { border-color: var(--accent-color); opacity: 1; filter: drop-shadow(0 0 8px var(--accent-glow)); }
 
-        /* ================= macOS SETUP TUTORIAL ================= */
-        .tutorial-overlay { position: fixed; inset: 0; z-index: 9999; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(60px); -webkit-backdrop-filter: blur(60px); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.8s ease, visibility 0.8s ease; }
+        /* ================= SETUP TUTORIAL ================= */
+        .tutorial-overlay { position: fixed; inset: 0; z-index: 9999; background: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.8s ease, visibility 0.8s ease; overflow: hidden; }
         .tutorial-overlay.show { opacity: 1; visibility: visible; }
-        .tutorial-slide { position: absolute; max-width: 550px; width: 90%; text-align: center; opacity: 0; transform: translateY(30px) scale(0.95); pointer-events: none; transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1); color: white; }
+        
+        .tutorial-slide { 
+            position: absolute; max-width: 550px; width: 90%; text-align: center; 
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 24px;
+            padding: 3rem;
+            opacity: 0; transform: translateY(30px) scale(0.95); pointer-events: none; transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1); color: white; 
+        }
         .tutorial-slide.active { opacity: 1; transform: translateY(0) scale(1); pointer-events: all; }
         
         .tut-title { font-size: 2.5rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 1rem; }
-        .tut-text { font-size: 1.15rem; color: #d1d5db; line-height: 1.6; margin-bottom: 2.5rem; }
-        .tut-icon { width: 100px; height: 100px; margin: 0 auto 2rem; stroke: white; stroke-width: 1; fill: none; display: block; }
+        .tut-text { font-size: 1.15rem; color: #e2e8f0; line-height: 1.6; margin-bottom: 2.5rem; text-shadow: 0 1px 2px rgba(0,0,0,0.2);}
+        .tut-icon { width: 100px; height: 100px; margin: 0 auto 2rem; stroke: white; stroke-width: 1; fill: none; display: block; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2)); }
         
         .tut-btn-group { display: flex; justify-content: center; gap: 1rem; margin-top: 2rem;}
-        .tut-btn { background: white; color: black; border: none; padding: 0.9rem 2.5rem; font-size: 1.05rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+        .tut-btn { background: rgba(255,255,255,0.9); color: black; border: none; padding: 0.9rem 2.5rem; font-size: 1.05rem; font-weight: 600; border-radius: 12px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
         .tut-btn:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(255,255,255,0.2); }
-        .tut-btn-secondary { background: rgba(255, 255, 255, 0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 0.9rem 2.5rem; font-size: 1.05rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+        .tut-btn-secondary { background: rgba(255, 255, 255, 0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 0.9rem 2.5rem; font-size: 1.05rem; font-weight: 600; border-radius: 12px; cursor: pointer; transition: all 0.2s;}
         .tut-btn-secondary:hover { background: rgba(255, 255, 255, 0.2); }
-        .tut-btn-start { background: #007aff; color: white; }
+        .tut-btn-start { background: #007aff; color: white; border: none;}
         .tut-btn-start:hover { box-shadow: 0 10px 25px rgba(0, 122, 255, 0.4); transform: scale(1.05); }
 
         .cursive-wrapper { margin-bottom: 1.5rem; display: flex; justify-content: center; }
         .cursive-welcome { font-family: 'Pacifico', cursive; font-size: 5.5rem; color: rgba(255,255,255,0.05); position: relative; display: inline-block; padding: 10px 30px; letter-spacing: 2px; }
         .cursive-welcome::before { content: 'welcome'; position: absolute; left: 30px; top: 10px; color: white; white-space: nowrap; overflow: hidden; width: 0; filter: drop-shadow(0 0 15px rgba(255,255,255,0.5)); }
-        .tutorial-overlay.show .cursive-welcome::before { animation: writeText 2.5s cubic-bezier(0.2, 0.8, 0.2, 1) 0.5s forwards; }
+        .tutorial-overlay.show .cursive-welcome::before { animation: writeText 2s cubic-bezier(0.2, 0.8, 0.2, 1) 0.5s forwards; }
         @keyframes writeText { 0% { width: 0; } 100% { width: 100%; } }
 
-        .fade-in-delay { opacity: 0; animation: fadeIn 1s 2.8s ease forwards; }
-        .fade-in-delay-btn { opacity: 0; transform: translateY(10px); animation: fadeUp 1s 3.2s ease forwards; }
+        .fade-in-delay { opacity: 0; animation: fadeIn 1s 2.5s ease forwards; }
+        .fade-in-delay-btn { opacity: 0; transform: translateY(10px); animation: fadeUp 1s 3s ease forwards; }
         @keyframes fadeIn { to { opacity: 1; } }
         @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
@@ -306,7 +392,16 @@
         .tut-theme-grid::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 10px; }
     </style>
 </head>
+<!-- Hard default to slider on initial boot to prevent layout bugs -->
 <body data-theme="default" data-layout="slider">
+
+    <!-- ==============================================
+         XBOX BOOT SCREEN (Auto-Plays Video)
+    =============================================== -->
+    <div id="xbox-boot-screen">
+        <div id="xbox-boot-prompt">Click to Power On Console</div>
+        <video id="xbox-boot-video" src="videoplayback.webm" playsinline style="display:none;"></video>
+    </div>
 
     <!-- ==============================================
          OS SPECIFIC OVERLAYS (STRICTLY ISOLATED)
@@ -389,7 +484,7 @@
     </div>
 
     <!-- ==============================================
-         SETUP TUTORIAL (macOS Style)
+         SETUP TUTORIAL
     =============================================== -->
     <div class="tutorial-overlay" id="tutorial-overlay">
         <!-- Slide 1 -->
@@ -418,6 +513,7 @@
             <div class="layout-toggle" style="margin-bottom: 2rem;">
                 <button class="layout-btn active" id="btn-layout-slider" onclick="setLayout('slider')">Slider</button>
                 <button class="layout-btn" id="btn-layout-grid" onclick="setLayout('grid')">Grid</button>
+                <button class="layout-btn" id="btn-layout-flow" onclick="setLayout('flow')">Flow</button>
                 <button class="layout-btn" id="btn-layout-switch" onclick="setLayout('switch')">Switch UI</button>
                 <button class="layout-btn" id="btn-layout-xp" onclick="setLayout('xp')">Windows XP</button>
                 <button class="layout-btn" id="btn-layout-xbox360" onclick="setLayout('xbox360')">Xbox 360</button>
@@ -428,55 +524,19 @@
             </div>
         </div>
 
-        <!-- Slide 4 (Themes - ONLY if Slider/Grid) -->
+        <!-- Slide 4 (Themes - ONLY if Slider/Grid/Flow) -->
         <div class="tutorial-slide" id="tut-slide-4">
             <h2 class="tut-title">Select a Vibe</h2>
             <p class="tut-text" style="margin-bottom: 1.5rem;">Click a theme below to preview it.</p>
             <div class="tut-theme-grid">
-                <!-- Group 1 -->
                 <button class="theme-btn active" data-btn-theme="default" onclick="setTheme('default')">Default Slate</button>
                 <button class="theme-btn" data-btn-theme="liquid-glass" onclick="setTheme('liquid-glass')">Liquid Glass</button>
-                <button class="theme-btn" data-btn-theme="monochrome" onclick="setTheme('monochrome')">Monochrome</button>
-                <button class="theme-btn" data-btn-theme="golden-hour" onclick="setTheme('golden-hour')">Golden Hour</button>
-                <button class="theme-btn" data-btn-theme="sunset" onclick="setTheme('sunset')">Sunset</button>
-                <button class="theme-btn" data-btn-theme="nebula" onclick="setTheme('nebula')">Nebula</button>
-                <button class="theme-btn" data-btn-theme="midnight-blue" onclick="setTheme('midnight-blue')">Midnight Blue</button>
-                <button class="theme-btn" data-btn-theme="mint-frost" onclick="setTheme('mint-frost')">Mint Frost</button>
-                <button class="theme-btn" data-btn-theme="cherry-blossom" onclick="setTheme('cherry-blossom')">Cherry Blossom</button>
-                <button class="theme-btn" data-btn-theme="solarized-dark" onclick="setTheme('solarized-dark')">Solarized Dark</button>
-                <!-- Group 2 -->
-                <button class="theme-btn" data-btn-theme="minecraft" onclick="setTheme('minecraft')">Minecraft Block</button>
                 <button class="theme-btn" data-btn-theme="cyberpunk" onclick="setTheme('cyberpunk')">Cyberpunk</button>
-                <button class="theme-btn" data-btn-theme="portal" onclick="setTheme('portal')">Aperture Lab</button>
-                <button class="theme-btn" data-btn-theme="doom" onclick="setTheme('doom')">Doom Mars</button>
-                <button class="theme-btn" data-btn-theme="halo" onclick="setTheme('halo')">Spartan Green</button>
-                <button class="theme-btn" data-btn-theme="animal-crossing" onclick="setTheme('animal-crossing')">Island Pastel</button>
-                <button class="theme-btn" data-btn-theme="pip-boy" onclick="setTheme('pip-boy')">Pip-Boy Rads</button>
-                <button class="theme-btn" data-btn-theme="persona" onclick="setTheme('persona')">Phantom Thief</button>
-                <button class="theme-btn" data-btn-theme="sheikah" onclick="setTheme('sheikah')">Sheikah Slate</button>
-                <button class="theme-btn" data-btn-theme="skyrim" onclick="setTheme('skyrim')">Skyrim Frost</button>
-                <!-- Group 3 -->
-                <button class="theme-btn" data-btn-theme="windows-xp-theme" onclick="setTheme('windows-xp-theme')">Windows XP Mode</button>
                 <button class="theme-btn" data-btn-theme="macos-27" onclick="setTheme('macos-27')">macOS 27</button>
+                <button class="theme-btn" data-btn-theme="minecraft" onclick="setTheme('minecraft')">Minecraft</button>
+                <button class="theme-btn" data-btn-theme="portal" onclick="setTheme('portal')">Aperture Lab</button>
                 <button class="theme-btn" data-btn-theme="synthwave" onclick="setTheme('synthwave')">Synthwave 84</button>
-                <button class="theme-btn" data-btn-theme="linux-terminal" onclick="setTheme('linux-terminal')">Linux Terminal</button>
-                <button class="theme-btn" data-btn-theme="console-ui" onclick="setTheme('console-ui')">Console UI</button>
-                <button class="theme-btn" data-btn-theme="vhs-glitch" onclick="setTheme('vhs-glitch')">VHS Glitch</button>
-                <button class="theme-btn" data-btn-theme="game-boy" onclick="setTheme('game-boy')">Classic Handheld</button>
-                <button class="theme-btn" data-btn-theme="arcade-retro" onclick="setTheme('arcade-retro')">Arcade Neon</button>
-                <button class="theme-btn" data-btn-theme="vaporwave" onclick="setTheme('vaporwave')">Vaporwave</button>
-                <button class="theme-btn" data-btn-theme="e-ink" onclick="setTheme('e-ink')">E-Ink Reader</button>
-                <!-- Group 4 -->
                 <button class="theme-btn" data-btn-theme="matrix" onclick="setTheme('matrix')">Animated Matrix</button>
-                <button class="theme-btn" data-btn-theme="ocean-wave" onclick="setTheme('ocean-wave')">Ocean Wave</button>
-                <button class="theme-btn" data-btn-theme="crimson-pulse" onclick="setTheme('crimson-pulse')">Crimson Pulse</button>
-                <button class="theme-btn" data-btn-theme="aurora" onclick="setTheme('aurora')">Aurora</button>
-                <button class="theme-btn" data-btn-theme="highway-drive" onclick="setTheme('highway-drive')">Highway Drive</button>
-                <button class="theme-btn" data-btn-theme="layer-shift" onclick="setTheme('layer-shift')">Layer Shift</button>
-                <button class="theme-btn" data-btn-theme="radio-waves" onclick="setTheme('radio-waves')">Radio Waves</button>
-                <button class="theme-btn" data-btn-theme="starfield" onclick="setTheme('starfield')">Starfield</button>
-                <button class="theme-btn" data-btn-theme="lava-lamp" onclick="setTheme('lava-lamp')">Lava Lamp</button>
-                <button class="theme-btn" data-btn-theme="dynamic-time" onclick="setTheme('dynamic-time')">Dynamic Time</button>
             </div>
             <div class="tut-btn-group">
                 <button class="tut-btn-secondary" onclick="nextSlide(3)">Back</button>
@@ -488,7 +548,7 @@
         <div class="tutorial-slide" id="tut-slide-5">
             <h2 class="tut-title">Create Gamertag</h2>
             <p class="tut-text">Choose a name for your Xbox 360 profile.</p>
-            <input type="text" id="tut-gamertag-input" class="xbox-input" placeholder="Player1" style="max-width: 300px; text-align: center; margin: 0 auto 2rem; display: block;">
+            <input type="text" id="tut-gamertag-input" placeholder="Player1" style="width: 100%; max-width: 300px; padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.4); color: white; border-radius: 8px; font-family: inherit; font-size: 1.2rem; font-weight: bold; text-align: center; margin: 0 auto 2rem; display: block; outline: none;">
             <div class="tut-btn-group">
                 <button class="tut-btn-secondary" onclick="nextSlide(3)">Back</button>
                 <button class="tut-btn" onclick="saveGamertagAndNext()">Next</button>
@@ -529,6 +589,8 @@
          MAIN APP CONTENT (Standard Header)
     =============================================== -->
     <header>
+        <div class="universal-clock clock-display">12:00 PM</div>
+        
         <button class="changelog-btn" onclick="openChangelog()">What's New</button>
         <button class="header-btn settings-btn" onclick="toggleSettings('settings-panel')" title="Settings">
             <svg viewBox="0 0 24 24"><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -711,11 +773,11 @@
         </div>
     </main>
 
-    <!-- Texture Packs & Shaders Tab -->
+    <!-- Texture Packs Tab -->
     <main id="packs" class="tab-content">
         <div class="slider-wrapper">
             <div class="card-container" id="packs-container">
-                <div class="card" style="border: 2px dashed var(--text-secondary); background: transparent; backdrop-filter: none;">
+                <div class="card" style="border: 2px dashed var(--text-secondary); background: transparent; backdrop-filter: none; box-shadow: none;">
                     <svg class="card-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                     <span>Add packs to repo</span>
                 </div>
@@ -723,7 +785,7 @@
         </div>
     </main>
 
-    <!-- Footer with Keyboard Nav Hint -->
+    <!-- Footer -->
     <footer>
         <p class="keyboard-hint">Use <kbd style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">&larr;</kbd> and <kbd style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">&rarr;</kbd> arrow keys to slide horizontally.</p>
     </footer>
@@ -740,6 +802,7 @@
         <div class="layout-toggle">
             <button class="layout-btn active" id="btn-layout-slider" onclick="setLayout('slider')">Slider</button>
             <button class="layout-btn" id="btn-layout-grid" onclick="setLayout('grid')">Grid</button>
+            <button class="layout-btn" id="btn-layout-flow" onclick="setLayout('flow')">Flow</button>
             <button class="layout-btn" id="btn-layout-switch" onclick="setLayout('switch')">Switch UI</button>
             <button class="layout-btn" id="btn-layout-xp" onclick="setLayout('xp')">Windows XP</button>
             <button class="layout-btn" id="btn-layout-xbox360" onclick="setLayout('xbox360')">Xbox 360</button>
@@ -760,65 +823,72 @@
             </div>
         </div>
 
-        <h3 class="settings-subheader">Themes (40 Total)</h3>
-        <div style="font-size: 0.8rem; margin-bottom: 10px; opacity: 0.7;">(Only active in Slider & Grid layouts)</div>
-        <div class="theme-grid">
-            <button class="theme-btn" data-btn-theme="default" onclick="setTheme('default')">Default Slate</button>
-            <button class="theme-btn" data-btn-theme="liquid-glass" onclick="setTheme('liquid-glass')">Liquid Glass</button>
-            <button class="theme-btn" data-btn-theme="monochrome" onclick="setTheme('monochrome')">Monochrome</button>
-            <button class="theme-btn" data-btn-theme="golden-hour" onclick="setTheme('golden-hour')">Golden Hour</button>
-            <button class="theme-btn" data-btn-theme="sunset" onclick="setTheme('sunset')">Sunset</button>
-            <button class="theme-btn" data-btn-theme="nebula" onclick="setTheme('nebula')">Nebula</button>
-            <button class="theme-btn" data-btn-theme="midnight-blue" onclick="setTheme('midnight-blue')">Midnight Blue</button>
-            <button class="theme-btn" data-btn-theme="mint-frost" onclick="setTheme('mint-frost')">Mint Frost</button>
-            <button class="theme-btn" data-btn-theme="cherry-blossom" onclick="setTheme('cherry-blossom')">Cherry Blossom</button>
-            <button class="theme-btn" data-btn-theme="solarized-dark" onclick="setTheme('solarized-dark')">Solarized Dark</button>
+        <div id="theme-settings-section">
+            <h3 class="settings-subheader">Themes (40 Total)</h3>
+            <div style="font-size: 0.8rem; margin-bottom: 10px; opacity: 0.7;">(Only active in Slider, Grid, and Flow layouts)</div>
+            <div class="theme-grid">
+                <!-- 1. Core / Clean -->
+                <button class="theme-btn" data-btn-theme="default" onclick="setTheme('default')">Default Slate</button>
+                <button class="theme-btn" data-btn-theme="liquid-glass" onclick="setTheme('liquid-glass')">Liquid Glass</button>
+                <button class="theme-btn" data-btn-theme="monochrome" onclick="setTheme('monochrome')">Monochrome</button>
+                <button class="theme-btn" data-btn-theme="golden-hour" onclick="setTheme('golden-hour')">Golden Hour</button>
+                <button class="theme-btn" data-btn-theme="sunset" onclick="setTheme('sunset')">Sunset</button>
+                <button class="theme-btn" data-btn-theme="nebula" onclick="setTheme('nebula')">Nebula</button>
+                <button class="theme-btn" data-btn-theme="midnight-blue" onclick="setTheme('midnight-blue')">Midnight Blue</button>
+                <button class="theme-btn" data-btn-theme="mint-frost" onclick="setTheme('mint-frost')">Mint Frost</button>
+                <button class="theme-btn" data-btn-theme="cherry-blossom" onclick="setTheme('cherry-blossom')">Cherry Blossom</button>
+                <button class="theme-btn" data-btn-theme="solarized-dark" onclick="setTheme('solarized-dark')">Solarized Dark</button>
 
-            <button class="theme-btn" data-btn-theme="minecraft" onclick="setTheme('minecraft')">Minecraft Block</button>
-            <button class="theme-btn" data-btn-theme="cyberpunk" onclick="setTheme('cyberpunk')">Cyberpunk</button>
-            <button class="theme-btn" data-btn-theme="portal" onclick="setTheme('portal')">Aperture Lab</button>
-            <button class="theme-btn" data-btn-theme="doom" onclick="setTheme('doom')">Doom Mars</button>
-            <button class="theme-btn" data-btn-theme="halo" onclick="setTheme('halo')">Spartan Green</button>
-            <button class="theme-btn" data-btn-theme="animal-crossing" onclick="setTheme('animal-crossing')">Island Pastel</button>
-            <button class="theme-btn" data-btn-theme="pip-boy" onclick="setTheme('pip-boy')">Pip-Boy Rads</button>
-            <button class="theme-btn" data-btn-theme="persona" onclick="setTheme('persona')">Phantom Thief</button>
-            <button class="theme-btn" data-btn-theme="sheikah" onclick="setTheme('sheikah')">Sheikah Slate</button>
-            <button class="theme-btn" data-btn-theme="skyrim" onclick="setTheme('skyrim')">Skyrim Frost</button>
+                <!-- 2. Game Inspired -->
+                <button class="theme-btn" data-btn-theme="minecraft" onclick="setTheme('minecraft')">Minecraft Block</button>
+                <button class="theme-btn" data-btn-theme="cyberpunk" onclick="setTheme('cyberpunk')">Cyberpunk</button>
+                <button class="theme-btn" data-btn-theme="portal" onclick="setTheme('portal')">Aperture Lab</button>
+                <button class="theme-btn" data-btn-theme="doom" onclick="setTheme('doom')">Doom Mars</button>
+                <button class="theme-btn" data-btn-theme="halo" onclick="setTheme('halo')">Spartan Green</button>
+                <button class="theme-btn" data-btn-theme="animal-crossing" onclick="setTheme('animal-crossing')">Island Pastel</button>
+                <button class="theme-btn" data-btn-theme="pip-boy" onclick="setTheme('pip-boy')">Pip-Boy Rads</button>
+                <button class="theme-btn" data-btn-theme="persona" onclick="setTheme('persona')">Phantom Thief</button>
+                <button class="theme-btn" data-btn-theme="sheikah" onclick="setTheme('sheikah')">Sheikah Slate</button>
+                <button class="theme-btn" data-btn-theme="skyrim" onclick="setTheme('skyrim')">Skyrim Frost</button>
 
-            <button class="theme-btn" data-btn-theme="windows-xp-theme" onclick="setTheme('windows-xp-theme')">Windows XP Mode</button>
-            <button class="theme-btn" data-btn-theme="macos-27" onclick="setTheme('macos-27')">macOS 27</button>
-            <button class="theme-btn" data-btn-theme="synthwave" onclick="setTheme('synthwave')">Synthwave 84</button>
-            <button class="theme-btn" data-btn-theme="linux-terminal" onclick="setTheme('linux-terminal')">Linux Terminal</button>
-            <button class="theme-btn" data-btn-theme="console-ui" onclick="setTheme('console-ui')">Console UI</button>
-            <button class="theme-btn" data-btn-theme="vhs-glitch" onclick="setTheme('vhs-glitch')">VHS Glitch</button>
-            <button class="theme-btn" data-btn-theme="game-boy" onclick="setTheme('game-boy')">Classic Handheld</button>
-            <button class="theme-btn" data-btn-theme="arcade-retro" onclick="setTheme('arcade-retro')">Arcade Neon</button>
-            <button class="theme-btn" data-btn-theme="vaporwave" onclick="setTheme('vaporwave')">Vaporwave</button>
-            <button class="theme-btn" data-btn-theme="e-ink" onclick="setTheme('e-ink')">E-Ink Reader</button>
+                <!-- 3. Retro / Tech / OS -->
+                <button class="theme-btn" data-btn-theme="windows-xp-theme" onclick="setTheme('windows-xp-theme')">Windows XP Mode</button>
+                <button class="theme-btn" data-btn-theme="macos-27" onclick="setTheme('macos-27')">macOS 27</button>
+                <button class="theme-btn" data-btn-theme="synthwave" onclick="setTheme('synthwave')">Synthwave 84</button>
+                <button class="theme-btn" data-btn-theme="linux-terminal" onclick="setTheme('linux-terminal')">Linux Terminal</button>
+                <button class="theme-btn" data-btn-theme="console-ui" onclick="setTheme('console-ui')">Console UI</button>
+                <button class="theme-btn" data-btn-theme="vhs-glitch" onclick="setTheme('vhs-glitch')">VHS Glitch</button>
+                <button class="theme-btn" data-btn-theme="game-boy" onclick="setTheme('game-boy')">Classic Handheld</button>
+                <button class="theme-btn" data-btn-theme="arcade-retro" onclick="setTheme('arcade-retro')">Arcade Neon</button>
+                <button class="theme-btn" data-btn-theme="vaporwave" onclick="setTheme('vaporwave')">Vaporwave</button>
+                <button class="theme-btn" data-btn-theme="e-ink" onclick="setTheme('e-ink')">E-Ink Reader</button>
 
-            <button class="theme-btn" data-btn-theme="matrix" onclick="setTheme('matrix')">Animated Matrix</button>
-            <button class="theme-btn" data-btn-theme="ocean-wave" onclick="setTheme('ocean-wave')">Ocean Wave</button>
-            <button class="theme-btn" data-btn-theme="crimson-pulse" onclick="setTheme('crimson-pulse')">Crimson Pulse</button>
-            <button class="theme-btn" data-btn-theme="aurora" onclick="setTheme('aurora')">Aurora</button>
-            <button class="theme-btn" data-btn-theme="highway-drive" onclick="setTheme('highway-drive')">Highway Drive</button>
-            <button class="theme-btn" data-btn-theme="layer-shift" onclick="setTheme('layer-shift')">Layer Shift</button>
-            <button class="theme-btn" data-btn-theme="radio-waves" onclick="setTheme('radio-waves')">Radio Waves</button>
-            <button class="theme-btn" data-btn-theme="starfield" onclick="setTheme('starfield')">Starfield</button>
-            <button class="theme-btn" data-btn-theme="lava-lamp" onclick="setTheme('lava-lamp')">Lava Lamp</button>
-            <button class="theme-btn" data-btn-theme="dynamic-time" onclick="setTheme('dynamic-time')">Dynamic Time</button>
-            
-            <button class="theme-btn" data-btn-theme="custom" onclick="setTheme('custom')">Custom Colors</button>
+                <!-- 4. Animated & Dynamic -->
+                <button class="theme-btn" data-btn-theme="matrix" onclick="setTheme('matrix')">Animated Matrix</button>
+                <button class="theme-btn" data-btn-theme="ocean-wave" onclick="setTheme('ocean-wave')">Ocean Wave</button>
+                <button class="theme-btn" data-btn-theme="crimson-pulse" onclick="setTheme('crimson-pulse')">Crimson Pulse</button>
+                <button class="theme-btn" data-btn-theme="aurora" onclick="setTheme('aurora')">Aurora</button>
+                <button class="theme-btn" data-btn-theme="highway-drive" onclick="setTheme('highway-drive')">Highway Drive</button>
+                <button class="theme-btn" data-btn-theme="layer-shift" onclick="setTheme('layer-shift')">Layer Shift</button>
+                <button class="theme-btn" data-btn-theme="radio-waves" onclick="setTheme('radio-waves')">Radio Waves</button>
+                <button class="theme-btn" data-btn-theme="starfield" onclick="setTheme('starfield')">Starfield</button>
+                <button class="theme-btn" data-btn-theme="lava-lamp" onclick="setTheme('lava-lamp')">Lava Lamp</button>
+                <button class="theme-btn" data-btn-theme="dynamic-time" onclick="setTheme('dynamic-time')">Dynamic Time</button>
+                
+                <button class="theme-btn" data-btn-theme="custom" onclick="setTheme('custom')">Custom Colors</button>
+            </div>
         </div>
 
-        <h3 class="settings-subheader">Custom Colors</h3>
-        <div class="setting-row">
-            <label for="accent-picker">Accent Color</label>
-            <input type="color" id="accent-picker" value="#6366f1" oninput="onCustomColorChange('accent', this.value)">
-        </div>
-
-        <div class="setting-row">
-            <label for="bg-picker">Background Color</label>
-            <input type="color" id="bg-picker" value="#0f172a" oninput="onCustomColorChange('bg', this.value)">
+        <div id="custom-color-section">
+            <h3 class="settings-subheader">Custom Colors</h3>
+            <div class="setting-row">
+                <label for="accent-picker">Accent Color</label>
+                <input type="color" id="accent-picker" value="#6366f1" oninput="onCustomColorChange('accent', this.value)">
+            </div>
+            <div class="setting-row">
+                <label for="bg-picker">Background Color</label>
+                <input type="color" id="bg-picker" value="#0f172a" oninput="onCustomColorChange('bg', this.value)">
+            </div>
         </div>
 
         <button class="tut-replay-btn" onclick="startTutorialFromSettings()">Replay Tutorial</button>
@@ -870,17 +940,19 @@
                 el.innerHTML = formatPlaytime(totalMs) + ' <span style="font-family: sans-serif; font-size:1rem;">G</span>';
             });
         }
+        
+        // LAUNCH GAMES IN A NEW TAB & RECORD PLAYTIME
         document.querySelectorAll('.game-card').forEach(card => {
             card.addEventListener('click', function(e) {
                 if (e.target.closest('.fav-star')) return;
                 e.preventDefault();
                 localStorage.setItem('eagler-launch-id', this.getAttribute('data-id'));
                 localStorage.setItem('eagler-launch-time', Date.now());
-                window.location.href = this.getAttribute('href');
+                window.open(this.getAttribute('href'), '_blank');
             });
         });
 
-        /* === Setup Tutorial Logic (Dynamic Routing) === */
+        /* === Setup Tutorial Logic === */
         function checkTutorial() {
             if (!localStorage.getItem('eagler-tutorial-done')) {
                 setTimeout(() => {
@@ -895,40 +967,34 @@
         }
         function nextSlide(num) { showSlide(num); }
         
-        // Router for Layout Slide -> Next
         function handleLayoutNext() {
             let layout = document.body.getAttribute('data-layout');
-            if (layout === 'slider' || layout === 'grid') { showSlide(4); } // Themes
-            else if (layout === 'xbox360') { showSlide(5); } // Gamertag
-            else { showSlide(7); } // Skip straight to end for XP/Switch
+            if (layout === 'slider' || layout === 'grid' || layout === 'flow') { showSlide(4); }
+            else if (layout === 'xbox360') { showSlide(5); }
+            else { showSlide(7); }
         }
-
-        // Router for Gamertag Slide -> Next
         function saveGamertagAndNext() {
             let tag = document.getElementById('tut-gamertag-input').value;
             if(tag.trim() === '') tag = 'Player1';
             updateGamertag(tag);
-            showSlide(6); // Go to Profile Pic
+            showSlide(6);
         }
-
-        // Router for Pfp Slide -> Next
-        function savePfpAndNext() {
-            showSlide(7); // Finish
-        }
-
-        // Route back from Finish slide dynamically
+        function savePfpAndNext() { showSlide(7); }
         function backFromFinish() {
             let layout = document.body.getAttribute('data-layout');
-            if (layout === 'slider' || layout === 'grid') { showSlide(4); }
+            if (layout === 'slider' || layout === 'grid' || layout === 'flow') { showSlide(4); }
             else if (layout === 'xbox360') { showSlide(6); }
             else { showSlide(3); }
         }
-
         function finishTutorial() {
             localStorage.setItem('eagler-tutorial-done', 'true');
             const overlay = document.getElementById('tutorial-overlay');
             overlay.style.opacity = '0';
             setTimeout(() => { overlay.classList.remove('show'); overlay.style.opacity = ''; }, 800);
+            
+            if(document.body.getAttribute('data-layout') === 'xbox360') {
+                setTimeout(() => { playXboxBoot(); }, 800);
+            }
         }
         function startTutorialFromSettings() {
             document.getElementById('settings-panel').classList.remove('active');
@@ -956,7 +1022,6 @@
         function updatePfp(pic) {
             localStorage.setItem('eagler-xbox-pic', pic);
             document.querySelectorAll('.os-pfp-img').forEach(img => { img.src = pic; img.style.display = 'block'; });
-            // Update active state in settings grid
             document.querySelectorAll('#settings-panel .pfp-option').forEach(img => {
                 img.classList.remove('active');
                 if(img.getAttribute('data-pic') === pic) img.classList.add('active');
@@ -1019,10 +1084,17 @@
             
             if (layoutName === 'xp') { buildXPStartMenu(); }
 
-            // Isolate Xbox 360 settings panel visibility
             const xboxSettings = document.getElementById('xbox-settings-section');
-            if (xboxSettings) {
-                xboxSettings.style.display = (layoutName === 'xbox360') ? 'block' : 'none';
+            if (xboxSettings) { xboxSettings.style.display = (layoutName === 'xbox360') ? 'block' : 'none'; }
+
+            const themeSettings = document.getElementById('theme-settings-section');
+            const customColorSettings = document.getElementById('custom-color-section');
+            if (['slider', 'grid', 'flow'].includes(layoutName)) {
+                if(themeSettings) themeSettings.style.display = 'block';
+                if(customColorSettings) customColorSettings.style.display = 'block';
+            } else {
+                if(themeSettings) themeSettings.style.display = 'none';
+                if(customColorSettings) customColorSettings.style.display = 'none';
             }
         }
 
@@ -1079,7 +1151,7 @@
                 let div = document.createElement('div');
                 div.className = 'xp-item xp-game-item';
                 div.innerHTML = svg + title;
-                div.onclick = () => { window.location.href = url; };
+                div.onclick = () => { window.open(url, '_blank'); };
                 list.appendChild(div);
             });
         }
@@ -1127,7 +1199,31 @@
         }
         setInterval(updateClocks, 1000);
 
+        /* === Xbox Boot Animation Logic === */
+        function playXboxBoot() {
+            const bootScreen = document.getElementById('xbox-boot-screen');
+            const video = document.getElementById('xbox-boot-video');
+            
+            bootScreen.style.display = 'flex';
+            video.style.display = 'block';
+            
+            // Auto-play the video muted. It will smoothly transition out when finished.
+            video.play().catch(e => {
+                dismissBootScreen(bootScreen);
+            });
+            
+            video.onended = function() {
+                dismissBootScreen(bootScreen);
+            };
+        }
+
+        function dismissBootScreen(screen) {
+            screen.style.opacity = '0';
+            setTimeout(() => { screen.style.display = 'none'; }, 1000);
+        }
+
         /* === Startup Sequence === */
+        let isFirstLoad = true;
         window.onload = function() {
             checkAndRecordPlaytime();
             renderPlaytimes();
@@ -1153,7 +1249,15 @@
             sortFavorites('vanilla-container');
             sortFavorites('clients-container');
 
+            // Play Xbox boot ONLY on very first load of the page if Xbox layout is active and tutorial is done
+            if (savedLayout === 'xbox360' && localStorage.getItem('eagler-tutorial-done')) {
+                playXboxBoot();
+            } else {
+                document.getElementById('xbox-boot-screen').style.display = 'none';
+            }
+
             checkTutorial();
+            isFirstLoad = false;
         }
     </script>
 </body>

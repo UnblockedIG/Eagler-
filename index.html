@@ -31,7 +31,7 @@
         }
 
         /* =========================================================
-           STRICT UI ISOLATION (Prevents Layouts from Breaking)
+           STRICT UI ISOLATION
         ========================================================= */
         .switch-ui, .xp-ui, .xbox-ui { display: none !important; }
         body[data-layout="switch"] .switch-ui { display: flex !important; }
@@ -39,7 +39,7 @@
         body[data-layout="xbox360"] .xbox-ui { display: flex !important; }
 
         /* =========================================================
-           40 UNIVERSAL THEMES (Only apply to compatible layouts)
+           40 UNIVERSAL THEMES
         ========================================================= */
         body[data-layout="slider"], body[data-layout="grid"], body[data-layout="flow"] { 
             background: var(--bg-image); background-color: var(--bg-color); 
@@ -75,6 +75,7 @@
         [data-theme="macos-27"] { --bg-color: #0b0b12; --accent-color: #007aff; --bg-image: radial-gradient(circle at 10% 20%, rgba(255, 42, 109, 0.4), transparent 40%), radial-gradient(circle at 90% 80%, rgba(5, 213, 255, 0.4), transparent 40%), #0b0b12; --glass-blur: 40px; --radius-lg: 40px; --text-primary: #fff; }
         [data-theme="synthwave"] { --bg-color: #090014; --accent-color: #00ffff; --bg-image: linear-gradient(180deg, #090014, #2b003b, #ff007f); --text-primary: #fff; }
         [data-theme="linux-terminal"] { --bg-color: #000000; --accent-color: #00ff00; --bg-image: none; background-color: #000000; --glass-blur: 0px; --card-border: #00ff00; --radius-lg: 0px; --text-primary: #00ff00; --text-secondary: #008800;}
+        [data-theme="linux-terminal"] * { font-family: 'Courier New', Courier, monospace !important; }
         [data-theme="console-ui"] { --bg-color: #12151a; --accent-color: #3b82f6; --bg-image: radial-gradient(circle at top right, #1e293b, #0f172a); --radius-lg: 32px; --radius-md: 100px; --text-primary: #fff;}
         [data-theme="vhs-glitch"] { --bg-color: #0000aa; --accent-color: #ffffff; --bg-image: repeating-linear-gradient(0deg, #0000aa, #0000aa 2px, #0000dd 2px, #0000dd 4px); --text-primary: #ffffff; --text-secondary: #aaa; --card-border: rgba(255,255,255,0.5); --radius-lg: 0px; }
         [data-theme="game-boy"] { --bg-color: #8bac0f; --accent-color: #0f380f; --bg-image: none; background-color: #8bac0f; --surface-color: #9bbc0f; --text-primary: #0f380f; --text-secondary: #306230; --card-border: #0f380f; --radius-lg: 8px; }
@@ -93,17 +94,14 @@
         [data-theme="radio-waves"] { --bg-color: #001100; --accent-color: #00ff41; --bg-image: radial-gradient(circle, transparent 20%, #00ff41 21%, transparent 22%); background-size: 100px 100px; animation: bgPulse 2s linear infinite; --text-primary: #fff; }
         [data-theme="starfield"] { --bg-color: #000; --accent-color: #fff; --bg-image: radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)), radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)), radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)); background-size: 200px 200px; animation: scrollY 20s linear infinite; --text-primary: #fff; }
         [data-theme="lava-lamp"] { --bg-color: #1a0033; --accent-color: #ff0066; --bg-image: radial-gradient(circle at 50% 50%, #ff0066 0%, #1a0033 50%); background-size: 200% 200%; animation: bgPulse 6s ease-in-out infinite alternate; --text-primary: #fff; }
-
-        /* Custom Mode */
         [data-theme="custom"] { --bg-image: radial-gradient(circle at top center, var(--surface-color), var(--bg-color)); --text-primary: #fff; }
 
-        /* Keyframes for backgrounds */
         @keyframes bgShift { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
         @keyframes scrollY { 0% { background-position: 0% 0%; } 100% { background-position: 0% 100%; } }
         @keyframes bgPulse { 0% { background-position: 50% 50%; background-size: 100% 100%; } 100% { background-position: 50% 50%; background-size: 150% 150%; } }
 
         /* =========================================================
-           STANDARD HEADER & NAV (Slider/Grid/Flow)
+           STANDARD HEADER & NAV
         ========================================================= */
         header { padding: 3rem 5vw 1rem; text-align: center; position: relative; z-index: 10; }
         
@@ -157,7 +155,7 @@
         .fav-star:hover { transform: scale(1.2); }
         .card.favorited .fav-star { fill: #fce700; stroke: #fce700; filter: drop-shadow(0 0 8px rgba(252, 231, 0, 0.5)); }
 
-        /* Smooth Icon Animations (Constant) */
+        /* Smooth Icon Animations */
         @keyframes subtleFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
         @keyframes subtlePulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
         @keyframes subtleSwing { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(5deg); } 75% { transform: rotate(-5deg); } }
@@ -188,7 +186,7 @@
         body[data-layout="grid"] .fav-star { position: absolute; top: 1rem; left: 1rem; }
         body[data-layout="grid"] .card:hover { transform: translateY(-10px) scale(1.02); background: var(--surface-hover, rgba(255,255,255,0.2)); box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), 0 0 25px var(--accent-glow); }
 
-        /* --- Flow Layout (Clean Vertical List) --- */
+        /* --- Flow Layout --- */
         body[data-layout="flow"] .card-container { display: flex; flex-direction: column; align-items: center; gap: 1rem; padding: 1rem 5vw 4rem; overflow-y: auto; overflow-x: hidden; height: 70vh; scrollbar-width: none; }
         body[data-layout="flow"] .card { width: 90%; max-width: 700px; height: 100px; flex-direction: row; justify-content: flex-start; padding: 0 2rem; border-radius: var(--radius-md); }
         body[data-layout="flow"] .card-icon { width: 40px; height: 40px; margin: 0 1.5rem 0 0; }
@@ -271,7 +269,6 @@
         @keyframes nxeFloat { 0% { background-position: 0% 0%; } 100% { background-position: 100% 100%; } }
         body[data-layout="xbox360"] header, body[data-layout="xbox360"] footer { display: none !important; }
         
-        /* Video Boot Screen */
         #xbox-boot-screen { position: fixed; inset: 0; background: #000; z-index: 100000; display: none; opacity: 1; transition: opacity 0.8s ease; pointer-events: auto; }
         #xbox-boot-video { width: 100%; height: 100%; object-fit: cover; }
 
@@ -305,10 +302,11 @@
         body[data-layout="xbox360"] .card-icon { position: absolute; top: 15%; left: 50%; transform: translateX(-50%); width: 130px; height: 130px; stroke: rgba(255,255,255,0.8) !important; animation: none !important;}
         body[data-layout="xbox360"] .badge, body[data-layout="xbox360"] .fav-star, body[data-layout="xbox360"] .playtime-display { display: none !important; }
 
-        /* ================= OVERLAYS (Settings / Changelog) ================= */
-        /* Center Footer */
-        footer { width: 100%; margin-top: auto; padding: 2rem; display: flex; justify-content: center; align-items: center;}
+        /* ================= OVERLAYS (Settings / Changelog / Dev) ================= */
+        footer { width: 100%; margin-top: auto; padding: 2rem; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 0.5rem;}
         .keyboard-hint { opacity: 0.6; color: var(--text-secondary); font-size: 0.9rem; text-align: center; }
+        .dev-portal-link { font-size: 0.75rem; color: var(--text-secondary); text-decoration: none; opacity: 0.4; cursor: pointer; transition: 0.2s; }
+        .dev-portal-link:hover { opacity: 1; color: var(--accent-color); }
 
         .overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 9000; }
         .overlay.active { opacity: 1; visibility: visible; }
@@ -352,7 +350,19 @@
         .pfp-option:hover { opacity: 0.8; }
         .pfp-option.active { border-color: var(--accent-color); opacity: 1; filter: drop-shadow(0 0 8px var(--accent-glow)); }
 
-        /* ================= macOS SETUP TUTORIAL (Liquid Glass Style) ================= */
+        /* ================= DEVELOPER PANEL STYLES ================= */
+        .dev-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+        .dev-stat-card { background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1rem; }
+        .dev-stat-card.full-width { grid-column: span 2; }
+        .dev-stat-title { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-light); font-weight: 700; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;}
+        .dev-list { list-style: none; font-size: 0.9rem; max-height: 140px; overflow-y: auto; padding-right: 5px; }
+        .dev-list::-webkit-scrollbar { width: 4px; }
+        .dev-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+        .dev-list-item { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+        .dev-list-item:last-child { border-bottom: none; }
+        .dev-count { font-weight: 700; color: var(--accent-color); }
+
+        /* ================= macOS SETUP TUTORIAL ================= */
         .tutorial-overlay { position: fixed; inset: 0; z-index: 99999; pointer-events: none; background: rgba(0, 0, 0, 0.4); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.8s ease, visibility 0.8s ease; overflow: hidden; }
         .tutorial-overlay.show { opacity: 1; visibility: visible; pointer-events: auto; }
         
@@ -389,7 +399,7 @@
         .cursive-wrapper { margin-bottom: 1.5rem; display: flex; justify-content: center; }
         .cursive-welcome { font-family: 'Pacifico', cursive; font-size: 5.5rem; color: rgba(255,255,255,0.05); position: relative; display: inline-block; padding: 10px 30px; letter-spacing: 2px; }
         .cursive-welcome::before { content: 'welcome'; position: absolute; left: 30px; top: 10px; color: white; white-space: nowrap; overflow: hidden; width: 0; filter: drop-shadow(0 0 15px rgba(255,255,255,0.5)); }
-        .tutorial-overlay.show .cursive-welcome::before { animation: writeText 2.5s cubic-bezier(0.2, 0.8, 0.2, 1) 0.5s forwards; }
+        .tutorial-overlay.show .cursive-welcome::before { animation: writeText 2s cubic-bezier(0.2, 0.8, 0.2, 1) 0.5s forwards; }
         @keyframes writeText { 0% { width: 0; } 100% { width: 100%; } }
 
         .fade-in-delay { opacity: 0; animation: fadeIn 1s 2.8s ease forwards; }
@@ -412,14 +422,14 @@
 <body data-theme="default" data-layout="slider">
 
     <!-- ==============================================
-         XBOX BOOT SCREEN (Smart Fallback Video)
+         XBOX BOOT SCREEN
     =============================================== -->
     <div id="xbox-boot-screen">
         <video id="xbox-boot-video" src="videoplayback.webm" playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
     </div>
 
     <!-- ==============================================
-         OS SPECIFIC OVERLAYS (STRICTLY ISOLATED)
+         OS SPECIFIC OVERLAYS
     =============================================== -->
     
     <!-- Nintendo Switch UI -->
@@ -499,7 +509,7 @@
     </div>
 
     <!-- ==============================================
-         SETUP TUTORIAL (macOS / Liquid Glass Style)
+         SETUP TUTORIAL (macOS Style)
     =============================================== -->
     <div class="tutorial-overlay" id="tutorial-overlay">
         <!-- Slide 1 -->
@@ -539,7 +549,7 @@
             </div>
         </div>
 
-        <!-- Slide 4 (Themes - ONLY if Slider/Grid/Flow) -->
+        <!-- Slide 4 (Themes) -->
         <div class="tutorial-slide" id="tut-slide-4">
             <h2 class="tut-title">Select a Vibe</h2>
             <p class="tut-text" style="margin-bottom: 1.5rem;">Click a theme below to preview it. (Note: Themes only apply to Slider, Grid, and Flow layouts).</p>
@@ -559,7 +569,7 @@
             </div>
         </div>
 
-        <!-- Slide 5 (Xbox Gamertag - ONLY if Xbox) -->
+        <!-- Slide 5 (Xbox Gamertag) -->
         <div class="tutorial-slide" id="tut-slide-5">
             <h2 class="tut-title">Create Gamertag</h2>
             <p class="tut-text">Choose a name for your Xbox 360 profile.</p>
@@ -570,7 +580,7 @@
             </div>
         </div>
 
-        <!-- Slide 6 (Xbox Pfp - ONLY if Xbox) -->
+        <!-- Slide 6 (Xbox Gamerpic) -->
         <div class="tutorial-slide" id="tut-slide-6">
             <h2 class="tut-title">Choose Gamerpic</h2>
             <p class="tut-text">Select your avatar.</p>
@@ -598,10 +608,9 @@
             </div>
         </div>
     </div>
-    <!-- End Tutorial -->
 
     <!-- ==============================================
-         MAIN APP CONTENT (Standard Header)
+         MAIN APP CONTENT
     =============================================== -->
     <header>
         <div class="header-live-stats">
@@ -625,12 +634,11 @@
         </div>
     </header>
 
-    <!-- Vanilla Builds Tab -->
+    <!-- Vanilla Tab -->
     <main id="vanilla" class="tab-content active">
         <div class="slider-wrapper">
             <div class="card-container" id="vanilla-container">
-                
-                <a href="Vanilla/26.2-wasm.html" class="card game-card" data-id="van-26.2" data-title="Version 26.2">
+                <a href="Vanilla/26.2-wasm.html" class="card game-card" data-id="van-26.2" data-title="Version 26.2" data-type="version">
                     <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'van-26.2', 'vanilla-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     <div class="badge">Latest</div>
                     <svg class="card-icon" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>
@@ -638,7 +646,7 @@
                     <div class="playtime-display" id="pt-van-26.2"></div>
                 </a>
 
-                <a href="Vanilla/26.1.2-wasm.html" class="card game-card" data-id="van-26.1.2" data-title="Version 26.1.2">
+                <a href="Vanilla/26.1.2-wasm.html" class="card game-card" data-id="van-26.1.2" data-title="Version 26.1.2" data-type="version">
                     <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'van-26.1.2', 'vanilla-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     <div class="badge" style="background: #eab308; color: black;">Beta</div>
                     <svg class="card-icon" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
@@ -646,49 +654,49 @@
                     <div class="playtime-display" id="pt-van-26.1.2"></div>
                 </a>
                 
-                <a href="Vanilla/1.21.11-wasm.html" class="card game-card" data-id="van-1.21" data-title="Version 1.21.11">
+                <a href="Vanilla/1.21.11-wasm.html" class="card game-card" data-id="van-1.21" data-title="Version 1.21.11" data-type="version">
                     <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'van-1.21', 'vanilla-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     <svg class="card-icon" viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
                     <span>Version 1.21.11</span>
                     <div class="playtime-display" id="pt-van-1.21"></div>
                 </a>
                 
-                <a href="Vanilla/1.20.6-wasm.html" class="card game-card" data-id="van-1.20" data-title="Version 1.20.6">
+                <a href="Vanilla/1.20.6-wasm.html" class="card game-card" data-id="van-1.20" data-title="Version 1.20.6" data-type="version">
                     <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'van-1.20', 'vanilla-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     <svg class="card-icon" viewBox="0 0 24 24"><polygon points="1 6 8 2 16 6 23 2 23 18 16 22 8 18 1 22 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
                     <span>Version 1.20.6</span>
                     <div class="playtime-display" id="pt-van-1.20"></div>
                 </a>
                 
-                <a href="Vanilla/1.16.5-wasm.html" class="card game-card" data-id="van-1.16" data-title="Version 1.16.5">
+                <a href="Vanilla/1.16.5-wasm.html" class="card game-card" data-id="van-1.16" data-title="Version 1.16.5" data-type="version">
                     <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'van-1.16', 'vanilla-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     <svg class="card-icon" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"></path></svg>
                     <span>Version 1.16.5</span>
                     <div class="playtime-display" id="pt-van-1.16"></div>
                 </a>
                 
-                <a href="Vanilla/1.14.4-wasm.html" class="card game-card" data-id="van-1.14" data-title="Version 1.14.4">
+                <a href="Vanilla/1.14.4-wasm.html" class="card game-card" data-id="van-1.14" data-title="Version 1.14.4" data-type="version">
                     <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'van-1.14', 'vanilla-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     <svg class="card-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                     <span>Version 1.14.4</span>
                     <div class="playtime-display" id="pt-van-1.14"></div>
                 </a>
                 
-                <a href="Vanilla/1.13.2-wasm.html" class="card game-card" data-id="van-1.13" data-title="Version 1.13.2">
+                <a href="Vanilla/1.13.2-wasm.html" class="card game-card" data-id="van-1.13" data-title="Version 1.13.2" data-type="version">
                     <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'van-1.13', 'vanilla-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     <svg class="card-icon" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
                     <span>Version 1.13.2</span>
                     <div class="playtime-display" id="pt-van-1.13"></div>
                 </a>
                 
-                <a href="Vanilla/1.12.2-wasm.html" class="card game-card" data-id="van-1.12" data-title="Version 1.12.2">
+                <a href="Vanilla/1.12.2-wasm.html" class="card game-card" data-id="van-1.12" data-title="Version 1.12.2" data-type="version">
                     <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'van-1.12', 'vanilla-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     <svg class="card-icon" viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c1.38 0 2.5-1.12 2.5-2.5 0-.61-.23-1.21-.64-1.67-.08-.09-.13-.21-.13-.33 0-.28.22-.5.5-.5H16c3.31 0 6-2.69 6-6 0-4.96-4.49-9-10-9z"/></svg>
                     <span>Version 1.12.2</span>
                     <div class="playtime-display" id="pt-van-1.12"></div>
                 </a>
                 
-                <a href="Vanilla/1.8.8-wasm.html" class="card game-card" data-id="van-1.8" data-title="Version 1.8.8">
+                <a href="Vanilla/1.8.8-wasm.html" class="card game-card" data-id="van-1.8" data-title="Version 1.8.8" data-type="version">
                     <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'van-1.8', 'vanilla-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     <svg class="card-icon" viewBox="0 0 24 24"><path d="M14.5 17.5L3 6V3h3l11.5 11.5"></path><path d="M13 19l6-6"></path><path d="M16 16l4 4"></path><path d="M19 21l2-2"></path></svg>
                     <span>Version 1.8.8</span>
@@ -698,89 +706,89 @@
         </div>
     </main>
 
-    <!-- Custom Clients Tab -->
+    <!-- Clients Tab -->
     <main id="clients" class="tab-content">
         <div class="slider-wrapper">
             <div class="card-container" id="clients-container">
-                <a href="Clients/Aero%20Client.html" class="card game-card" data-id="cli-aero" data-title="Aero Client">
+                <a href="Clients/Aero%20Client.html" class="card game-card" data-id="cli-aero" data-title="Aero Client" data-type="client">
                     <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-aero', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
                     <span>Aero Client</span>
                     <div class="playtime-display" id="pt-cli-aero"></div>
                 </a>
-                <a href="Clients/Astra%20Client.html" class="card game-card" data-id="cli-astra" data-title="Astra Client">
+                <a href="Clients/Astra%20Client.html" class="card game-card" data-id="cli-astra" data-title="Astra Client" data-type="client">
                     <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-astra', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
                     <span>Astra Client</span>
                     <div class="playtime-display" id="pt-cli-astra"></div>
                 </a>
-                <a href="Clients/EB%20Client%201.8.8.html" class="card game-card" data-id="cli-eb8" data-title="EB Client 1.8.8">
+                <a href="Clients/EB%20Client%201.8.8.html" class="card game-card" data-id="cli-eb8" data-title="EB Client 1.8.8" data-type="client">
                     <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-eb8', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
                     <span>EB Client 1.8.8</span>
                     <div class="playtime-display" id="pt-cli-eb8"></div>
                 </a>
-                <a href="Clients/EB%20Client%201.14.4.html" class="card game-card" data-id="cli-eb14" data-title="EB Client 1.14.4">
+                <a href="Clients/EB%20Client%201.14.4.html" class="card game-card" data-id="cli-eb14" data-title="EB Client 1.14.4" data-type="client">
                     <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-eb14', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
                     <span>EB Client 1.14.4</span>
                     <div class="playtime-display" id="pt-cli-eb14"></div>
                 </a>
-                <a href="Clients/Eclipse%20Client.html" class="card game-card" data-id="cli-eclipse" data-title="Eclipse Client">
+                <a href="Clients/Eclipse%20Client.html" class="card game-card" data-id="cli-eclipse" data-title="Eclipse Client" data-type="client">
                     <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-eclipse', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
                     <span>Eclipse Client</span>
                     <div class="playtime-display" id="pt-cli-eclipse"></div>
                 </a>
-                <a href="Clients/GX-Client.html" class="card game-card" data-id="cli-gx" data-title="GX-Client">
+                <a href="Clients/GX-Client.html" class="card game-card" data-id="cli-gx" data-title="GX-Client" data-type="client">
                     <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-gx', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
                     <span>GX-Client</span>
                     <div class="playtime-display" id="pt-cli-gx"></div>
                 </a>
-                <a href="Clients/Huzzium%20Client.html" class="card game-card" data-id="cli-huzz" data-title="Huzzium Client">
+                <a href="Clients/Huzzium%20Client.html" class="card game-card" data-id="cli-huzz" data-title="Huzzium Client" data-type="client">
                     <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-huzz', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
                     <span>Huzzium Client</span>
                     <div class="playtime-display" id="pt-cli-huzz"></div>
                 </a>
-                <a href="Clients/Kozmo%20Client.html" class="card game-card" data-id="cli-kozmo" data-title="Kozmo Client">
+                <a href="Clients/Kozmo%20Client.html" class="card game-card" data-id="cli-kozmo" data-title="Kozmo Client" data-type="client">
                     <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-kozmo', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
                     <span>Kozmo Client</span>
                     <div class="playtime-display" id="pt-cli-kozmo"></div>
                 </a>
-                <a href="Clients/Larp%20Client%201.14.4.html" class="card game-card" data-id="cli-larp" data-title="Larp Client 1.14.4">
+                <a href="Clients/Larp%20Client%201.14.4.html" class="card game-card" data-id="cli-larp" data-title="Larp Client 1.14.4" data-type="client">
                     <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-larp', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
                     <span>Larp Client 1.14.4</span>
                     <div class="playtime-display" id="pt-cli-larp"></div>
                 </a>
-                <a href="Clients/Myven%20Client.html" class="card game-card" data-id="cli-myven" data-title="Myven Client">
+                <a href="Clients/Myven%20Client.html" class="card game-card" data-id="cli-myven" data-title="Myven Client" data-type="client">
                     <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-myven', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
                     <span>Myven Client</span>
                     <div class="playtime-display" id="pt-cli-myven"></div>
                 </a>
-                <a href="Clients/Pixel%20Client.html" class="card game-card" data-id="cli-pixel" data-title="Pixel Client">
+                <a href="Clients/Pixel%20Client.html" class="card game-card" data-id="cli-pixel" data-title="Pixel Client" data-type="client">
                     <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-pixel', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
                     <span>Pixel Client</span>
                     <div class="playtime-display" id="pt-cli-pixel"></div>
                 </a>
-                <a href="Clients/Precision%20Client.html" class="card game-card" data-id="cli-precis" data-title="Precision Client">
+                <a href="Clients/Precision%20Client.html" class="card game-card" data-id="cli-precis" data-title="Precision Client" data-type="client">
                     <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-precis', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
                     <span>Precision Client</span>
                     <div class="playtime-display" id="pt-cli-precis"></div>
                 </a>
-                <a href="Clients/Resent%20Client.html" class="card game-card" data-id="cli-resent" data-title="Resent Client">
+                <a href="Clients/Resent%20Client.html" class="card game-card" data-id="cli-resent" data-title="Resent Client" data-type="client">
                     <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-resent', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
                     <span>Resent Client</span>
                     <div class="playtime-display" id="pt-cli-resent"></div>
                 </a>
-                <a href="Clients/Tuff%20Client%20Beta.html" class="card game-card" data-id="cli-tuff" data-title="Tuff Client Beta">
+                <a href="Clients/Tuff%20Client%20Beta.html" class="card game-card" data-id="cli-tuff" data-title="Tuff Client Beta" data-type="client">
                     <svg class="fav-star" viewBox="0 0 24 24" onclick="toggleFav(event, 'cli-tuff', 'clients-container')"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     <div class="badge" style="background: #eab308; color: black;">Beta</div>
                     <svg class="card-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
@@ -806,10 +814,11 @@
     <!-- Footer -->
     <footer>
         <p class="keyboard-hint">Use <kbd style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">&larr;</kbd> and <kbd style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">&rarr;</kbd> arrow keys to slide horizontally.</p>
+        <span class="dev-portal-link" onclick="openDevAuth()">Developer Portal</span>
     </footer>
 
     <!-- Settings Panel -->
-    <div class="overlay" id="overlay" onclick="toggleSettings('settings-panel')"></div>
+    <div class="overlay" id="overlay" onclick="closeAllModals()"></div>
     <div class="side-panel" id="settings-panel">
         <div class="panel-header">
             <h2>Customization</h2>
@@ -910,6 +919,7 @@
         </div>
 
         <button class="tut-replay-btn" onclick="startTutorialFromSettings()">Replay Tutorial</button>
+        <button class="tut-replay-btn" style="margin-top: 0.5rem; border-color: rgba(255,255,255,0.1); color: var(--accent-light);" onclick="openDevAuth()">Developer Portal</button>
     </div>
 
     <!-- Changelog Modal -->
@@ -919,6 +929,66 @@
             <button class="close-btn" onclick="toggleSettings('changelog-modal')">&times;</button>
         </div>
         <div class="changelog-content" id="changelog-content">Loading...</div>
+    </div>
+
+    <!-- Developer Password Modal -->
+    <div class="center-modal" id="dev-auth-modal" style="max-width: 400px; text-align: center;">
+        <div class="panel-header" style="margin-bottom: 1rem;">
+            <h2>Developer Access</h2>
+            <button class="close-btn" onclick="toggleSettings('dev-auth-modal')">&times;</button>
+        </div>
+        <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem;">Enter the security password to unlock live analytics.</p>
+        <input type="password" id="dev-password-input" class="xbox-input" placeholder="Password" style="text-align: center; font-size: 1.2rem; letter-spacing: 2px;" onkeydown="if(event.key==='Enter') verifyDevPassword()">
+        <button class="tut-btn tut-btn-start" style="width: 100%; border-radius: 8px;" onclick="verifyDevPassword()">Authenticate</button>
+    </div>
+
+    <!-- Developer Analytics Dashboard Modal -->
+    <div class="center-modal" id="dev-dashboard-modal" style="max-width: 750px; max-height: 85vh;">
+        <div class="panel-header" style="margin-bottom: 1rem;">
+            <div style="display:flex; align-items:center; gap: 10px;">
+                <h2>Developer Analytics</h2>
+                <span style="font-size: 0.75rem; background: var(--accent-color); color: #fff; padding: 2px 8px; border-radius: 10px; font-weight: 700;">LIVE</span>
+            </div>
+            <button class="close-btn" onclick="toggleSettings('dev-dashboard-modal')">&times;</button>
+        </div>
+
+        <div class="dev-stats-grid">
+            <div class="dev-stat-card full-width" style="display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                    <div class="dev-stat-title" style="margin: 0;">Active Online Players</div>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary);">Currently connected users across all tabs</p>
+                </div>
+                <div id="dev-live-online" style="font-size: 2.2rem; font-weight: 800; color: #55ff55;">0</div>
+            </div>
+
+            <div class="dev-stat-card">
+                <div class="dev-stat-title">Most Used Versions <span>Launches</span></div>
+                <ul class="dev-list" id="dev-versions-list">
+                    <li style="color: var(--text-secondary);">Loading stats...</li>
+                </ul>
+            </div>
+
+            <div class="dev-stat-card">
+                <div class="dev-stat-title">Most Used Clients <span>Launches</span></div>
+                <ul class="dev-list" id="dev-clients-list">
+                    <li style="color: var(--text-secondary);">Loading stats...</li>
+                </ul>
+            </div>
+
+            <div class="dev-stat-card">
+                <div class="dev-stat-title">Most Popular Themes <span>Picks</span></div>
+                <ul class="dev-list" id="dev-themes-list">
+                    <li style="color: var(--text-secondary);">Loading stats...</li>
+                </ul>
+            </div>
+
+            <div class="dev-stat-card">
+                <div class="dev-stat-title">Most Popular Layouts <span>Picks</span></div>
+                <ul class="dev-list" id="dev-layouts-list">
+                    <li style="color: var(--text-secondary);">Loading stats...</li>
+                </ul>
+            </div>
+        </div>
     </div>
 
     <!-- Interactive Scripts -->
@@ -958,8 +1028,30 @@
                 el.innerHTML = formatPlaytime(totalMs) + ' <span style="font-family: sans-serif; font-size:1rem;">G</span>';
             });
         }
+        
+        // LAUNCH GAMES IN A NEW TAB & RECORD PLAYTIME & LOG ANALYTICS
+        document.querySelectorAll('.game-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (e.target.closest('.fav-star')) return;
+                e.preventDefault();
+                let id = this.getAttribute('data-id');
+                let title = this.getAttribute('data-title');
+                let type = this.getAttribute('data-type');
+                
+                localStorage.setItem('eagler-launch-id', id);
+                localStorage.setItem('eagler-launch-time', Date.now());
+                
+                // Track to Firebase Realtime DB
+                if (window.logDevMetric) {
+                    let category = (type === 'client') ? 'clients' : 'versions';
+                    window.logDevMetric(category, title);
+                }
 
-        /* === Setup Tutorial Logic (Dynamic Routing) === */
+                window.open(this.getAttribute('href'), '_blank');
+            });
+        });
+
+        /* === Setup Tutorial Logic === */
         function checkTutorial() {
             if (!localStorage.getItem('eagler-tutorial-done')) {
                 setTimeout(() => {
@@ -999,7 +1091,6 @@
             overlay.style.opacity = '0';
             setTimeout(() => { overlay.classList.remove('show'); overlay.style.opacity = ''; }, 800);
             
-            // Trigger Boot screen immediately after tut if Xbox layout
             if(document.body.getAttribute('data-layout') === 'xbox360') {
                 setTimeout(() => { playXboxBoot(); }, 800);
             }
@@ -1071,14 +1162,17 @@
             if(xboxTab) xboxTab.classList.add('active');
         }
 
+        function closeAllModals() {
+            document.querySelectorAll('.side-panel, .center-modal, .overlay').forEach(el => el.classList.remove('active'));
+        }
+
         function toggleSettings(modalId) {
             const element = document.getElementById(modalId);
             const overlay = document.getElementById('overlay');
             if (element.classList.contains('active')) {
                 element.classList.remove('active'); overlay.classList.remove('active');
             } else {
-                document.getElementById('settings-panel').classList.remove('active');
-                document.getElementById('changelog-modal').classList.remove('active');
+                closeAllModals();
                 element.classList.add('active'); overlay.classList.add('active');
             }
         }
@@ -1091,6 +1185,9 @@
             if(activeBtn) activeBtn.classList.add('active');
             
             if (layoutName === 'xp') { buildXPStartMenu(); }
+
+            // Log layout preference
+            if (window.logDevMetric) { window.logDevMetric('layouts', layoutName); }
 
             // Isolate settings panel visibility
             const xboxSettings = document.getElementById('xbox-settings-section');
@@ -1126,6 +1223,9 @@
                 document.documentElement.style.setProperty('--bg-color', bg);
             }
             if(themeName === 'dynamic-time') { updateDynamicTime(); }
+
+            // Log theme preference
+            if (window.logDevMetric) { window.logDevMetric('themes', themeName); }
         }
 
         function onCustomColorChange(type, value) {
@@ -1224,13 +1324,11 @@
             const video = document.getElementById('xbox-boot-video');
             
             bootScreen.style.display = 'flex';
-            video.style.display = 'block';
             video.currentTime = 0;
             
             let playPromise = video.play();
             if (playPromise !== undefined) {
                 playPromise.catch(error => {
-                    // Autoplay with sound failed. Mute and force visual playback.
                     video.muted = true;
                     video.play().catch(e => {
                         dismissBootScreen(bootScreen);
@@ -1243,7 +1341,33 @@
             };
         }
 
+        /* === Developer Panel Authentication & Routing === */
+        function openDevAuth() {
+            toggleSettings('dev-auth-modal');
+            setTimeout(() => { document.getElementById('dev-password-input').focus(); }, 100);
+        }
+
+        function verifyDevPassword() {
+            const pass = document.getElementById('dev-password-input').value;
+            if (pass === 'Noodles') {
+                document.getElementById('dev-password-input').value = '';
+                toggleSettings('dev-dashboard-modal');
+                if (window.renderDevDashboard) {
+                    window.renderDevDashboard();
+                }
+            } else {
+                alert('Access Denied: Incorrect Developer Password.');
+                document.getElementById('dev-password-input').value = '';
+            }
+        }
+
         /* === Startup Sequence === */
+        document.addEventListener("DOMContentLoaded", () => {
+            if (localStorage.getItem('eagler-layout') === 'xbox360' && localStorage.getItem('eagler-tutorial-done')) {
+                playXboxBoot();
+            }
+        });
+
         window.onload = function() {
             checkAndRecordPlaytime();
             renderPlaytimes();
@@ -1269,23 +1393,22 @@
             sortFavorites('vanilla-container');
             sortFavorites('clients-container');
 
-            // Play Xbox boot ONLY on very first load of the page if Xbox layout is active and tutorial is done
             if (savedLayout === 'xbox360' && localStorage.getItem('eagler-tutorial-done')) {
                 playXboxBoot();
             } else {
                 let bootScreen = document.getElementById('xbox-boot-screen');
-                bootScreen.style.display = 'none';
+                if(bootScreen) bootScreen.style.display = 'none';
             }
 
             checkTutorial();
         }
     </script>
     
-    <!-- Firebase Live User Counter -->
+    <!-- Firebase Tracking & Developer Analytics Engine -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-analytics.js";
-        import { getDatabase, ref, onValue, push, onDisconnect, set } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
+        import { getDatabase, ref, onValue, push, onDisconnect, set, update, increment } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
       
         const firebaseConfig = {
           apiKey: "AIzaSyCzm8-Zh9NiQMiVFB2OMdSH2sXeFu04Wac",
@@ -1302,8 +1425,10 @@
         const analytics = getAnalytics(app); 
         const db = getDatabase(app);
       
+        // Connection & Presence Tracking
         const connectedRef = ref(db, ".info/connected");
         const onlineUsersRef = ref(db, "online_users");
+        let activeUserCount = 0;
       
         onValue(connectedRef, (snap) => {
           if (snap.val() === true) {
@@ -1314,12 +1439,61 @@
         });
       
         onValue(onlineUsersRef, (snap) => {
-          let count = snap.size;
+          activeUserCount = snap.size;
           let displayEl = document.getElementById("live-users");
           if (displayEl) {
-            displayEl.innerText = count === 1 ? count + " Player Online" : count + " Players Online";
+            displayEl.innerText = activeUserCount === 1 ? "1 Player Online" : activeUserCount + " Players Online";
+          }
+          let devOnline = document.getElementById("dev-live-online");
+          if (devOnline) {
+            devOnline.innerText = activeUserCount;
           }
         });
+
+        // Global metric logging function
+        window.logDevMetric = function(category, rawItem) {
+          if (!rawItem) return;
+          const cleanItem = String(rawItem).replace(/[\.\#\$\/\[\]]/g, "_");
+          const categoryRef = ref(db, `analytics/${category}`);
+          update(categoryRef, {
+            [cleanItem]: increment(1)
+          }).catch(() => {});
+        };
+
+        // Developer Dashboard Live Render
+        window.renderDevDashboard = function() {
+          const devOnline = document.getElementById("dev-live-online");
+          if (devOnline) devOnline.innerText = activeUserCount;
+
+          const analyticsRef = ref(db, "analytics");
+          onValue(analyticsRef, (snapshot) => {
+            const data = snapshot.val() || {};
+            
+            renderList('dev-versions-list', data.versions || {});
+            renderList('dev-clients-list', data.clients || {});
+            renderList('dev-themes-list', data.themes || {});
+            renderList('dev-layouts-list', data.layouts || {});
+          });
+        };
+
+        function renderList(elementId, itemsObj) {
+          const list = document.getElementById(elementId);
+          if (!list) return;
+          list.innerHTML = '';
+
+          const sorted = Object.entries(itemsObj).sort((a, b) => b[1] - a[1]);
+          if (sorted.length === 0) {
+            list.innerHTML = '<li style="color: var(--text-secondary); font-size: 0.85rem;">No activity logged yet</li>';
+            return;
+          }
+
+          sorted.forEach(([name, count]) => {
+            const li = document.createElement('li');
+            li.className = 'dev-list-item';
+            li.innerHTML = `<span>${name.replace(/_/g, '.')}</span> <span class="dev-count">${count}</span>`;
+            list.appendChild(li);
+          });
+        }
     </script>
 </body>
 </html>

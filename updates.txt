@@ -5,3 +5,4 @@
 -General UI and theme fixes
 -Better Tutorial
 -New features coming soon (Cleaner settings page)
+-Developer Portal
